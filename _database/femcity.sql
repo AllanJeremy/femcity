@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2017 at 09:55 PM
+-- Generation Time: Mar 17, 2017 at 05:42 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -32,6 +32,7 @@ CREATE TABLE `admin_accounts` (
   `last_name` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
   `business_name` varchar(256) NOT NULL,
+  `business_description` text NOT NULL COMMENT 'Description of what the business does',
   `cat_id` int(255) UNSIGNED NOT NULL COMMENT 'Category id',
   `email` varchar(256) NOT NULL,
   `password` varchar(512) NOT NULL,
@@ -73,7 +74,7 @@ CREATE TABLE `featured_items` (
 
 CREATE TABLE `items` (
   `item_id` int(255) UNSIGNED NOT NULL,
-  `name` varchar(256) NOT NULL,
+  `item_name` varchar(256) NOT NULL,
   `type` enum('service','product','','') NOT NULL DEFAULT 'service',
   `description` text,
   `price` int(255) UNSIGNED NOT NULL DEFAULT '10',
@@ -168,7 +169,7 @@ ALTER TABLE `admin_accounts`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `cat_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `cat_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `featured_items`
 --
