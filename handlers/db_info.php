@@ -62,7 +62,7 @@ class DbInfo implements DbInfoInterface
         }
         else #failed to prepare the query for data retrieval
         {
-            ErrorHandler::PrintError($prepare_error);
+            echo "<p>".($prepare_error)."</p>";
             return null;
         }
     }
