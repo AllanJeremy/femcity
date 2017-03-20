@@ -17,16 +17,10 @@ interface DbInfoInterface
     public static function GetItemById($item_id);
     public static function GetPromoById($promo_id);
     
-    #Account related records
-    public static function GetAdminById($acc_id);
-    public static function GetSuperuserById($acc_id);
-    
     //Get records based on foreign keys
     public static function GetFeaturedByItemId($item_id);
     public static function GetPromoByItemId($item_id);
-    public static function GetItemByAccId($acc_id);
-    
-        
+    public static function GetItemByAccId($acc_id);        
 }
 
 //This class deals with retrieval of records from the database
