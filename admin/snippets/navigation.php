@@ -36,7 +36,7 @@ class AdminNavigation
         <nav class="navbar navbar-default">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" href="?p=categories">Femcity Admin Panel </a>
+              <a class="navbar-brand" href="?p=create">Femcity Admin Panel </a>
             </div>
             <ul class="nav navbar-nav">
               <li class="<?php echo $this->post_items_class;?>"><a href="?p=create">Create Post</a></li>

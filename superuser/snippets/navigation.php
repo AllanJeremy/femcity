@@ -9,7 +9,6 @@ class SuperuserNavigation
     public $featured_class;
     public $offers_class;
     public $requests_class;
-    public $settings_class;
     public $profile_class;
     
     function __construct($active_tab)
@@ -19,7 +18,6 @@ class SuperuserNavigation
         $this->featured_class="";
         $this->offers_class="";
         $this->requests_class="";
-        $this->settings_class="";
         $this->profile_class="";
         
         //Setting the active classes
@@ -41,17 +39,15 @@ class SuperuserNavigation
                 $this->requests_class="active";
             break;
             case "profile":
-                $this->settings_class = "active";
                 $this->profile_class="active";
             default:
-                //No tab is active if it wasn't specified above as a case
+                $this->categories_class="active";
         }
-        
 ?>
         <nav class="navbar navbar-default">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" href="?p=categories">Femcity Superuser Panel </a>
+              <a class="navbar-brand" href="../ index.php">Femcity Superuser Panel</a>
             </div>
             <ul class="nav navbar-nav">
               <li class="<?php echo $this->categories_class;?>"><a href="?p=categories">Categories</a></li>
@@ -63,7 +59,7 @@ class SuperuserNavigation
             
               <div class="container">
                <ul class="nav navbar-nav navbar-right">
-                  <li class="<?php echo $this->settings_class;?>">
+                  <li>
                       <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
                           <span class="glyphicon glyphicon-cog"></span> Settings 
                           <span class="caret"></span>
