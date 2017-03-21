@@ -1,1 +1,1 @@
-<p>Hello world</p>
+<p>Categories</p>

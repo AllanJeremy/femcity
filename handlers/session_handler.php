@@ -3,7 +3,7 @@
 
 require_once("db_info.php");#Database information file
 
-interface SessionHandlerInterface
+interface MySessionHandlerInterface
 {
     //Admin functions
     public static function AdminIsLoggedIn();
@@ -21,7 +21,7 @@ interface SessionHandlerInterface
 }
 
 //This class deals with the session related functionality ~ logging in and out
-class MySessionHandler extends DbInfo
+class MySessionHandler extends DbInfo implements MySessionHandlerInterface
 {
     //Get admin account by acc_id
     public static function GetAdminById($acc_id)
@@ -95,7 +95,7 @@ class MySessionHandler extends DbInfo
     }
     /*SESSION VARIABLES*/
     //Initialize the admin session variables ~ used to store admin information on login [param is an admin account]
-    protected static InitAdminSessionVars($admin_acc)
+    protected static function InitAdminSessionVars($admin_acc)
     {
         try
         {
@@ -125,7 +125,7 @@ class MySessionHandler extends DbInfo
     }
     
     //Unset the admin session variables ~ used when logging out ~ return true on success and false on failure
-    protected UnsetAdminSessionVars()
+    protected static function UnsetAdminSessionVars()
     {
         //Try unsetting the session variables
         try
@@ -156,7 +156,7 @@ class MySessionHandler extends DbInfo
     }
     
     //Initialize the superuser session variables ~ used to store admin information on login
-    protected static InitSuperuserSessionVars($superuser_acc)
+    protected static function InitSuperuserSessionVars($superuser_acc)
     {
         try
         {
@@ -178,7 +178,7 @@ class MySessionHandler extends DbInfo
     }
     
     //Unset the superuser session variables ~ used when logging out ~ return true on success and false on failure
-    protected UnsetSuperuserSessionVars()
+    protected static function UnsetSuperuserSessionVars()
     {
         try
         {
@@ -237,7 +237,7 @@ class MySessionHandler extends DbInfo
         if($admin_acc)
         {   
             //if the account exists and the password is valid, log them in ~ set session variables
-            $password_valid = PasswordHandler::Verify($password,$admin_acc["password"])
+            $password_valid = PasswordHandler::Verify($password,$admin_acc["password"]);
                 
             //If the password is valid
             if($password_valid)
@@ -300,7 +300,7 @@ class MySessionHandler extends DbInfo
         if($superuser_acc)
         {
             //if the account exists and the password is valid, log them in ~ set session variables
-            $password_valid = PasswordHandler::Verify($password,$superuser_acc["password"])
+            $password_valid = PasswordHandler::Verify($password,$superuser_acc["password"]);
                 
             //If the password is valid
             if($password_valid)

@@ -1,1 +1,1 @@
-<p>Hello world</p>
+<p>Featured items</p>
