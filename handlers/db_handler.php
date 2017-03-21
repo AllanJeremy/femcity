@@ -15,6 +15,13 @@ interface DbHandlerInterface
     public static function UpdateUserAcc($id,$details); #Update user account based on primary key
     public static function DeleteUserAcc($id); #Delete user account based on primary key
     
+    public static function ResetAdminAccountPassword($id); #Reset admin account password
+    public static function BanAdminAccount($id); #Ban an admin account
+    public static function UnbanAdminAccount($id); #Unban an admin account
+    
+    //Account requests
+    public static function DeleteAdminAccountRequest($id);#Delete an admin account request based on primary key
+    
     //Featured products
     public static function CreateFeaturedItem($details); #Create a new featured product
     public static function UpdateFeaturedItem($id,$details); #Update featured product based on primary key
@@ -39,12 +46,7 @@ interface DbHandlerInterface
     public static function RequestAdminAccount($details); #Create an admin account request
     public static function CreateAdminAccount($details); #Create an admin account
     public static function UpdateAdminAccount($id,$details); #Update an admin account
-    public static function ResetAdminAccountPassword($id); #Reset admin account password
-    
-    public static function BanAdminAccount($id); #Ban an admin account
-    public static function UnbanAdminAccount($id); #Unban an admin account
-    
-    public static function DeleteAdminAccountRequest($id);#Delete an admin account request based on primary key
+
     public static function DeleteAdminAccount($id);#Delete an admin account based on primary key
 
     //Products/services ~ add and remove services/products

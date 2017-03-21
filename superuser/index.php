@@ -77,7 +77,7 @@
     <main>
         <div class="container">
         <?php
-            include_once($display_tab);
+            @include_once($display_tab);
         ?>
         </div>
     </main>
