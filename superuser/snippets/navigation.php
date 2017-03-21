@@ -9,6 +9,8 @@ class SuperuserNavigation
     public $featured_class;
     public $offers_class;
     public $requests_class;
+    public $settings_class;
+    public $profile_class;
     
     function __construct($active_tab)
     {   
@@ -17,6 +19,7 @@ class SuperuserNavigation
         $this->featured_class="";
         $this->offers_class="";
         $this->requests_class="";
+        $this->profile_class="";
         
         //Setting the active classes
         switch($active_tab)
@@ -36,14 +39,19 @@ class SuperuserNavigation
             case "requests":
                 $this->requests_class="active";
             break;
+            case "profile":
+                $this->categories_class="";
+                $this->settings_class = "active";
+                $this->profile_class="active";
             default:
-                $this->categories_class="active";
+                //No tab is active it wasn't specified
         }
+        
 ?>
         <nav class="navbar navbar-default">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" href="#">Femcity</a>
+              <a class="navbar-brand" href="../index.php">Femcity</a>
             </div>
             <ul class="nav navbar-nav">
               <li class="<?php echo $this->categories_class;?>"><a href="?p=categories">Categories</a></li>
@@ -52,6 +60,31 @@ class SuperuserNavigation
               <li class="<?php echo $this->offers_class;?>"><a href="?p=offers">Offers</a></li>
               <li class="<?php echo $this->requests_class;?>"><a href="?p=requests">Requests</a></li>
             </ul>
+            
+              <div class="container">
+               <ul class="nav navbar-nav navbar-right">
+                  <li class="<?php echo $this->settings_class;?>">
+                      <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                          <span class="glyphicon glyphicon-cog"></span> Settings 
+                          <span class="caret"></span>
+                      </a>
+                    <ul class="dropdown-menu">
+                        <li class="<?php echo $this->profile_class;?>" title="Personal profile. You can change your account information here.">
+                            <a href="?p=profile">
+                                <span class="glyphicon glyphicon-user"></span> Profile
+                            </a>
+                        </li>
+                        <li title="Logout of your account">
+                            <a href="?action=logout">
+                                <span class="glyphicon glyphicon-off"></span> Logout
+                            </a>
+                        </li>
+                    </ul>
+                      
+                   </li>
+                </ul>
+              </div>
+
           </div>
         </nav>
 <?php

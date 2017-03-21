@@ -21,6 +21,19 @@
         $snippets_dir ="snippets/"; #Snippets folder
         $display_tab = ""; #Tab that should be displayed
         
+        $action = @$_GET["action"]; #True if the state is the logout state
+        if(isset($action))
+        {
+            //Handle the different actions
+            switch($action)
+            {
+                case "logout":
+                    MySessionHandler::SuperuserLogout();#Log the superuser out
+                    header("Location:login.php");#redirect the superuser to the login page
+                break;
+            }
+        }
+        
         $current_page = htmlspecialchars(@$_GET["p"]); #Get the page get variable
     
         //Check for current active tab
@@ -42,6 +55,9 @@
                 break;                
                 case "requests":
                     $display_tab = $snippets_dir."account_requests_tab.php";
+                break;
+                case "profile":
+                    $display_tab = $snippets_dir."profile_tab.php";
                 break;
                 default:
                     $display_tab = $snippets_dir."categories_tab.php";
