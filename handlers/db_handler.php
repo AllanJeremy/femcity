@@ -19,6 +19,7 @@ interface DbHandlerInterface
     public static function BanAdminAccount($id); #Ban an admin account
     public static function UnbanAdminAccount($id); #Unban an admin account
     
+/*
     //Account requests
     public static function DeleteAdminAccountRequest($id);#Delete an admin account request based on primary key
     
@@ -40,9 +41,9 @@ interface DbHandlerInterface
     public static function CreateSuperuserAccount($details); #Create a new featured product
     public static function UpdateSuperuserAccount($id,$details); #Update a superuser account based on primary key
     public static function DeleteSuperuserAccount($id); #Delete a superuser account based on primary key
-
+*/
 /*ADMIN FUNCTIONS*/
-    //Personal account ~ Create update account
+/*    //Personal account ~ Create update account
     public static function RequestAdminAccount($details); #Create an admin account request
     public static function CreateAdminAccount($details); #Create an admin account
     public static function UpdateAdminAccount($id,$details); #Update an admin account
@@ -53,7 +54,7 @@ interface DbHandlerInterface
     public static function CreateItem($details); #Create a new product or service
     public static function UpdateItem($id,$details); #Update product/service based on primary key
     public static function DeleteItem($id); #Delete product/service based on primary key
-    
+*/  
 }
 
 //This class deals with manipulation of records in the database

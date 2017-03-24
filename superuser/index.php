@@ -7,11 +7,12 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/main.css" rel="stylesheet">
-    <link href="../css/responsive.css" rel="stylesheet">
+
 </head>
 
 <body>
     <?php
+        require_once("../handlers/message_display.php");
         require_once("../handlers/session_handler.php");
     
         /*//If the superuser is not logged in ~ redirect them to the login page
@@ -24,7 +25,7 @@
         $snippets_dir ="snippets/"; #Snippets folder
         $display_tab = ""; #Tab that should be displayed
         
-        $action = @$_GET["action"]; #True if the state is the logout state
+        $action = htmlspecialchars(@$_GET["action"]); #True if the state is the logout state
         if(isset($action))
         {
             //Handle the different actions
@@ -80,7 +81,7 @@
     <main>
         <div class="container">
         <?php
-            @include_once($display_tab);
+            include_once($display_tab);
         ?>
         </div>
     </main>
@@ -91,6 +92,8 @@
         
     </script>
     <script src="../js/jquery.js"></script>
+    <script src="js/event_handler.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    
 </body>
 </html>

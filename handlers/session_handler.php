@@ -29,7 +29,7 @@ class MySessionHandler extends DbInfo implements MySessionHandlerInterface
         //todo: Get everything except the password
         global $dbCon;
         
-        $select_query = "SELECT first_name,last_name,username,business_name,business_description,cat_id,email,subbed,date_created,date_activated,date_expires 
+        $select_query = "SELECT first_name,last_name,business_name,business_description,cat_id,email,subbed,date_created,date_activated,date_expires 
         FROM admin_accounts WHERE acc_id=? INNER JOIN categories ON admin_accounts.cat_id=categories.cat_id";
         
         //Attempt to prepare the query

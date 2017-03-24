@@ -46,9 +46,16 @@ class SuperuserNavigation
 ?>
         <nav class="navbar navbar-default">
           <div class="container-fluid">
+              
             <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#superuserNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span> 
+              </button>
               <a class="navbar-brand" href="../ index.php">Femcity Superuser Panel</a>
             </div>
+              <div class="collapse navbar-collapse" id="superuserNavbar">
             <ul class="nav navbar-nav">
               <li class="<?php echo $this->categories_class;?>"><a href="?p=categories">Categories</a></li>
               <li class="<?php echo $this->users_class;?>"><a href="?p=accounts">Accounts</a></li>
@@ -57,7 +64,7 @@ class SuperuserNavigation
               <li class="<?php echo $this->requests_class;?>"><a href="?p=requests">Requests</a></li>
             </ul>
             
-              <div class="container">
+            <div class="container">
                <ul class="nav navbar-nav navbar-right">
                   <li>
                       <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
@@ -80,7 +87,7 @@ class SuperuserNavigation
                    </li>
                 </ul>
               </div>
-
+              </div>
           </div>
         </nav>
 <?php

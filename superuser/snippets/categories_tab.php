@@ -1,1 +1,130 @@
-<p>Categories</p>
+<?php
+    //Get the active tab
+    require_once("tab_manager.php");#Variables ~ $is_create, $create_tab_class, $manage_tab_class
+    
+    //Current page
+    $current_page = "categories";
+
+    //Variables for the different urls
+    $create_url = "index.php?p=".$current_page."&tab=create";
+    $manage_url = "index.php?p=".$current_page."&tab=manage";
+
+    //Display the tab headers below
+?>
+    <!--Tab headers-->
+    <div class="container row">
+		<ul class="nav nav-pills col-xs-offset-4 col-sm-offset-5">
+            <li class="<?php echo $create_tab_class;?>"><a href="<?php echo $create_url; ?>">Create</a></li>
+            <li class="<?php echo $manage_tab_class;?>"><a href="<?php echo $manage_url; ?>">Manage</a></li>
+		</ul>
+    </div><br><br>
+
+    <!--Tab body-->
+    <div class="container well tab-body">
+<?php
+    //If the active tab is the create tab ~ Display the create tab only
+    if($is_create):#Create tab active
+?>
+    <div>
+        <p>Create a new category here</p>    
+    </div><hr>
+        
+    <form class="row" method="post">  
+        <div class="col-xs-12 col-md-6">
+            <br>
+            <label for="in_cat_name" >Category name : </label>
+            <input class="form-control" type="text" placeholder="Category name" name="cat_name" id="in_cat_name" title="Category name">
+        </div>
+        
+        <div class="col-xs-12 col-md-6">
+            <br>
+            <label for="in_cat_description">Category Description </label>
+            <textarea class="form-control" type="text" placeholder="Category Description" name="cat_description" id="in_cat_description" title="Category Description"></textarea>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-3 pull-right">
+            <br>
+            <a class="btn btn-primary" title="Create a new category" href="javascript:void(0)" id="createCategory">CREATE CATEGORY</a>
+        </div>
+    </form>
+<?php
+    else:#Manage tab active
+        $categories = DbInfo::GetAllCategories();
+        if($categories):
+?>
+    <!--Category list-->
+    <div class="container">
+        <div class="col-xs-12 col-sm-6">
+            <p>Manage categories here.</p>
+        </div>
+        <div class="col-xs-12 col-sm-6 pull-right row clearfix">
+            <div class="col-xs-10">
+                <input class="form-control" type="search" id="search_manage_cat" placeholder="Search Categories">
+            </div>
+            <div class="col-xs-2">
+                <button class="btn btn-default">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
+        </div>
+    </div><hr> 
+        
+    <!--Accordion-->
+    <div class="panel-group" id="manage_cat_group">
+    <?php
+        $cat_id="";
+        $count = 0;#iterator
+        $open_state = "";
+        
+        //Loop through each category creating a dropdown item
+        foreach($categories as $cat):
+            $cat_id = $cat["cat_id"];
+            $cat_name = $cat["cat_name"];
+            $cat_description = $cat["cat_description"];
+            
+            $description_available = (isset($cat_description)&&(!empty($cat_description)));
+            //If the category description is unavailable set the value to this
+            if(!$description_available)
+            {
+                $cat_description = "No description available for this category. Click edit to add one.";
+            }
+        
+            $collapse_id="cat_".$cat_id; #Collapse trigger id
+            
+            //If it is the first category, make the collapsible open by default
+            if($count==0)
+            {   $open_state="in";}
+            else
+            {   $open_state="";}
+    ?>
+      <div class="panel panel-default manage-cat-item" data-cat-id="<?php echo $cat_id;?>">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#manage_cat_group" href="#<?php echo $collapse_id;?>">
+            <?php echo $cat_name;?> <span class="caret"></span></a>
+            <span class="pull-right action-buttons">
+                <a class="btn btn-info manage-edit-btn"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                <a class="btn btn-warning manage-delete-btn"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+            </span>
+          </h4><br>
+        </div>
+          
+        <div id="<?php echo $collapse_id;?>" class="panel-collapse collapse <?php echo $open_state;?>">
+          <div class="panel-body"><?php echo $cat_description;?></div>
+        </div>
+      </div>
+    <?php
+            $count++;
+        endforeach;   
+    ?>
+    </div>
+<?php
+        else:#No categories were found
+?>
+    <div>
+        <p>No categories were found. Once you create categories, they will appear here</p>    
+    </div>
+<?php
+        endif;
+    endif;
+?>
+    </div>

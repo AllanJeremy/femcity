@@ -11,6 +11,8 @@ interface DbInfoInterface
     public static function GetAllItems();
     public static function GetAllPromotions();
     
+    public static function GetAllAdminAccounts();
+    
     //Get records based on primary keys
     public static function GetCategoryById($cat_id);
     public static function GetFeaturedById($f_item_id);
@@ -119,6 +121,14 @@ class DbInfo implements DbInfoInterface
         return self::GetAllRecordsFromTable("promotions");
     }
     
+    //Get all admin accounts ~ select everything except the password
+    public static function GetAllAdminAccounts()
+    {
+        global $dbCon;
+        $select_query = "SELECT first_name,last_name,business_name,business_description,cat_id,email,subbed,date_created,date_activated,date_expires FROM admin_accounts";
+        
+        return ($dbCon->query($select_query));
+    }
     /*GET RECORDS BASED ON PRIMARY KEYS*/
     //Get Category by it's primary key (cat_id)
     public static function GetCategoryById($cat_id)
