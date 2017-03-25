@@ -12,6 +12,7 @@ interface DbInfoInterface
     public static function GetAllPromotions();
     
     public static function GetAllAdminAccounts();
+    public static function GetAllSuperuserAccounts();
     
     //Get records based on primary keys
     public static function GetCategoryById($cat_id);
@@ -108,9 +109,13 @@ class DbInfo implements DbInfoInterface
     {
         return self::GetAllRecordsFromTable("categories");
     }
+    //Get all featured items
     public static function GetAllFeaturedItems()
     {
-        return self::GetAllRecordsFromTable("featured_items");
+        global $dbCon;
+        $select_query="SELECT * FROM featured_items INNER JOIN items ON featured_items.item_id = items.item_id";
+        $result = $dbCon->query($select_query);
+        return $result;
     }
     public static function GetAllItems()
     {
@@ -125,10 +130,18 @@ class DbInfo implements DbInfoInterface
     public static function GetAllAdminAccounts()
     {
         global $dbCon;
-        $select_query = "SELECT first_name,last_name,business_name,business_description,cat_id,email,subbed,date_created,date_activated,date_expires FROM admin_accounts";
+        $select_query = "SELECT acc_id,first_name,last_name,business_name,business_description,cat_id,email,subbed,date_created,date_activated,date_expires FROM admin_accounts";
         
         return ($dbCon->query($select_query));
     }
+    public static function GetAllSuperuserAccounts()
+    {
+        global $dbCon;
+        $select_query = "SELECT acc_id,first_name,last_name,username,email,subbed,date_created FROM admin_accounts";
+        
+        return ($dbCon->query($select_query));
+    }
+    
     /*GET RECORDS BASED ON PRIMARY KEYS*/
     //Get Category by it's primary key (cat_id)
     public static function GetCategoryById($cat_id)

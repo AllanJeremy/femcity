@@ -19,7 +19,7 @@ interface DbHandlerInterface
     public static function BanAdminAccount($id); #Ban an admin account
     public static function UnbanAdminAccount($id); #Unban an admin account
     
-/*
+
     //Account requests
     public static function DeleteAdminAccountRequest($id);#Delete an admin account request based on primary key
     
@@ -34,27 +34,23 @@ interface DbHandlerInterface
     public static function DeleteOffer($id); #Delete offer based on primary key
     
     //Account requests
-    public static function AcceptAccRequest($details); #Accept account request ~ delete the account request from account requests table and move it to the admin_accounts table
+    public static function AcceptAccRequest($id,$details); #Accept account request ~ delete the account request from account requests table and move it to the admin_accounts table
     public static function DenyAccountRequest($id); #Deny an account request, delete the account request
     
     //Personal account ~ Create, update and delete superuser account
     public static function CreateSuperuserAccount($details); #Create a new featured product
     public static function UpdateSuperuserAccount($id,$details); #Update a superuser account based on primary key
     public static function DeleteSuperuserAccount($id); #Delete a superuser account based on primary key
-*/
-/*ADMIN FUNCTIONS*/
-/*    //Personal account ~ Create update account
-    public static function RequestAdminAccount($details); #Create an admin account request
-    public static function CreateAdminAccount($details); #Create an admin account
-    public static function UpdateAdminAccount($id,$details); #Update an admin account
 
-    public static function DeleteAdminAccount($id);#Delete an admin account based on primary key
+/*ADMIN FUNCTIONS*/
+   //Account requests
+    public static function RequestAdminAccount($details); #Create an admin account request
 
     //Products/services ~ add and remove services/products
     public static function CreateItem($details); #Create a new product or service
     public static function UpdateItem($id,$details); #Update product/service based on primary key
     public static function DeleteItem($id); #Delete product/service based on primary key
-*/  
+ 
 }
 
 //This class deals with manipulation of records in the database
@@ -142,12 +138,12 @@ class DbHandler implements DbHandlerInterface
     public static function CreateAdminAcc($details)
     {
         global $dbCon;
-        $insert_query = "INSERT INTO admin_accounts(first_name,last_name,username,business_name,business_description,cat_id,email,password,subbed) VALUES(?,?,?,?,?,?,?,?,?)";
+        $insert_query = "INSERT INTO admin_accounts(first_name,last_name,business_name,business_description,cat_id,email,password,subbed) VALUES(?,?,?,?,?,?,?,?)";
         
         //Attempt to prepare query
         if($insert_stmt = $dbCon->prepare($insert_query))
         {   
-            $insert_stmt->bind_param("sssssissi",$details["first_name"],$details["last_name"],$details["username"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["password"],$details["subbed"]);
+            $insert_stmt->bind_param("ssssissi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["password"],$details["subbed"]);
             
             //Try executing the query ~ returns true on success and false on failure
             return($insert_stmt->execute());
@@ -162,12 +158,12 @@ class DbHandler implements DbHandlerInterface
     public static function UpdateAdminAcc($id,$details)
     {
         global $dbCon;
-        $update_query = "UPDATE admin_accounts SET first_name=?,last_name=?,username=?,business_name=?,business_description=?,cat_id=?,email=?,password=?,subbed=? WHERE acc_id=?";
+        $update_query = "UPDATE admin_accounts SET first_name=?,last_name=?,business_name=?,business_description=?,cat_id=?,email=?,password=?,subbed=? WHERE acc_id=?";
 
         //Attempt to prepare query
         if($update_stmt = $dbCon->prepare($update_query))
         {
-            $update_stmt->bind_param("sssssissii",$details["first_name"],$details["last_name"],$details["username"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["password"],$details["subbed"],$id);
+            $update_stmt->bind_param("ssssissii",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["password"],$details["subbed"],$id);
             
             //Try executing the query ~ returns true on success and false on failure
             return($update_stmt->execute());
@@ -256,7 +252,245 @@ class DbHandler implements DbHandlerInterface
         return self::SetAdminAccBanStatus(false,$id);
     }
     
+    //Delete an admin account request based on primary key
+    public static function DeleteAdminAccountRequest($id)
+    {
+        return self::DeleteBasedOnSingleProperty("account_requests","request_id",$id);
+    }
+    //Featured products
+    #Create a new featured product
+    public static function CreateFeaturedItem($details)
+    {
+        global $dbCon;
+        $insert_query = "INSERT INTO featured_items(item_id,description) VALUES (?,?)";
+        
+        //Attempt to prepare query
+        if($insert_stmt = $dbCon->prepare($insert_query))
+        {
+            $insert_stmt->bind_param("is",$details["item_id"],$details["description"]);
+            return ($insert_stmt->execute());
+        }
+        else #failed to prepare query
+        {
+            return null;
+        }
+    }
+    
+    #Update featured product based on primary key
+    public static function UpdateFeaturedItem($id,$details)
+    {
+        $update_query = "UPDATE featured_items SET item_id=?,description=? WHERE feature_id=?";
+        
+        //Attempt to prepare query
+        if($update_stmt = $dbCon->prepare($update_query))
+        {
+            $update_stmt->bind_param("is",$details["item_id"],$details["description"],$id);
+            return ($update_stmt->execute());
+        }
+        else #failed to prepare query
+        {
+            return null;
+        }
+    }
+    
+    #Delete featured product based on primary key
+    public static function DeleteFeaturedItem($id)
+    {
+        return self::DeleteBasedOnSingleProperty("featured_items","feature_id",$id);
+    }
+    
+    //Offers
+    #Create a new offer
+    public static function CreateOffer($details)
+    {
+        global $dbCon;
+        $insert_query = "INSERT INTO offers(offer_text,description,item_id) VALUES (?,?,?)";
+        
+        //Attempt to prepare query
+        if($insert_stmt = $dbCon->prepare($insert_query))
+        {
+            $insert_stmt->bind_param("ssi",$details["offer_text"],$details["description"],$details["item_id"]);
+            
+            return ($insert_stmt->execute());
+        }
+        else #failed to prepare query
+        {
+            return null;
+        }    
+    }
+    
+    #Update offer based on primary key
+    public static function UpdateOffer($id,$details)
+    {
+        $update_query = "UPDATE offers SET offer_text=?,description=?,item_id=? WHERE offer_id=?";
+        
+        //Attempt to prepare query
+        if($update_stmt = $dbCon->prepare($update_query))
+        {
+            $update_stmt->bind_param("ssii",$details["offer_text"],$details["description"],$details["item_id"],$id);
+            return ($update_stmt->execute());
+        }
+        else #failed to prepare query
+        {
+            return null;
+        }
+    }
+    
+    #Delete offer based on primary key
+    public static function DeleteOffer($id)
+    {
+        return self::DeleteBasedOnSingleProperty("offers","offer_id",$id);
+    }
+    
+    //Account requests
+    #Helper function: Delete account request
+    private static function DeleteAccountRequest($id)
+    {
+        return self::DeleteBasedOnSingleProperty("account_requests","request_id",$id);
+    }
+    
+    #Accept account request ~ NOTE: $details MUST be an associative array containing columns in admin_accounts
+    public static function AcceptAccRequest($id,$details)
+    {   
+        $admin_acc_created = self::CreateAdminAcc($details);
+        //If the admin acc was created successfully
+        if($admin_acc_created)
+        {
+            #delete the account request if the corresponsing admin account is created
+            $acc_request_deleted = self::DeleteAccountRequest($id); 
+            
+            return ($acc_request_deleted && $admin_acc_created);#return the status of the execution
+        }
+        else
+        {
+            return $admin_acc_created;
+        }
+    }
+    
+    #Deny an account request, delete the account request
+    public static function DenyAccountRequest($id)
+    {
+        return self::DeleteAccountRequest($id);
+    }
+    
+    //Superuser Personal account ~ Create, update and delete superuser account
+    #Create a new superuser account
+    public static function CreateSuperuserAccount($details)
+    {
+        global $dbCon;
+        $insert_query = "INSERT INTO superuser_accounts(first_name,last_name,username,email,password,subbed) VALUES(?,?,?,?,?,?)";
+        
+        //Attempt to prepare query
+        if($insert_stmt = $dbCon->prepare($insert_query))
+        {   
+            $insert_stmt->bind_param("sssssi",$details["first_name"],$details["last_name"],$details["username"],$details["email"],$details["password"],$details["subbed"]);
+            
+            //Try executing the query ~ returns true on success and false on failure
+            return($insert_stmt->execute());
+        }
+        else #Failed to prepare query
+        {
+            return null;
+        }   
+    }
+    
+    #Update a superuser account based on primary key
+    public static function UpdateSuperuserAccount($id,$details)
+    {
+        global $dbCon;
+        $update_query = "UPDATE superuser_accounts SET first_name=?,last_name=?,username=?,email=?,password=?,subbed=? WHERE acc_id=?";
+        
+        //Attempt to prepare query
+        if($update_stmt = $dbCon->prepare($update_query))
+        {   
+            $update_stmt->bind_param("sssssii",$details["first_name"],$details["last_name"],$details["username"],$details["email"],$details["password"],$details["subbed"],$id);
+            
+            //Try executing the query ~ returns true on success and false on failure
+            return($update_stmt->execute());
+        }
+        else #Failed to prepare query
+        {
+            return null;
+        }  
+    }
+    
+    #Delete a superuser account based on primary key
+    public static function DeleteSuperuserAccount($id)
+    {
+        return self::DeleteBasedOnSingleProperty("superuser_accounts","acc_id",$id);
+    }
+    
     
     /*ADMIN ACCOUNT FUNCTIONS*/
+    
+    //Account requests
+    #Create an admin account request
+    public static function RequestAdminAccount($details)
+    {
+        global $dbCon;
+        $insert_query = "INSERT INTO account_requests(first_name,last_name,business_name,business_description,cat_id,email,password,subbed) VALUES(?,?,?,?,?,?,?,?)";
+        
+        //Attempt to prepare query
+        if($insert_stmt = $dbCon->prepare($insert_query))
+        {   
+            $insert_stmt->bind_param("ssssissi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["password"],$details["subbed"]);
+            
+            //Try executing the query ~ returns true on success and false on failure
+            return($insert_stmt->execute());
+        }
+        else #Failed to prepare query
+        {
+            return null;
+        }   
+    }
+    
+    //Products/services ~ add and remove services/products
+    #Create a new product or service
+    public static function CreateItem($details)
+    {
+        global $dbCon;
+        $insert_query = "INSERT INTO items(item_name,type,description,images,price,quantity,discount,acc_id) VALUES(?,?,?,?,?,?,?,?)";
+        
+        //Attempt to prepare query
+        if($insert_stmt = $dbCon->prepare($insert_query))
+        {   
+            $insert_stmt->bind_param("ssssiiii",$details["item_name"],$details["type"],$details["description"],$details["images"],$details["price"],$details["quantity"],$details["discount"],$details["acc_id"]);
+            
+            //Try executing the query ~ returns true on success and false on failure
+            return($insert_stmt->execute());
+        }
+        else #Failed to prepare query
+        {
+            return null;
+        }  
+    }
+    
+    #Update product/service based on primary key
+    public static function UpdateItem($id,$details)
+    {
+        global $dbCon;
+        $update_query = "UPDATE items SET item_name=?,type=?,description=?,images=?,price=?,quantity=?,discount=?,acc_id=? WHERE item_id=?";
+        
+        //Attempt to prepare query
+        if($update_stmt = $dbCon->prepare($update_query))
+        {   
+            $update_stmt->bind_param("ssssiiiii",$details["item_name"],$details["type"],$details["description"],$details["images"],$details["price"],$details["quantity"],$details["discount"],$details["acc_id"],$id);
+            
+            //Try executing the query ~ returns true on success and false on failure
+            return($update_stmt->execute());
+        }
+        else #Failed to prepare query
+        {
+            return null;
+        }  
+    }
+    
+    #Delete product/service based on primary key
+    public static function DeleteItem($id)
+    {
+        return self::DeleteBasedOnSingleProperty("items","item_id",$id);
+    }
+    
+    
     
 }
