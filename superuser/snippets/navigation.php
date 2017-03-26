@@ -53,7 +53,7 @@ class SuperuserNavigation
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span> 
               </button>
-              <a class="navbar-brand" href="../ index.php">Femcity Superuser Panel</a>
+              <a class="navbar-brand" href="../index.php">Femcity Superuser Panel</a>
             </div>
               <div class="collapse navbar-collapse" id="superuserNavbar">
             <ul class="nav navbar-nav">
