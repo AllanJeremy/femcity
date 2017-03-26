@@ -32,8 +32,8 @@
     <form class="row" method="post">  
         <div class="col-xs-12 col-md-6">
             <br>
-            <label for="in_cat_name" >Category name : </label>
-            <input class="form-control" type="text" placeholder="Category name" name="cat_name" id="in_cat_name" title="Category name">
+            <label for="in_cat_name" >Category Name</label>
+            <input class="form-control" type="text" placeholder="Category name" name="cat_name" id="in_cat_name" title="Category Name">
         </div>
         
         <div class="col-xs-12 col-md-6">
@@ -80,13 +80,6 @@
             $cat_id = $cat["cat_id"];
             $cat_name = $cat["cat_name"];
             $cat_description = $cat["cat_description"];
-            
-            $description_available = (isset($cat_description)&&(!empty($cat_description)));
-            //If the category description is unavailable set the value to this
-            if(!$description_available)
-            {
-                $cat_description = "No description available for this category. Click edit to add one.";
-            }
         
             $collapse_id="cat_".$cat_id; #Collapse trigger id
             
@@ -102,14 +95,28 @@
             <a data-toggle="collapse" data-parent="#manage_cat_group" href="#<?php echo $collapse_id;?>">
             <?php echo $cat_name;?> <span class="caret"></span></a>
             <span class="pull-right action-buttons">
-                <a class="btn btn-info manage-edit-btn"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                <a class="btn btn-info editable-trigger-btn"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                 <a class="btn btn-warning manage-delete-btn"><span class="glyphicon glyphicon-trash"></span> Delete</a>
             </span>
           </h4><br>
         </div>
           
         <div id="<?php echo $collapse_id;?>" class="panel-collapse collapse <?php echo $open_state;?>">
-          <div class="panel-body"><?php echo $cat_description;?></div>
+          <div class="panel-body">
+              <form class="row editable-list" method="post">  
+                <div class="col-xs-12 col-md-6">
+                    <br>
+                    <label for="in_cat_name" >Category Name </label>
+                    <input class="editable form-control" disabled type="text" placeholder="Category name" name="cat_name" id="in_cat_name" title="Category name" value="<?php echo $cat_name;?>">
+                </div>
+
+                <div class="col-xs-12 col-md-6">
+                    <br>
+                    <label for="in_cat_description">Category Description </label>
+                    <textarea class="editable form-control" disabled type="text" placeholder="No description available for this category. Click edit to add one." name="cat_description" id="in_cat_description" title="Category Description"><?php echo $cat_description;?></textarea>
+                </div>
+            </form>
+          </div>
         </div>
       </div>
     <?php
