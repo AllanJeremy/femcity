@@ -95,7 +95,7 @@
             <a data-toggle="collapse" data-parent="#manage_cat_group" href="#<?php echo $collapse_id;?>">
             <?php echo $cat_name;?> <span class="caret"></span></a>
             <span class="pull-right action-buttons">
-                <a class="btn btn-info editable-trigger-btn"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                <a class="btn btn-info editable-trigger-btn" data-state-toggle="edit"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                 <a class="btn btn-warning manage-delete-btn"><span class="glyphicon glyphicon-trash"></span> Delete</a>
             </span>
           </h4><br>
@@ -135,3 +135,4 @@
     endif;
 ?>
     </div>
+<script src="js/event_handler.js"></script>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2017 at 05:42 PM
+-- Generation Time: Mar 26, 2017 at 08:04 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -23,6 +23,25 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `account_requests`
+--
+
+CREATE TABLE `account_requests` (
+  `request_id` int(255) UNSIGNED NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `business_name` varchar(256) NOT NULL,
+  `business_description` text NOT NULL COMMENT 'Description of what the business does',
+  `cat_id` int(255) UNSIGNED NOT NULL COMMENT 'Category id',
+  `email` varchar(256) NOT NULL,
+  `password` varchar(512) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `subbed` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'If the account request is subscribed to the email newsletter'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `admin_accounts`
 --
 
@@ -30,7 +49,6 @@ CREATE TABLE `admin_accounts` (
   `acc_id` int(255) UNSIGNED NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
-  `username` varchar(50) NOT NULL,
   `business_name` varchar(256) NOT NULL,
   `business_description` text NOT NULL COMMENT 'Description of what the business does',
   `cat_id` int(255) UNSIGNED NOT NULL COMMENT 'Category id',
@@ -39,7 +57,8 @@ CREATE TABLE `admin_accounts` (
   `subbed` tinyint(1) NOT NULL DEFAULT '1',
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_activated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_expires` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `date_expires` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `is_banned` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'True if the account is banned and false if it is not. Only accounts that have not been banned can log in'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -77,8 +96,9 @@ CREATE TABLE `items` (
   `item_name` varchar(256) NOT NULL,
   `type` enum('service','product','','') NOT NULL DEFAULT 'service',
   `description` text,
+  `images` text COMMENT 'An array showing the images for the item',
   `price` int(255) UNSIGNED NOT NULL DEFAULT '10',
-  `quantity` int(10) NOT NULL DEFAULT '1',
+  `quantity` int(10) DEFAULT '1',
   `discount` int(255) UNSIGNED NOT NULL DEFAULT '0',
   `acc_id` int(255) UNSIGNED NOT NULL,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -87,14 +107,14 @@ CREATE TABLE `items` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `promotions`
+-- Table structure for table `offers`
 --
 
-CREATE TABLE `promotions` (
-  `promo_id` int(11) NOT NULL,
-  `promo_text` varchar(512) NOT NULL,
-  `promo_description` text,
-  `item_id` int(255) UNSIGNED NOT NULL
+CREATE TABLE `offers` (
+  `offer_id` int(11) NOT NULL,
+  `offer_text` varchar(512) NOT NULL,
+  `description` text,
+  `cat_id` int(255) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Contains promotions currently being displayed on banners';
 
 -- --------------------------------------------------------
@@ -117,6 +137,13 @@ CREATE TABLE `superuser_accounts` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `account_requests`
+--
+ALTER TABLE `account_requests`
+  ADD PRIMARY KEY (`request_id`),
+  ADD KEY `cat_id` (`cat_id`);
 
 --
 -- Indexes for table `admin_accounts`
@@ -145,10 +172,10 @@ ALTER TABLE `items`
   ADD PRIMARY KEY (`item_id`);
 
 --
--- Indexes for table `promotions`
+-- Indexes for table `offers`
 --
-ALTER TABLE `promotions`
-  ADD KEY `item_id` (`item_id`);
+ALTER TABLE `offers`
+  ADD KEY `item_id` (`cat_id`);
 
 --
 -- Indexes for table `superuser_accounts`
@@ -161,10 +188,15 @@ ALTER TABLE `superuser_accounts`
 --
 
 --
+-- AUTO_INCREMENT for table `account_requests`
+--
+ALTER TABLE `account_requests`
+  MODIFY `request_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `admin_accounts`
 --
 ALTER TABLE `admin_accounts`
-  MODIFY `acc_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `acc_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `categories`
 --
@@ -179,7 +211,7 @@ ALTER TABLE `featured_items`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `item_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `item_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `superuser_accounts`
 --
@@ -202,10 +234,10 @@ ALTER TABLE `featured_items`
   ADD CONSTRAINT `fk_featured_id` FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `promotions`
+-- Constraints for table `offers`
 --
-ALTER TABLE `promotions`
-  ADD CONSTRAINT `fk_promo_item_id` FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `offers`
+  ADD CONSTRAINT `fk_promo_item_id` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`cat_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

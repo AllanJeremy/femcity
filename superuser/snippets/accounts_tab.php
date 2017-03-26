@@ -144,7 +144,7 @@
             <a data-toggle="collapse" data-parent="#manage_accounts_group" href="#<?php echo $collapse_id;?>">
             <?php echo $acc_name.", ".$business_name;?> <span class="caret"></span></a>
             <div class="pull-right action-buttons">
-                <a class="btn btn-info editable-trigger-btn"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                <a class="btn btn-info editable-trigger-btn" data-state-toggle="edit"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                 <a class="btn btn-info manage-reset-btn"><span class="glyphicon glyphicon-refresh"></span> Reset</a>
                 <a class="btn btn-warning manage-ban-btn"><span class="glyphicon glyphicon-ban-circle"></span> Ban</a>
                 <a class="btn btn-warning manage-delete-btn"><span class="glyphicon glyphicon-trash"></span> Delete</a>

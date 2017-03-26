@@ -88,11 +88,10 @@
     <footer>
         
     </footer>
-    <script>
-        
-    </script>
-    <script src="../js/jquery.js"></script>
+    <!--Javascript files-->
+    <script src="js/jquery.min.js"></script>
     <script src="js/event_handler.js"></script>
+    
     <script src="../js/bootstrap.min.js"></script>
     
 </body>
