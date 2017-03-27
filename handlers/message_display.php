@@ -1,7 +1,7 @@
 <?php
 
 //This classs allows for displaying of different message boxes
-class MessageBox
+class MessageDisplay
 {
     //Generic display message ~ this message will be unhidden based on the $hidden parameter
     private static function DisplayGenericMessage($message,$msg_class="",$id="",$hidden=false)

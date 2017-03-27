@@ -1,4 +1,6 @@
 <?php
+    
+    require_once("../handlers/message_display.php");#Controls displaying of message boxes
 
     function DisplaySignupBox()
     {
@@ -94,9 +96,8 @@
     }
     
     //No superuser accounts were found if we get to this point ~ display the signup form
-    require_once("../handlers/message_display.php");
     echo "<div class='container'><br>";
-        MessageBox::PrintInfo("No superuser accounts were found in the database. Create one here");
+        MessageDisplay::PrintInfo("No superuser accounts were found in the database. Create one here");
     echo "</div>";
 ?>
 <!DOCTYPE html>

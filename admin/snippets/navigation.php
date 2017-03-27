@@ -76,5 +76,6 @@ class AdminNavigation
         </nav>
 <?php
     }
-
+    
+    require_once("../handlers/message_display.php");#Controls displaying of message boxes
 }

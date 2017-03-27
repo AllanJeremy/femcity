@@ -1,6 +1,10 @@
-    <!--Tab body-->
+<!--Tab body-->
     <div class="container well">
 
+    <?php
+        $items = DbInfo::GetAllItems(); #Get all the items
+        if($items && $items->num_rows>0):    
+    ?>
         <!--Manage featured items header-->
         <div class="container">
             <div class="col-xs-12 col-sm-6">
@@ -18,10 +22,7 @@
             </div>
         </div><hr> 
 
-    <?php
-        $items = DbInfo::GetAllItems(); #Get all the items
-        if($items && $items->num_rows>0):    
-    ?>
+
     <!--Accordion-->
     <div class="panel-group" id="manage_featured_group">
     <?php
@@ -64,7 +65,7 @@
     <?php
         else:
     ?>
-    <div>
+    <div class="container">
         <p class="text-center">No items were found in the database. <br>Once business owners post items, they will appear here and you can set the featured items.</p>    
     </div>
     <?php

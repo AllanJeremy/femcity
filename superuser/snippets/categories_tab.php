@@ -1,7 +1,7 @@
 <?php
     //Get the active tab
     require_once("tab_manager.php");#Variables ~ $is_create, $create_tab_class, $manage_tab_class
-    
+
     //Current page
     $current_page = "categories";
 
@@ -49,7 +49,7 @@
 <?php
     else:#Manage tab active
         $categories = DbInfo::GetAllCategories();
-        if($categories):
+        if($categories && $categories->num_rows>0):
 ?>
     <!--Category list-->
     <div class="container">
