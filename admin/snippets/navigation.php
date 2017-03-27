@@ -57,6 +57,11 @@ class AdminNavigation
                             </a>
                         </li>
                         <li title="Logout of your account">
+                            <a href="?p=billing">
+                                <span class="glyphicon glyphicon-credit-card"></span> Billing
+                            </a>
+                        </li>                        
+                        <li title="Logout of your account">
                             <a href="?action=logout">
                                 <span class="glyphicon glyphicon-off"></span> Logout
                             </a>

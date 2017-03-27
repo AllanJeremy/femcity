@@ -47,8 +47,7 @@
     <title>Femcity | Superuser Login</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/main.css" rel="stylesheet">
-    <link href="../css/responsive.css" rel="stylesheet">
+    <link href="../css/toastr.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -85,8 +84,11 @@
     <footer>
         
     </footer>
-    <script src="../js/jquery.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/toastr.min.js"></script>
+    
     <script src="../js/bootstrap.min.js"></script>
+    
 </body>
 </html>
 

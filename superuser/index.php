@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/main.css" rel="stylesheet">
-
+    <link href="../css/toastr.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -89,9 +89,10 @@
         
     </footer>
     <!--Javascript files-->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/event_handler.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/toastr.min.js"></script>
     
+    <script type="text/javascript" src="js/event_handler.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     
 </body>
