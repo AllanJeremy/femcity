@@ -8,21 +8,23 @@ interface DbInfoInterface
     //Get all records from a table  
     public static function GetAllCategories();
     public static function GetAllFeaturedItems();
+    public static function GetAllOtherItems();
     public static function GetAllItems();
-    public static function GetAllPromotions();
+    public static function GetAllOffers();
     
     public static function GetAllAdminAccounts();
     public static function GetAllSuperuserAccounts();
+    public static function GetAllAccountRequests();
     
     //Get records based on primary keys
     public static function GetCategoryById($cat_id);
     public static function GetFeaturedById($f_item_id);
     public static function GetItemById($item_id);
-    public static function GetPromoById($promo_id);
+    public static function GetOfferById($promo_id);
     
     //Get records based on foreign keys
     public static function GetFeaturedByItemId($item_id);
-    public static function GetPromoByItemId($item_id);
+    public static function GetOfferByItemId($item_id);
     public static function GetItemByAccId($acc_id);        
 }
 
@@ -117,13 +119,59 @@ class DbInfo implements DbInfoInterface
         $result = $dbCon->query($select_query);
         return $result;
     }
+    
+    //Get all other items ~ items that are not featured
+    public static function GetAllOtherItems()
+    {
+        global $dbCon;
+        $featured_items = self::GetAllFeaturedItems();
+        $featured_ids = array(); # Array containing featured item ids
+        
+        //If any featured items were found
+        if($featured_items && $featured_items->num_rows>0)
+        {
+            //Add the featured item ids to the featured ids
+            foreach($featured_items as $item)
+            {
+                array_push($featured_ids,$item["item_id"]);
+            }
+        }
+        
+        $all_items = self::GetAllItems();
+        $other_items = array();
+        
+        //If there are featured items, filter them off the other items list
+        if(!empty($featured_ids) && $all_items && $all_items->num_rows>0)
+        {
+            foreach($all_items as $item)
+            {
+                #If the item is in the featured item_ids variable, it is considered a featured item
+                $is_featured = in_array($featured_ids,$item["item_id"]);
+                
+                #If the item is not a featured item ~ it is considered to be "other item"
+                if(!$is_featured)
+                {
+                    array_push($other_items,$item);
+                }
+            }
+            
+            return $other_items;
+        }
+        else #No featured items, return all items
+        {
+            return $all_items;
+        }
+
+    }
+    
+    //Get all items
     public static function GetAllItems()
     {
         return self::GetAllRecordsFromTable("items");
     }
-    public static function GetAllPromotions()
+    public static function GetAllOffers()
     {
-        return self::GetAllRecordsFromTable("promotions");
+        return self::GetAllRecordsFromTable("offers");
     }
     
     //Get all admin accounts ~ select everything except the password
@@ -140,6 +188,11 @@ class DbInfo implements DbInfoInterface
         $select_query = "SELECT acc_id,first_name,last_name,username,email,subbed,date_created FROM admin_accounts";
         
         return ($dbCon->query($select_query));
+    }
+    
+    public static function GetAllAccountRequests()
+    {
+        return self::GetAllRecordsFromTable("account_requests");
     }
     
     /*GET RECORDS BASED ON PRIMARY KEYS*/
@@ -162,9 +215,9 @@ class DbInfo implements DbInfoInterface
     }
     
     //Get Promotion by it's primary key (promo_id)
-    public static function GetPromoById($promo_id)
+    public static function GetOfferById($offer_id)
     {
-        return (self::GetSingleRecordUsingProperty("promotions","promo_id",$promo_id));
+        return (self::GetSingleRecordUsingProperty("offers","offer_id",$offer_id));
     }
     
     /*GET RECORDS BASED ON FOREIGN KEYS*/
@@ -175,9 +228,9 @@ class DbInfo implements DbInfoInterface
     }
     
     //Get Promotion item by item_id
-    public static function GetPromoByItemId($item_id)
+    public static function GetOfferByItemId($item_id)
     {
-        return self::SinglePropertyExists("promotions","item_id",$item_id);
+        return self::SinglePropertyExists("offers","item_id",$item_id);
     }
     
     //Get item by acc_id ~ the id of the account that added it
