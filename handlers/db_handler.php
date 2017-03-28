@@ -138,12 +138,12 @@ class DbHandler implements DbHandlerInterface
     public static function CreateAdminAcc($details)
     {
         global $dbCon;
-        $insert_query = "INSERT INTO admin_accounts(first_name,last_name,business_name,business_description,cat_id,email,password,subbed) VALUES(?,?,?,?,?,?,?,?)";
+        $insert_query = "INSERT INTO admin_accounts(first_name,last_name,business_name,business_description,cat_id,email,email,password,subbed) VALUES(?,?,?,?,?,?,?,?)";
         
         //Attempt to prepare query
         if($insert_stmt = $dbCon->prepare($insert_query))
         {   
-            $insert_stmt->bind_param("ssssissi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["password"],$details["subbed"]);
+            $insert_stmt->bind_param("sssssissi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["phone"],$details["password"],$details["subbed"]);
             
             //Try executing the query ~ returns true on success and false on failure
             return($insert_stmt->execute());

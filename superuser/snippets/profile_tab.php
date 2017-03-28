@@ -1,4 +1,12 @@
 <div class="container" id="profile_info">
+<?php
+    require_once("../handlers/session_handler.php"); #Session handler
+    
+    $user_info = MySessionHandler::GetLoggedUserInfo(); #User info ~ information on the logged in user
+    
+    #If user is logged in and we could retrieve the user information
+    //if($user_info):
+?>
     <div class="col-xs-12" id="profile_basic_info">
         <h4>BASIC INFORMATION</h4><hr>
         <form class="row">
@@ -95,4 +103,8 @@
         <br><br><br>
     </div>
 -->
+
+<?php
+    //endif;#End check for user info
+?>
 </div>

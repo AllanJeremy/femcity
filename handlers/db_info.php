@@ -178,7 +178,7 @@ class DbInfo implements DbInfoInterface
     public static function GetAllAdminAccounts()
     {
         global $dbCon;
-        $select_query = "SELECT acc_id,first_name,last_name,business_name,business_description,cat_id,email,subbed,date_created,date_activated,date_expires FROM admin_accounts";
+        $select_query = "SELECT acc_id,first_name,last_name,business_name,business_description,cat_id,email,phone,subbed,date_created,date_activated,date_expires FROM admin_accounts";
         
         return ($dbCon->query($select_query));
     }
