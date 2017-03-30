@@ -27,7 +27,7 @@
 
                         <div style="margin-top:10px" class="form-group">
                             <div class="col-sm-12 controls">
-                              <a id="btn-login" href="javascript:void(0)" class="btn btn-success">Login</a>
+                              <a id="btn-login" href="javascript:void(0)" class="btn btn-success pull-right">Login</a>
                             </div>
                         </div>
 

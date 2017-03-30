@@ -22,7 +22,7 @@ function DisplayForgotBox()
 
                         <div style="margin-top:10px" class="form-group">
                             <div class="col-sm-12 controls">
-                              <a id="btn-reset" href="javascript:void(0)" class="btn btn-default">Reset Account</a>
+                              <a id="btn-reset" href="javascript:void(0)" class="btn btn-default pull-right">Reset Account</a>
                             </div>
                         </div>
 
