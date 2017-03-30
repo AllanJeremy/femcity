@@ -55,7 +55,7 @@ class SuperuserNavigation
               </button>
               <a class="navbar-brand" href="../index.php">Femcity Superuser Panel</a>
             </div>
-              <div class="collapse navbar-collapse" id="superuserNavbar">
+          <div class="collapse navbar-collapse" id="superuserNavbar">
             <ul class="nav navbar-nav">
               <li class="<?php echo $this->categories_class;?>"><a href="?p=categories">Categories</a></li>
               <li class="<?php echo $this->users_class;?>"><a href="?p=accounts">Accounts</a></li>
@@ -87,7 +87,7 @@ class SuperuserNavigation
                    </li>
                 </ul>
               </div>
-              </div>
+          </div>
           </div>
         </nav>
 <?php

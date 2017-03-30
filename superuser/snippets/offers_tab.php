@@ -91,7 +91,7 @@
     </div><hr> 
         
     <!--Accordion-->
-    <div class="panel-group" id="manage_cat_group">
+    <div class="panel-group" id="manage_offers_group">
     <?php
         $cat_id="";
         $count = 0;#iterator

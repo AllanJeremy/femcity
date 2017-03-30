@@ -115,16 +115,13 @@
                 <a class="btn btn-info pull-right" id="update_email" href="javascript:void(0)">UPDATE BUSINESS</a>  
             </div>
         </form>
+        <br><br><br>
     </div>
     
 <!--
     <div class="col-xs-12" id="profile_business_info">
         <br><br><h4>PAYMENT &amp BILLING INFORMATION</h4><hr>
-        <?php
-            $business_message = "<b>Note :</b> If you'd like to  change the name of your business or category, contact the superuser.<br><b>Tip :</b> If your business is in multiple categories, each category is treated as a different business. You will need multiple accounts for the different categories.";
-            
-            MessageDisplay::PrintInfo($business_message);
-        ?>
+
         <form class="row">
             <div class="col-xs-12 col-sm-6">
                 <br>

@@ -1,4 +1,4 @@
-<?php
+o<?php
     //Get the active tab
     require_once("tab_manager.php");#Variables ~ $is_create, $create_tab_class, $manage_tab_class
     

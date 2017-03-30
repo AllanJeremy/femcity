@@ -36,8 +36,15 @@ class AdminNavigation
         <nav class="navbar navbar-default">
           <div class="container-fluid">
             <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#adminNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span> 
+              </button>
               <a class="navbar-brand" href="?p=create">Femcity Admin Panel </a>
             </div>
+              
+          <div class="collapse navbar-collapse" id="adminNavbar">
             <ul class="nav navbar-nav">
               <li class="<?php echo $this->post_items_class;?>"><a href="?p=create">Create Post</a></li>
               <li class="<?php echo $this->manage_items_class;?>"><a href="?p=manage">Manage Posts</a></li>
@@ -55,12 +62,7 @@ class AdminNavigation
                             <a href="?p=profile">
                                 <span class="glyphicon glyphicon-user"></span> Profile
                             </a>
-                        </li>
-                        <li title="Logout of your account">
-                            <a href="?p=billing">
-                                <span class="glyphicon glyphicon-credit-card"></span> Billing
-                            </a>
-                        </li>                        
+                        </li>                
                         <li title="Logout of your account">
                             <a href="?action=logout">
                                 <span class="glyphicon glyphicon-off"></span> Logout
@@ -71,7 +73,7 @@ class AdminNavigation
                    </li>
                 </ul>
               </div>
-
+            </div>
           </div>
         </nav>
 <?php

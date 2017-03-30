@@ -25,7 +25,7 @@ interface DbInfoInterface
     //Get records based on foreign keys
     public static function GetFeaturedByItemId($item_id);
     public static function GetOfferByItemId($item_id);
-    public static function GetItemByAccId($acc_id);        
+    public static function GetItemsByAccId($acc_id);        
 }
 
 //This class deals with retrieval of records from the database
@@ -234,7 +234,7 @@ class DbInfo implements DbInfoInterface
     }
     
     //Get item by acc_id ~ the id of the account that added it
-    public static function GetItemByAccId($acc_id)
+    public static function GetItemsByAccId($acc_id)
     {
         return self::SinglePropertyExists("items","acc_id",$acc_id);
     }
