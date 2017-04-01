@@ -118,12 +118,24 @@
         <h4>FEATURED ITEMS</h4><hr>
     <?php
             $item_description = "";
-            
+
             $featured_items = DbInfo::GetAllFeaturedItems(); #Get all the featured items
-            
-            MessageDisplay::PrintHiddenInfo("No featured items found in the database.","no_featured_msg");
-            //Add the featured items to the DOM
-            AddItemsToDOM($featured_items,true);
+
+            //Message shown when no items are found and the id of the message box the message is displayed in
+            $no_featured_msg = "No featured items found in the database.";
+            $no_featured_id="no_featured_msg";
+
+            //If featured items were found
+            if($featured_items && $featured_items->num_rows>0)
+            {
+                MessageDisplay::PrintHiddenInfo($no_featured_msg,$no_featured_id); 
+                AddItemsToDOM($featured_items,true); #Add the featured items to the DOM
+            }
+            else #No featured items found
+            {
+                MessageDisplay::PrintInfo($no_featured_msg,$no_featured_id); 
+            }        
+        
     ?>
         <br><hr><h4>OTHER ITEMS</h4><hr>
     </div>
@@ -131,10 +143,21 @@
             //Other items
             $other_items = DbInfo::GetAllOtherItems();
         
-            MessageDisplay::PrintHiddenInfo("No other items found in the database.","no_other_msg");
+            //Message shown when no items are found and the id of the message box the message is displayed in
+            $no_other_msg = "No other items found in the database.";
+            $no_other_id = "no_other_msg";
+            
+            //If other items were found
+            if($other_items && $other_items->num_rows>0)
+            {
+                MessageDisplay::PrintHiddenInfo($no_other_msg,$no_other_id);    
+                AddItemsToDOM($other_items,false); #Add the featured items to the DOM
+            }
+            else #No other items were found
+            {
+                MessageDisplay::PrintInfo($no_other_msg,$no_other_id);
+            }
 
-            //Add the featured items to the DOM
-            AddItemsToDOM($other_items,false);  
         else:
     ?>
     <div class="container">

@@ -1,4 +1,4 @@
-o<?php
+<?php
     //Get the active tab
     require_once("tab_manager.php");#Variables ~ $is_create, $create_tab_class, $manage_tab_class
     
@@ -78,9 +78,9 @@ o<?php
         </div>
 
 
-        <div class="col-xs-12 pull-right">
+        <div class="col-xs-12">
             <br>
-            <button type="submit" class="btn btn-primary" title="Create a new category" href="javascript:void(0)" id="createCategory">CREATE ACCOUNT</button>
+            <a class="btn btn-info pull-right" title="Create a new admin account" href="javascript:void(0)" id="createAdminAccount">CREATE ACCOUNT</a>
         </div>
     </form>
 <?php

@@ -1,24 +1,139 @@
 $(document).ready(function(){
+    var $input_list_class = ".input-list";
+    var ajax_handler_path = "../handlers/ajax_handler.php";
+    
+    //Init toastr options
+    toastr.options = {
+          "closeButton": false,
+          "positionClass": "toast-bottom-center",
+          "preventDuplicates": false,
+          "showDuration": "500",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000"
+    } 
+    
+    //Get the input list form
+    function GetInputList($btn)
+    {
+        return ($btn.parents($input_list_class));
+    }
+    
+    //Validate inputs ~ returns true if the inputs were valid(not empty), false if otherwise
+    function ValidateInputs($input_list)
+    {   
+        toastr.options.positionClass = "toast-bottom-full-width";
+        //If the input list is undefined
+        if($input_list == "undefined" || $input_list.length == 0)
+        {
+            return null;
+        }
+        
+        //Input containers found.
+        var $input_containers = $input_list.children(".input-container")
+        
+        var is_valid = true;//If the content is valid ~ defaults to true
+        var error_class = "has-error";
+        var success_class = "has-success";
+        
+        //Check each item and show message if they are valid or invalid
+        $input_containers.each(function(){
+            $self = $(this);
+            
+            var $input_array = $(this).children("input,textarea");
+            var is_required = typeof($input_array.attr("required"));
+            
+            //If the item a required item
+            if(!(is_required == false || is_required == "undefined"))
+            {
+                //Check if the value is blank
+                if($input_array.val()=="" || $input_array.val=="undefined")
+                {
+                    $self.removeClass(success_class);
+                    $self.addClass(error_class);
+                    is_valid = false;//A value is blank, therefore it is not valid
+                }
+                else 
+                {
+                    $self.removeClass(error_class);
+                    $self.addClass(success_class);
+                }
+            }
+        });
+        
+        return is_valid;
+    }
     
     /*CREATE FUNCTIONS*/
+    var missingDataMessage = "One or more required fields are empty.";
+    var creatingCategory=false;
+    
     //Create a category
     $("#createCategory").click(function(){
         
+        //Checking if the required inputs are valid
+        var $input_list = GetInputList($(this));
+        var data_is_valid = ValidateInputs($input_list);
+        
+        //Category data
+        var $cat_name = $("#in_cat_name").val();
+        var $cat_descr = $("#in_cat_description").val();
+        
+        //Store the data as json data
+        var data = {
+            "cat_name":$cat_name,
+            "cat_description":$cat_descr
+        };
+        
+        //Form data is invalid
+        if(!data_is_valid)
+        {
+            toastr.error(missingDataMessage,"Failed to create category");
+        }
+        else
+        {
+            //Only display the creating category message once until the category is created
+            if(creatingCategory == false)
+            {
+                toastr.positionClass = "toast-bottom-center";
+                toastr.info("Attempting to create category...","Action in progress");
+                creating=true;
+                
+                //Send ajax request
+                $.post(ajax_handler_path,{"action":"CreateCategory","data":data},function(response,status){
+                   
+                    //Successfully created the category
+                    if(response==true)
+                    {
+                        toastr.success("Successfully created the category");
+                    }
+                    else //Failed to create the category
+                    {
+                        toastr.error("Failed to create the category","Server-side error");
+                    }
+                });
+            }            
+        }
+        
+
+        
+
+
     });
     
     //Create an admin account
     $("#createAdminAccount").click(function(){
-        
+        alert("Creating admin account...");
     });
     
     //Create a featured item
     $("#createFeaturedItem").click(function(){
-        
+         alert("Creating featured item...");
     });
     
     //Create a featured item
     $("#createOffer").click(function(){
-        
+         alert("Creating offer...");
     });
     
     /*UPDATE FUNCTIONS*/

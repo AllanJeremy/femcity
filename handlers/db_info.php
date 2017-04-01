@@ -11,7 +11,7 @@ interface DbInfoInterface
     public static function GetAllOtherItems();
     public static function GetAllItems();
     public static function GetAllOffers();
-    
+       
     public static function GetAllAdminAccounts();
     public static function GetAllSuperuserAccounts();
     public static function GetAllAccountRequests();

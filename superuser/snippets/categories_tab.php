@@ -29,21 +29,21 @@
         <p>Create a new category here</p>    
     </div><hr>
         
-    <form class="row" method="post">  
-        <div class="col-xs-12 col-md-6">
+    <form class="row input-list" method="post">  
+        <div class="col-xs-12 col-md-6 input-container has-feedback">
             <br>
-            <label for="in_cat_name" >Category Name</label>
-            <input class="form-control" type="text" placeholder="Category name" name="cat_name" id="in_cat_name" title="Category Name">
+            <label for="in_cat_name" >Category Name (Required)</label>
+            <input class="form-control" type="text" placeholder="Category name" required name="cat_name" id="in_cat_name" title="Category Name. This field is required">
         </div>
         
-        <div class="col-xs-12 col-md-6">
+        <div class="col-xs-12 col-md-6 input-container has-feedback">
             <br>
-            <label for="in_cat_description">Category Description </label>
+            <label for="in_cat_description">Category Description (Optional)</label>
             <textarea class="form-control" type="text" placeholder="Category Description" name="cat_description" id="in_cat_description" title="Category Description"></textarea>
         </div>
-        <div class="col-xs-12 col-sm-4 col-md-3 pull-right">
+        <div class="col-xs-12">
             <br>
-            <a class="btn btn-primary" title="Create a new category" href="javascript:void(0)" id="createCategory">CREATE CATEGORY</a>
+            <a class="btn btn-info pull-right" title="Create a new category" href="javascript:void(0)" id="createCategory">CREATE CATEGORY</a>
         </div>
     </form>
 <?php
