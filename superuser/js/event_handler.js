@@ -22,6 +22,7 @@ $(document).ready(function(){
     //Validate inputs ~ returns true if the inputs were valid(not empty), false if otherwise
     function ValidateInputs($input_list)
     {   
+        toastr.options.preventDuplicates = true;
         toastr.options.positionClass = "toast-bottom-full-width";
         //If the input list is undefined
         if($input_list == "undefined" || $input_list.length == 0)
@@ -71,7 +72,7 @@ $(document).ready(function(){
     //Create a category
     $("#createCategory").click(function(){
         
-        //Checking if the required inputs are valid
+        //Get input list and validate the inputs
         var $input_list = GetInputList($(this));
         var data_is_valid = ValidateInputs($input_list);
         
@@ -90,35 +91,24 @@ $(document).ready(function(){
         {
             toastr.error(missingDataMessage,"Failed to create category");
         }
-        else
+        else//Form data is valid
         {
-            //Only display the creating category message once until the category is created
-            if(creatingCategory == false)
-            {
-                toastr.positionClass = "toast-bottom-center";
-                toastr.info("Attempting to create category...","Action in progress");
-                creating=true;
-                
-                //Send ajax request
-                $.post(ajax_handler_path,{"action":"CreateCategory","data":data},function(response,status){
-                   
-                    //Successfully created the category
-                    if(response==true)
-                    {
-                        toastr.success("Successfully created the category");
-                    }
-                    else //Failed to create the category
-                    {
-                        toastr.error("Failed to create the category","Server-side error");
-                    }
-                });
-            }            
+            //TODO: Make it so that this toast is only displayed once per create attempt
+            toastr.positionClass = "toast-top-center";
+
+            //Send ajax request
+            $.post(ajax_handler_path,{"action":"CreateCategory","data":data},function(response,status){
+                //Successfully created the category
+                if(response==true)
+                {
+                    toastr.success("Successfully created the category");
+                }
+                else //Failed to create the category
+                {
+                    toastr.error("Failed to create the category","Server-side error");
+                }
+            });
         }
-        
-
-        
-
-
     });
     
     //Create an admin account
@@ -137,76 +127,122 @@ $(document).ready(function(){
     });
     
     /*UPDATE FUNCTIONS*/
-    //Toggle state between edit and save modes for the button provided as value for $button parameter
-    function ToggleEditState($button)
+    //Update categories
+    function UpdateCategories(id,$editable_list)
+    {
+        //Data in JSON format
+//        var data = {
+//            "cat_name":,
+//            "cat_description":
+//        };
+        
+        $.post(ajax_handler_path,{"action":"UpdateCategory","id":id,"data":data},function(response,status){
+            
+        });
+        
+    }
+    
+    function UpdateAccounts(id,$editable_list)
+    {
+        
+    }
+    
+    function UpdateCategories(id,$editable_list)
+    {
+        
+    }
+    
+    //Update accounts
+    
+    //Update offers
+    
+    
+    /*EDIT BUTTON*/
+    var $state_toggle = "data-state-toggle"; //State toggle selector
+    //Make button edit button
+    function ShowEditButton($button,is_valid)
     {
         var EDIT_STATE = "edit";
+        btn_class="btn-success";
+        btn_icon_class="glyphicon-floppy-disk";
+        btn_text = "Save ";
+
+        //Remove the btn-success class from the previous state
+        $button.removeClass("btn-info");
+
+        $button.attr($state_toggle,EDIT_STATE);        
+
+        //Update the button to the new state
+        $button.html('<span class="glyphicon '+btn_icon_class+'"></span> '+btn_text+'');
+
+        $button.addClass(btn_class);
+    }
+    
+    //Make button save button
+    function ShowSaveButton($button)
+    {
         var SAVE_STATE = "save";
         
-        var $state_toggle = "data-state-toggle"; //State toggle selector
-        var current_state = $button.attr($state_toggle);
+        btn_class="btn-info";
+        btn_icon_class="glyphicon-edit";
+        btn_text = "Edit";
+
+        //Remove the btn-success class from the previous state
+        $button.removeClass("btn-success");
+
+        $button.attr($state_toggle,SAVE_STATE);
         
-        var btn_class="btn-info";
-        var btn_icon_class="glyphicon-edit";
-        var btn_text = "Edit";
-        
-        var is_editable=false;
-        //Toggle between the edit and save states
-        switch(current_state)
-        {
-            case "edit":
-                is_editable = false;
-                btn_class="btn-info";
-                btn_icon_class="glyphicon-edit";
-                btn_text = "Edit";
-                
-                //Remove the btn-success class from the previous state
-                $button.removeClass("btn-success");
-                
-                $button.attr($state_toggle,SAVE_STATE);
-            break;
-            case "save":
-                is_editable = true;
-                btn_class="btn-success";
-                btn_icon_class="glyphicon-floppy-disk";
-                btn_text = "Save ";
-                
-                //Remove the btn-success class from the previous state
-                $button.removeClass("btn-info");
-                
-                $button.attr($state_toggle,EDIT_STATE);
-            break;
-            default://Default to the edit state
-                is_editable=false;
-                btn_class="btn-info";
-                btn_icon_class="glyphicon-edit";
-                btn_text = "Edit";
-                
-                //Remove the btn-success class from the previous state
-                $button.removeClass("btn-success");
-                
-                $button.attr($state_toggle,EDIT_STATE);
-            break;
-        }
-        
-        //Update the button to the new state
+        //Update the button to the save state
         $button.html('<span class="glyphicon '+btn_icon_class+'"></span> '+btn_text+'');
         
         $button.addClass(btn_class);
+    }
+    
+    //Toggle state between edit and save modes for the button provided as value for $button parameter
+    function ToggleEditState($button,is_valid)
+    {
+        var current_state = $button.attr($state_toggle);
+        var is_editable=false;
+        
+        //Toggle between the edit and save states
+        if(current_state=="edit")
+        {
+            if(is_valid)
+            {
+                is_editable = false
+            }
+            else
+            {
+                is_editable = true;
+            }
+        }
+        else
+        {
+            is_editable = true;
+        }
+        
         return is_editable;
     }
     
+    //When the edit button is clicked
     $(".editable-trigger-btn").click(function(){
         var $self = $(this);
-        var is_editable = ToggleEditState($self);
         var $parents = $self.parents(".manage-items");//Accordion contents parent
         var $editable_list = $parents.find(".editable-list");//Get the editable list
-        
         var $editable_items = $editable_list.find(".editable");
+        
+        var is_valid = ValidateInputs($editable_list);//Checks if the data in the input fields is valid
+        var is_editable = ToggleEditState($self,is_valid);
+
+        
+        var $data_state = $self.attr("data-state-toggle");//State of the button. 
+        
         
         //Make all the content editable
         if(is_editable)
         {
+            ShowEditButton($self);
+
             //Make all editable fields editable
             $editable_items.each(function(){
                 $(this).removeAttr("disabled");
@@ -214,11 +250,60 @@ $(document).ready(function(){
         }
         else //Make the content uneditable
         {
-            //Make all editable fields disabled
-            $editable_items.each(function(){
-                $(this).attr("disabled","");
-            });
+            ShowSaveButton($self);
+            //If the content is valid ~ make the input fields disabled
+            if(is_valid)
+            {
+                //Make all editable fields disabled
+                $editable_items.each(function(){
+                    $(this).attr("disabled","");
+                });
+            }
+            else
+            {
+                $self.attr("disabled");
+            }
         }
+        
+        //If we are currently editing the content
+        if($data_state == "edit")
+        {
+            //Determine what kind of item was clicked
+            var $edit_type = $self.attr("data-edit-type");
+            var primary_id = null;
+            
+            //If the data is invalid ~ one or more fields were not filled in
+            if(!is_valid)
+            {
+                //Prevent the save button from being updated
+                toastr.error(missingDataMessage,"Failed to update category");
+                return;
+            }
+            
+            //The data is valid ~ proceed to check what type of item is being edited
+            switch($edit_type)
+            {
+                case "categories": //Update categories
+                    primary_id = $parents.attr("data-cat-id");
+//                    UpdateCategories(primary_id,$editable_list);
+                break;
+
+                case "accounts":
+                    primary_id = $parents.attr("data-acc-id");
+//                    UpdateAccounts(primary_id,$editable_list);
+                break;
+
+                case "offers":
+                    primary_id = $parents.attr("data-offer-id");
+//                    UpdateOffers(primary_id,$editable_list);
+                break;
+
+                default:
+                    console.log("Unhandled edit type");
+            }
+        }
+
+        
     });
     /*DELETE FUNCTIONS*/
 });

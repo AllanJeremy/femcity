@@ -15,7 +15,9 @@ if(isset($_POST["action"]))
     {
         //CATEGORY FUNCTIONS
         case "CreateCategory": #Superuser ~ Create a category
-            echo true;
+            $data = $_POST["data"];
+            $create_status = DbHandler::CreateCategory($data);
+            echo $create_status;
         break;
             
         case "UpdateCategory": #Superuser ~ Update a category

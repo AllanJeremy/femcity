@@ -30,19 +30,19 @@
     </div><hr>
         
     <form class="row input-list" method="post">  
-        <div class="col-xs-12 col-md-6 input-container has-feedback">
-            <br>
+        <div class="form-group col-xs-12 col-md-6 input-container has-feedback">
+<!--            <br>-->
             <label for="in_cat_name" >Category Name (Required)</label>
             <input class="form-control" type="text" placeholder="Category name" required name="cat_name" id="in_cat_name" title="Category Name. This field is required">
         </div>
         
-        <div class="col-xs-12 col-md-6 input-container has-feedback">
-            <br>
+        <div class="form-group col-xs-12 col-md-6 input-container has-feedback">
+<!--            <br>-->
             <label for="in_cat_description">Category Description (Optional)</label>
             <textarea class="form-control" type="text" placeholder="Category Description" name="cat_description" id="in_cat_description" title="Category Description"></textarea>
         </div>
-        <div class="col-xs-12">
-            <br>
+        <div class="form-group col-xs-12">
+<!--            <br>-->
             <a class="btn btn-info pull-right" title="Create a new category" href="javascript:void(0)" id="createCategory">CREATE CATEGORY</a>
         </div>
     </form>
@@ -82,8 +82,6 @@
             $cat_description = $cat["cat_description"];
         
             $collapse_id = "cat_".$cat_id; #Collapse trigger id
-            $cat_name_id = $collapse_id."_name"; #Category name id
-            $cat_descr_id = $collapse_id."_descr"; #Category description id
         
             //If it is the first category, make the collapsible open by default
             if($count==0)
@@ -106,16 +104,16 @@
         <div id="<?php echo $collapse_id;?>" class="panel-collapse collapse <?php echo $open_state;?>">
           <div class="panel-body">
               <form class="row editable-list" method="post">  
-                <div class="col-xs-12 col-md-6">
+                <div class="col-xs-12 col-md-6 input-container">
                     <br>
-                    <label for="<?php echo $cat_name_id;?>" >Category Name </label>
-                    <input class="editable form-control" disabled type="text" placeholder="Category name" name="cat_name" id="<?php echo $cat_name_id;?>" title="Category name" value="<?php echo $cat_name;?>">
+                    <label for="cat_name_<?php echo $cat_id;?>" >Category Name </label>
+                    <input class="editable form-control cat_name" required disabled type="text" placeholder="Category name" id="cat_name_<?php echo $cat_id;?>" title="Category name" value="<?php echo $cat_name;?>">
                 </div>
 
-                <div class="col-xs-12 col-md-6">
+                <div class="col-xs-12 col-md-6 input-container">
                     <br>
-                    <label for="<?php echo $cat_descr_id;?>">Category Description </label>
-                    <textarea class="editable form-control" disabled type="text" placeholder="No description available for this category. Click edit to add one." name="cat_description" id="<?php echo $cat_descr_id;?>" title="Category Description"><?php echo $cat_description;?></textarea>
+                    <label for="cat_descr_<?php echo $cat_id;?>">Category Description </label>
+                    <textarea class="editable form-control cat_description" disabled type="text" placeholder="No description available for this category. Click edit to add one." id="cat_descr_<?php echo $cat_id;?>" title="Category Description"><?php echo $cat_description;?></textarea>
                 </div>
             </form>
           </div>
