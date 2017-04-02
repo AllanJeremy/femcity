@@ -19,6 +19,10 @@ $(document).ready(function(){
         return ($btn.parents($input_list_class));
     }
     
+    function IsValid(input)
+    {
+        return (input!=false && input!=null && (typeof(input)!="undefined"));
+    }
     //Validate inputs ~ returns true if the inputs were valid(not empty), false if otherwise
     function ValidateInputs($input_list)
     {   
@@ -35,7 +39,7 @@ $(document).ready(function(){
         
         var is_valid = true;//If the content is valid ~ defaults to true
         var error_class = "has-error";
-        var success_class = "has-success";
+        //var success_class = "has-success";
         
         //Check each item and show message if they are valid or invalid
         $input_containers.each(function(){
@@ -50,14 +54,14 @@ $(document).ready(function(){
                 //Check if the value is blank
                 if($input_array.val()=="" || $input_array.val=="undefined")
                 {
-                    $self.removeClass(success_class);
+                    //$self.removeClass(success_class);
                     $self.addClass(error_class);
                     is_valid = false;//A value is blank, therefore it is not valid
                 }
                 else 
                 {
                     $self.removeClass(error_class);
-                    $self.addClass(success_class);
+                    //$self.addClass(success_class);
                 }
             }
         });
@@ -68,6 +72,13 @@ $(document).ready(function(){
     /*CREATE FUNCTIONS*/
     var missingDataMessage = "One or more required fields are empty.";
     var creatingCategory=false;
+    
+    //Reset Create category inputs
+    function ResetCreateCategoryInputs()
+    {
+        $("#in_cat_name").val("");
+        $("#in_cat_description").val("");
+    }
     
     //Create a category
     $("#createCategory").click(function(){
@@ -96,9 +107,10 @@ $(document).ready(function(){
             //Send ajax request
             $.post(ajax_handler_path,{"action":"CreateCategory","data":data},function(response,status){
                 //Successfully created the category
-                if(response==true)
+                if(IsValid(response))
                 {
                     toastr.success("Successfully created the category");
+                    ResetCreateCategoryInputs();
                 }
                 else //Failed to create the category
                 {
@@ -107,6 +119,18 @@ $(document).ready(function(){
             });
         }
     });
+    
+    //Reset the values of the input fields for create admin account
+    function ResetCreateAdminInputs()
+    {
+        $("#in_admin_first_name").val("");
+        $("#in_admin_last_name").val("");
+        $("#in_admin_email").val("");
+        $("#in_admin_phone").val("");
+        $("#in_admin_business_name").val("");
+        $("#in_business_category").val("");
+        $("#in_business_description").val("");
+    }
     
     //Create an admin account
     $("#createAdminAccount").click(function(){
@@ -146,9 +170,11 @@ $(document).ready(function(){
             //Send ajax request
             $.post(ajax_handler_path,{"action":"CreateAdminAccount","data":data},function(response,status){
                 //Successfully created the category
-                if(response==true)
+                if(IsValid(response))
                 {
-                    toastr.success("Successfully created the admin account");
+                    toastr.options.timeOut = "2000";
+                    toastr.success("Successfully created the admin account. Note: the password for the account defaults to the email address entered for the business.");
+                    ResetCreateAdminInputs();
                 }
                 else //Failed to create the category
                 {
@@ -158,16 +184,58 @@ $(document).ready(function(){
         }
     });
     
-    //Create a featured item
-    $("#createFeaturedItem").click(function(){
-         alert("Creating featured item...");
-    });
+    //Reset create offer inputs
+    function ResetCreateOfferInputs()
+    {
+        $("#in_offer_text").val("");
+        $("#in_offer_description").val("");
+        $("#in_category").val("1");
+    }
     
-    //Create a featured item
+    //Create an offer
     $("#createOffer").click(function(){
-         alert("Creating offer...");
+        //Get input list and validate the inputs
+        var $input_list = GetInputList($(this));
+        var data_is_valid = ValidateInputs($input_list);
+        
+        //Admin account data
+        var offer_text = $("#in_offer_text").val();
+        var description = $("#in_offer_description").val();
+        var cat_id = $("#in_category").val();
+        
+        //Store the data as JSON data
+        var data = {
+            "offer_text":offer_text,
+            "description":description,
+            "cat_id":cat_id
+        };
+        
+        //Form data is invalid
+        if(!data_is_valid)
+        {
+            toastr.error(missingDataMessage,"Failed to create offer");
+        }
+        else//Form data is valid
+        {
+            //Send ajax request
+            $.post(ajax_handler_path,{"action":"CreateOffer","data":data},function(response,status){
+                //Successfully created the category
+                console.log(IsValid(response));
+                if(IsValid(response))
+                {
+                    toastr.options.timeOut = "2000";
+                    toastr.success("Successfully created the offer");
+                    ResetCreateOfferInputs();
+                }
+                else //Failed to create the category
+                {
+                    toastr.error("Failed to create the offer","AJAX Server-side error");
+                }
+            });
+        }       
     });
     
+
     /*UPDATE FUNCTIONS*/
     //Update categories
     function UpdateCategories(id,$editable_list)
@@ -341,11 +409,21 @@ $(document).ready(function(){
                 break;
 
                 default:
-                    console.log("Unhandled edit type");
+                    console.log("Unhandled edit type. Check javascript switch statement");
             }
         }
 
         
+    });
+    
+    //Add a featured item
+    $(".addFeaturedItem").click(function(){
+         alert("Adding featured item...");
+    });
+    
+    //Remove a featured item
+    $(".removeFeaturedItem").click(function(){
+         alert("Removing featured item...");
     });
     /*DELETE FUNCTIONS*/
 });

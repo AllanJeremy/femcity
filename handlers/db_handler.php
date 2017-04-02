@@ -306,12 +306,12 @@ class DbHandler implements DbHandlerInterface
     public static function CreateOffer($details)
     {
         global $dbCon;
-        $insert_query = "INSERT INTO offers(offer_text,description,item_id) VALUES (?,?,?)";
+        $insert_query = "INSERT INTO offers(offer_text,description,cat_id) VALUES (?,?,?)";
         
         //Attempt to prepare query
         if($insert_stmt = $dbCon->prepare($insert_query))
         {
-            $insert_stmt->bind_param("ssi",$details["offer_text"],$details["description"],$details["item_id"]);
+            $insert_stmt->bind_param("ssi",$details["offer_text"],$details["description"],$details["cat_id"]);
             
             return ($insert_stmt->execute());
         }
@@ -324,12 +324,12 @@ class DbHandler implements DbHandlerInterface
     #Update offer based on primary key
     public static function UpdateOffer($id,$details)
     {
-        $update_query = "UPDATE offers SET offer_text=?,description=?,item_id=? WHERE offer_id=?";
+        $update_query = "UPDATE offers SET offer_text=?,description=?,cat_id=? WHERE offer_id=?";
         
         //Attempt to prepare query
         if($update_stmt = $dbCon->prepare($update_query))
         {
-            $update_stmt->bind_param("ssii",$details["offer_text"],$details["description"],$details["item_id"],$id);
+            $update_stmt->bind_param("ssii",$details["offer_text"],$details["description"],$details["cat_id"],$id);
             return ($update_stmt->execute());
         }
         else #failed to prepare query

@@ -32,13 +32,13 @@
     <form class="row input-list" method="post">  
         <div class="form-group col-xs-12 col-md-6 input-container has-feedback">
 <!--            <br>-->
-            <label for="in_cat_name" >Category Name (Required)</label>
+            <label for="in_cat_name" >Category Name <sup>(Required)</sup></label>
             <input class="form-control" type="text" placeholder="Category name" required name="cat_name" id="in_cat_name" title="Category Name. This field is required">
         </div>
         
         <div class="form-group col-xs-12 col-md-6 input-container has-feedback">
 <!--            <br>-->
-            <label for="in_cat_description">Category Description (Optional)</label>
+            <label for="in_cat_description">Category Description <sup>(Optional)</sup></label>
             <textarea class="form-control" type="text" placeholder="Category Description" name="cat_description" id="in_cat_description" title="Category Description"></textarea>
         </div>
         <div class="form-group col-xs-12">
@@ -127,8 +127,8 @@
 <?php
         else:#No categories were found
 ?>
-    <div>
-        <p>No categories were found. Once you create categories, they will appear here</p>    
+    <div class="container">
+        <?php MessageDisplay::PrintInfo("No categories were found. Once you create categories, they will appear here");?>  
     </div>
 <?php
         endif;

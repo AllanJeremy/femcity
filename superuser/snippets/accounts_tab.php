@@ -31,22 +31,22 @@
     <form class="row input-list" method="post">  
         <div class="col-xs-12 col-sm-6 input-container">
             <br>
-            <label for="in_admin_first_name">First name </label>
+            <label for="in_admin_first_name">First name <sup>(Required)</sup> </label>
             <input class="form-control" required type="text" placeholder="First name" id="in_admin_first_name" title="First name of the business owner">
         </div>
         <div class="col-xs-12 col-sm-6 input-container">
             <br>
-            <label for="in_admin_last_name">Last name </label>
+            <label for="in_admin_last_name">Last name <sup>(Required)</sup></label>
             <input class="form-control" required type="text" placeholder="Last name" id="in_admin_last_name" title="Last name of the business owner">
         </div>
         <div class="col-xs-12 col-sm-6 input-container">
             <br>
-            <label for="in_admin_first_name">Email address</label>
+            <label for="in_admin_first_name">Email address <sup>(Required)</sup></label>
             <input class="form-control" required type="email" placeholder="Email address" id="in_admin_email" title="Email of the business/business owner. Used to login to the account.">
         </div>
         <div class="col-xs-12 col-sm-6 input-container">
             <br>
-            <label for="in_admin_first_name">Phone number</label>
+            <label for="in_admin_phone">Phone number <sup>(Required)</sup></label>
             <input class="form-control" required type="text" placeholder="Phone number" id="in_admin_phone" title="Phone number of the business/business owner. Used to login to the account.">
         </div>
         
@@ -69,12 +69,12 @@
 -->
         <div class="col-xs-12 col-sm-6 input-container">
             <br>
-            <label for="in_admin_business_name">Business name </label>
+            <label for="in_admin_business_name">Business name <sup>(Required)</sup> </label>
             <input class="form-control" type="text" required placeholder="Business name" id="in_admin_business_name" title="Name of the business/company that owns this account">
         </div>
         <div class="col-xs-12 col-sm-6 input-container">
             <br>
-            <label for="in_business_category">Category </label>
+            <label for="in_business_category">Category <sup>(Required)</sup> </label>
             <select id="in_business_category" required title="Category the business belongs to" class="form-control">
                 <?php
                     $categories = DbInfo::GetAllCategories();
@@ -96,7 +96,7 @@
         </div>
         <div class="col-xs-12 col-md-6 input-container">
             <br>
-            <label for="in_cat_description">Business description </label>
+            <label for="in_cat_description">Business description <sup>(Optional)</sup> </label>
             <textarea class="form-control" type="text" placeholder="Business description" name="business_description" id="in_business_description" title="Business description. Brief description of what the business does"></textarea>
         </div>
 
@@ -133,7 +133,7 @@
     <div class="panel-group" id="manage_accounts_group">
     <?php
         $acc_id="";
-        $count = 0;#iterator
+//        $count = 0;#iterator
         $open_state = "";
         
         
@@ -164,10 +164,10 @@
             $bus_descr_id = $collapse_id."_bus_descr";
         
             //If it is the first category, make the collapsible open by default
-            if($count==0)
-            {   $open_state="in";}
-            else
-            {   $open_state="";}
+//            if($count==0)
+//            {   $open_state="in";}
+//            else
+//            {   $open_state="";}
     ?>
       <div class="panel panel-default manage-items" data-acc-id="<?php echo $acc_id;?>">
         <div class="panel-heading">
@@ -189,32 +189,32 @@
             <form class="row editable-list" method="post">  
                 <div class="col-xs-12 col-sm-6 input-container">
                     <br>
-                    <label for="<?php echo $first_name_id;?>" >First name </label>
+                    <label for="<?php echo $first_name_id;?>" >First name <sup>(Required)</sup> </label>
                     <input class="editable form-control" required disabled type="text" placeholder="First name" name="admin_first_name" id="<?php echo $first_name_id;?>" title="First name of the business owner" value="<?php echo $acc["first_name"];?>">
                 </div>
                 <div class="col-xs-12 col-sm-6 input-container">
                     <br>
-                    <label for="<?php echo $last_name_id;?>" >Last name </label>
+                    <label for="<?php echo $last_name_id;?>" >Last name <sup>(Required)</sup> </label>
                     <input class="editable form-control" required disabled type="text" placeholder="Last name" name="admin_last_name" id="<?php echo $last_name_id;?>" title="Last name of the business owner" value="<?php echo $acc["last_name"];?>">
                 </div>
                 <div class="col-xs-12 col-sm-6 input-container">
                     <br>
-                    <label for="<?php echo $email_id;?>" >Email address</label>
+                    <label for="<?php echo $email_id;?>" >Email address <sup>(Required)</sup></label>
                     <input class="editable form-control" required disabled type="email" placeholder="Email address" name="admin_email" id="<?php echo $email_id;?>" title="Email of the business/business owner. Used to login to the account." value="<?php echo $acc["email"];?>">
                 </div>
                 <div class="col-xs-12 col-sm-6 input-container">
                     <br>
-                    <label for="admin_phone_<?php echo $acc_id;?>">Phone number</label>
+                    <label for="admin_phone_<?php echo $acc_id;?>">Phone number <sup>(Required)</sup></label>
                     <input class="editable form-control" required disabled type="text" placeholder="Phone number" id="admin_phone_<?php echo $acc_id;?>" title="Phone number of the business/business owner. Used to login to the account." value="<?php echo $acc["phone"];?>">
                 </div>
                 <div class="col-xs-12 col-sm-6 input-container">
                     <br>
-                    <label for="<?php echo $bus_name_id;?>">Business name </label>
+                    <label for="<?php echo $bus_name_id;?>">Business name <sup>(Required)</sup> </label>
                     <input class="editable form-control" required disabled type="text" placeholder="Business name" name="admin_business_name" id="<?php echo $bus_name_id;?>" title="Name of the business/company that owns this account" value="<?php echo $business_name;?>">
                 </div>
                 <div class="col-xs-12 col-sm-6 input-container">
                     <br>
-                    <label for="<?php echo $cat_dom_id;?>" >Category </label>
+                    <label for="<?php echo $cat_dom_id;?>" >Category <sup>(Required)</sup> </label>
                     <select id="<?php echo $cat_dom_id;?>" required title="Category the business belongs to" class="editable form-control disabled" disabled>
                         <?php
                             $categories = DbInfo::GetAllCategories();
@@ -243,7 +243,7 @@
                 </div>
                 <div class="col-xs-12 col-md-6 input-container">
                     <br>
-                    <label for="<?php echo $bus_descr_id;?>">Business description </label>
+                    <label for="<?php echo $bus_descr_id;?>">Business description <sup>(Optional)</sup> </label>
                     <textarea class="editable form-control" disabled placeholder="No business description set" name="business_description" id="<?php echo $bus_descr_id;?>" title="Business description. Brief description of what the business does"><?php echo $business_descr;?></textarea>
                 </div>
             </form>
@@ -264,7 +264,7 @@
         </div>
       </div>
     <?php
-            $count++;
+//            $count++;
         endforeach;   
     ?>
     </div>
@@ -272,7 +272,9 @@
         else:#No categories were found
 ?>
     <div>
-        <p>No admin accounts were found. Once you create admin accounts, they will appear here</p>    
+        <?php
+            MessageDisplay::PrintInfo("No admin accounts were found. Once you create admin accounts, they will appear here");
+        ?> 
     </div>
 <?php
         endif;

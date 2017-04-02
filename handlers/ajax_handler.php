@@ -61,7 +61,10 @@ if(isset($_POST["action"]))
      
         //OFFER FUNCTIONS
         case "CreateOffer": #Superuser ~ Create an offer
-            echo "<p>Creating offer</p>";
+            $data = $_POST["data"];
+            $create_status = DbHandler::CreateOffer($data);
+
+            echo $create_status;
         break;
         
         case "UpdateOffer": #Superuser ~ Update an offer

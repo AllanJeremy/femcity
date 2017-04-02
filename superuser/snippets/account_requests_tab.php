@@ -24,9 +24,6 @@
     <div class="panel-group" id="manage_account_requests">
         <h4>ACCOUNT REQUESTS</h4><hr>
     <?php
-            //Hidden info message ~ displayed when no accounts were found in the database
-            MessageDisplay::PrintHiddenInfo("No admin account requests were found. Once account requests are made, they will appear here.","no_acc_requests_msg");
-        
             $account_requests = DbInfo::GetAllAccountRequests();
         
             //If account requests were found, display them
@@ -139,6 +136,9 @@
       </div>
     <?php
                 endforeach;
+            else:
+                //Info message ~ displayed when no accounts were found in the database
+                MessageDisplay::PrintInfo("No admin account requests were found. Once account requests are made, they will appear here.","no_acc_requests_msg");
             endif;    
     ?>
     </div>

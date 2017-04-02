@@ -13,14 +13,14 @@
         {
             $item_type="featured";
             $btn_class = "btn-warning";
-            $btn_glyph_class = "glyphicon-minus";
+            $btn_glyph_class = "glyphicon-minus removeFeaturedItem";
             $btn_text = "Remove";      
             $state_toggle = "add";#state toggle is remove because remove toggles to add
         }
         else
         {
             $item_type="other";
-            $btn_class = "btn-info";
+            $btn_class = "btn-info addFeaturedItem";
             $btn_glyph_class = "glyphicon-plus";
             $btn_text = "Add";
             $state_toggle = "remove";#state toggle is remove because add toggles to remove
@@ -161,7 +161,7 @@
         else:
     ?>
     <div class="container">
-        <p class="text-center">No items were found in the database. <br>Once business owners post items, they will appear here and you can set the featured items.</p>    
+        <?php MessageDisplay::PrintInfo("No items were found in the database. <br>Once business owners post items, they will appear here and you can set the featured items.");?>    
     </div>
     <?php
         endif;

@@ -32,13 +32,13 @@
     <form class="row input-list" method="post">  
         <div class="col-xs-12 col-sm-6 input-container">
             <br>
-            <label for="in_offer_name" >Offer Title</label>
-            <input class="form-control" type="text" placeholder="Offer Title" id="in_offer_name" title="Offer Title">
+            <label for="in_offer_name" >Offer Title <sup>(Required)</sup></label>
+            <input class="form-control" required type="text" placeholder="Offer Title" id="in_offer_text" title="Offer Title">
         </div>
         
         <div class="col-xs-12 col-sm-6 input-container">
             <br>
-            <label for="in_category">Category </label>  
+            <label for="in_category">Category <sup>(Required)</sup></label>  
             <select id="in_category" required title="Category the business belongs to" class="form-control">
                 <?php
                     $categories = DbInfo::GetAllCategories();
@@ -60,7 +60,7 @@
         </div>
         <div class="col-xs-12 col-md-6 input-container">
             <br>
-            <label for="in_offer_description">Offer Description </label>
+            <label for="in_offer_description">Offer Description <sup>(Optional)</sup></label>
             <textarea class="form-control" type="text" placeholder="Offer Description" id="in_offer_description" title="Offer Description"></textarea>
         </div>
         <div class="col-xs-12">
@@ -131,13 +131,13 @@
               <form class="row editable-list" method="post">  
                 <div class="col-xs-12 col-sm-6 input-container">
                     <br>
-                    <label for="<?php echo $offer_name_id;?>" >Offer title </label>
+                    <label for="<?php echo $offer_name_id;?>" >Offer title <sup>(Required)</sup></label>
                     <input class="editable form-control" required disabled type="text" placeholder="Offer title" id="<?php echo $offer_name_id;?>" title="Offer title" value="<?php echo $offer_title;?>">
                 </div>
 
                 <div class="col-xs-12 col-sm-6 input-container">
                     <br>
-                    <label for="in_cat<?php echo $offer_id?>">Category </label>  
+                    <label for="in_cat<?php echo $offer_id?>">Category <sup>(Required)</sup></label>  
                     <select id="in_cat<?php echo $offer_id?>" required title="Category the business belongs to" disabled class="editable form-control">
                         <?php
                             $categories = DbInfo::GetAllCategories();
@@ -167,7 +167,7 @@
                 </div>
                 <div class="col-xs-12 col-md-6 input-container">
                     <br>
-                    <label for="<?php echo $offer_descr_id;?>">Offer description </label>
+                    <label for="<?php echo $offer_descr_id;?>">Offer Description <sup>(Optional)</sup></label>
                     <textarea class="editable form-control" disabled type="text" placeholder="No description available for this offer. Click edit to add one." id="<?php echo $offer_descr_id;?>" title="Category Description"><?php echo $offer_description;?></textarea>
                 </div>
             </form>
@@ -182,8 +182,8 @@
 <?php
         else:#No offers were found
 ?>
-    <div>
-        <p>No offers were found. Once you create offers, they will appear here</p>    
+    <div class="container">
+        <?php MessageDisplay::PrintInfo("No offers were found. Once you create offers, they will appear here");?>    
     </div>
 <?php
         endif;
