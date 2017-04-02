@@ -30,7 +30,12 @@ if(isset($_POST["action"]))
             
         //ADMIN ACCOUNT FUNCTIONS
         case "CreateAdminAccount": #Superuser ~ Create an admin account
-            echo "<p>Creating admin account</p>";
+            $data = $_POST["data"];
+            $data["password"] = PasswordHandler::Encrypt($data["password"]);#Encrypt the password
+            $data["subbed"] = (int)$data["subbed"];
+            $create_status = DbHandler::CreateAdminAcc($data);
+            
+            echo $create_status;
         break;
         
         case "UpdateAdminAccount": #Superuser ~ Update an admin account

@@ -1,6 +1,7 @@
 <?php
 @session_start();#start session
 
+require_once("password_handler.php");#Encrypting and validating passwords
 require_once("db_info.php");#Database information file
 
 interface MySessionHandlerInterface

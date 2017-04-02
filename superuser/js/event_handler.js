@@ -102,7 +102,7 @@ $(document).ready(function(){
                 }
                 else //Failed to create the category
                 {
-                    toastr.error("Failed to create the category","Server-side error");
+                    toastr.error("Failed to create the category","AJAX Server-side error");
                 }
             });
         }
@@ -118,6 +118,7 @@ $(document).ready(function(){
         var first_name = $("#in_admin_first_name").val();
         var last_name = $("#in_admin_last_name").val();
         var email = $("#in_admin_email").val();
+        var phone = $("#in_admin_phone").val();
         var business_name = $("#in_admin_business_name").val();
         var business_category = $("#in_business_category").val();
         var business_description = $("#in_business_description").val();
@@ -130,6 +131,9 @@ $(document).ready(function(){
             "business_description":business_description,
             "cat_id":business_category,
             "email":email,
+            "phone":phone,
+            "password":email,
+            "subbed":1
         };
         
         //Form data is invalid
@@ -140,15 +144,15 @@ $(document).ready(function(){
         else//Form data is valid
         {
             //Send ajax request
-            $.post(ajax_handler_path,{"action":"CreateCategory","data":data},function(response,status){
+            $.post(ajax_handler_path,{"action":"CreateAdminAccount","data":data},function(response,status){
                 //Successfully created the category
                 if(response==true)
                 {
-                    toastr.success("Successfully created the category");
+                    toastr.success("Successfully created the admin account");
                 }
                 else //Failed to create the category
                 {
-                    toastr.error("Failed to create the category","Server-side error");
+                    toastr.error("Failed to create the category","AJAX Server-side error");
                 }
             });
         }
