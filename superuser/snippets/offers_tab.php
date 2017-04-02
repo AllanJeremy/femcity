@@ -29,17 +29,17 @@
         <p>Create an offer/promotion here</p>    
     </div><hr>
         
-    <form class="row" method="post">  
-        <div class="col-xs-12 col-md-6">
+    <form class="row input-list" method="post">  
+        <div class="col-xs-12 col-sm-6 input-container">
             <br>
             <label for="in_offer_name" >Offer Title</label>
             <input class="form-control" type="text" placeholder="Offer Title" id="in_offer_name" title="Offer Title">
         </div>
         
-        <div class="col-xs-12 col-md-6">
+        <div class="col-xs-12 col-sm-6 input-container">
             <br>
             <label for="in_category">Category </label>  
-            <select id="in_category" title="Category the business belongs to" class="form-control">
+            <select id="in_category" required title="Category the business belongs to" class="form-control">
                 <?php
                     $categories = DbInfo::GetAllCategories();
                     
@@ -58,14 +58,14 @@
                 ?>
             </select>
         </div>
-        <div class="col-xs-12">
+        <div class="col-xs-12 col-md-6 input-container">
             <br>
             <label for="in_offer_description">Offer Description </label>
             <textarea class="form-control" type="text" placeholder="Offer Description" id="in_offer_description" title="Offer Description"></textarea>
         </div>
-        <div class="col-xs-12 col-sm-4 col-md-3 pull-right">
+        <div class="col-xs-12">
             <br>
-            <a class="btn btn-primary" title="Create a new offer" href="javascript:void(0)" id="createCategory">CREATE AN OFFER</a>
+            <a class="btn btn-info pull-right" title="Create a new offer" href="javascript:void(0)" id="createOffer">CREATE AN OFFER</a>
         </div>
     </form>
 <?php
@@ -129,16 +129,16 @@
         <div id="<?php echo $collapse_id;?>" class="panel-collapse collapse <?php echo $open_state;?>">
           <div class="panel-body">
               <form class="row editable-list" method="post">  
-                <div class="col-xs-12 col-md-6">
+                <div class="col-xs-12 col-sm-6 input-container">
                     <br>
                     <label for="<?php echo $offer_name_id;?>" >Offer title </label>
-                    <input class="editable form-control" disabled type="text" placeholder="Offer title" id="<?php echo $offer_name_id;?>" title="Offer title" value="<?php echo $offer_title;?>">
+                    <input class="editable form-control" required disabled type="text" placeholder="Offer title" id="<?php echo $offer_name_id;?>" title="Offer title" value="<?php echo $offer_title;?>">
                 </div>
 
-                <div class="col-xs-12 col-md-6">
+                <div class="col-xs-12 col-sm-6 input-container">
                     <br>
-                    <label for="in_category">Category </label>  
-                    <select id="in_category" title="Category the business belongs to" disabled class="editable form-control">
+                    <label for="in_cat<?php echo $offer_id?>">Category </label>  
+                    <select id="in_cat<?php echo $offer_id?>" required title="Category the business belongs to" disabled class="editable form-control">
                         <?php
                             $categories = DbInfo::GetAllCategories();
 
@@ -165,7 +165,7 @@
                         ?>
                     </select>
                 </div>
-                <div class="col-xs-12 col-md-6">
+                <div class="col-xs-12 col-md-6 input-container">
                     <br>
                     <label for="<?php echo $offer_descr_id;?>">Offer description </label>
                     <textarea class="editable form-control" disabled type="text" placeholder="No description available for this offer. Click edit to add one." id="<?php echo $offer_descr_id;?>" title="Category Description"><?php echo $offer_description;?></textarea>

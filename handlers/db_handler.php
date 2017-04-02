@@ -138,12 +138,12 @@ class DbHandler implements DbHandlerInterface
     public static function CreateAdminAcc($details)
     {
         global $dbCon;
-        $insert_query = "INSERT INTO admin_accounts(first_name,last_name,business_name,business_description,cat_id,email,email,password,subbed) VALUES(?,?,?,?,?,?,?,?)";
+        $insert_query = "INSERT INTO admin_accounts(first_name,last_name,business_name,business_description,cat_id,email,phone,password,subbed) VALUES(?,?,?,?,?,?,?,?)";
         
         //Attempt to prepare query
         if($insert_stmt = $dbCon->prepare($insert_query))
         {   
-            $insert_stmt->bind_param("sssssissi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["phone"],$details["password"],$details["subbed"]);
+            $insert_stmt->bind_param("ssssisssi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["phone"],$details["password"],$details["subbed"]);
             
             //Try executing the query ~ returns true on success and false on failure
             return($insert_stmt->execute());
@@ -158,12 +158,12 @@ class DbHandler implements DbHandlerInterface
     public static function UpdateAdminAcc($id,$details)
     {
         global $dbCon;
-        $update_query = "UPDATE admin_accounts SET first_name=?,last_name=?,business_name=?,business_description=?,cat_id=?,email=?,password=?,subbed=? WHERE acc_id=?";
+        $update_query = "UPDATE admin_accounts SET first_name=?,last_name=?,business_name=?,business_description=?,cat_id=?,email=?,phone=?,password=?,subbed=? WHERE acc_id=?";
 
         //Attempt to prepare query
         if($update_stmt = $dbCon->prepare($update_query))
         {
-            $update_stmt->bind_param("ssssissii",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["password"],$details["subbed"],$id);
+            $update_stmt->bind_param("ssssisssii",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["phone"],$details["password"],$details["subbed"],$id);
             
             //Try executing the query ~ returns true on success and false on failure
             return($update_stmt->execute());

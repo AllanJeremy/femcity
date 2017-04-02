@@ -80,7 +80,7 @@ $(document).ready(function(){
         var $cat_name = $("#in_cat_name").val();
         var $cat_descr = $("#in_cat_description").val();
         
-        //Store the data as json data
+        //Store the data as JSON data
         var data = {
             "cat_name":$cat_name,
             "cat_description":$cat_descr
@@ -93,9 +93,6 @@ $(document).ready(function(){
         }
         else//Form data is valid
         {
-            //TODO: Make it so that this toast is only displayed once per create attempt
-            toastr.positionClass = "toast-top-center";
-
             //Send ajax request
             $.post(ajax_handler_path,{"action":"CreateCategory","data":data},function(response,status){
                 //Successfully created the category
@@ -113,7 +110,48 @@ $(document).ready(function(){
     
     //Create an admin account
     $("#createAdminAccount").click(function(){
-        alert("Creating admin account...");
+        //Get input list and validate the inputs
+        var $input_list = GetInputList($(this));
+        var data_is_valid = ValidateInputs($input_list);
+        
+        //Admin account data
+        var first_name = $("#in_admin_first_name").val();
+        var last_name = $("#in_admin_last_name").val();
+        var email = $("#in_admin_email").val();
+        var business_name = $("#in_admin_business_name").val();
+        var business_category = $("#in_business_category").val();
+        var business_description = $("#in_business_description").val();
+        
+        //Store the data as JSON data
+        var data = {
+            "first_name":first_name,
+            "last_name":last_name,
+            "business_name":business_name,
+            "business_description":business_description,
+            "cat_id":business_category,
+            "email":email,
+        };
+        
+        //Form data is invalid
+        if(!data_is_valid)
+        {
+            toastr.error(missingDataMessage,"Failed to create category");
+        }
+        else//Form data is valid
+        {
+            //Send ajax request
+            $.post(ajax_handler_path,{"action":"CreateCategory","data":data},function(response,status){
+                //Successfully created the category
+                if(response==true)
+                {
+                    toastr.success("Successfully created the category");
+                }
+                else //Failed to create the category
+                {
+                    toastr.error("Failed to create the category","Server-side error");
+                }
+            });
+        }
     });
     
     //Create a featured item

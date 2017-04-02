@@ -28,31 +28,54 @@
         <p>Create a new admin account here</p>    
     </div><hr>
         
-    <form class="row" method="post">  
-        <div class="col-xs-12 col-sm-6">
+    <form class="row input-list" method="post">  
+        <div class="col-xs-12 col-sm-6 input-container">
             <br>
-            <label for="in_admin_first_name" >First name </label>
-            <input class="form-control" type="text" placeholder="First name" name="admin_first_name" id="in_admin_first_name" title="First name of the business owner">
+            <label for="in_admin_first_name">First name </label>
+            <input class="form-control" required type="text" placeholder="First name" id="in_admin_first_name" title="First name of the business owner">
         </div>
-        <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12 col-sm-6 input-container">
             <br>
-            <label for="in_admin_last_name" >Last name </label>
-            <input class="form-control" type="text" placeholder="Last name" name="admin_last_name" id="in_admin_last_name" title="Last name of the business owner">
+            <label for="in_admin_last_name">Last name </label>
+            <input class="form-control" required type="text" placeholder="Last name" id="in_admin_last_name" title="Last name of the business owner">
         </div>
-        <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12 col-sm-6 input-container">
             <br>
-            <label for="in_admin_first_name" >Email address</label>
-            <input class="form-control" type="email" placeholder="Email address" name="admin_email" id="in_admin_email" title="Email of the business/business owner. Used to login to the account.">
+            <label for="in_admin_first_name">Email address</label>
+            <input class="form-control" required type="email" placeholder="Email address" id="in_admin_email" title="Email of the business/business owner. Used to login to the account.">
         </div>
-        <div class="col-xs-12 col-md-6">
+        <div class="col-xs-12 col-sm-6 input-container">
             <br>
-            <label for="in_admin_business_name" >Business name </label>
-            <input class="form-control" type="text" placeholder="Business name" name="admin_business_name" id="in_admin_business_name" title="Name of the business/company that owns this account">
+            <label for="in_admin_first_name">Phone number</label>
+            <input class="form-control" required type="text" placeholder="Phone number" id="in_admin_phone" title="Phone number of the business/business owner. Used to login to the account.">
         </div>
-        <div class="col-xs-12 col-sm-6">
+        
+<!--
+        <div class="col-xs-12 col-sm-6 col-md-4 input-container">
             <br>
-            <label for="in_business_category" >Category </label>
-            <select id="in_business_category" title="Category the business belongs to" class="form-control">
+            <label for="in_admin_first_name">Country</label>
+            <input class="form-control" required type="text" placeholder="Country the business belongs to" id="in_admin_country" title="Phone number of the business/business owner. Used to login to the account.">
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 input-container">
+            <br>
+            <label for="in_admin_first_name">Region</label>
+            <input class="form-control" required type="text" placeholder="Country the business belongs to" id="in_admin_country" title="Phone number of the business/business owner. Used to login to the account.">
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 input-container">
+            <br>
+            <label for="in_admin_first_name">Sub-region</label>
+            <input class="form-control" required type="text" placeholder="Country the business belongs to" id="in_admin_country" title="Phone number of the business/business owner. Used to login to the account.">
+        </div>
+-->
+        <div class="col-xs-12 col-sm-6 input-container">
+            <br>
+            <label for="in_admin_business_name">Business name </label>
+            <input class="form-control" type="text" required placeholder="Business name" id="in_admin_business_name" title="Name of the business/company that owns this account">
+        </div>
+        <div class="col-xs-12 col-sm-6 input-container">
+            <br>
+            <label for="in_business_category">Category </label>
+            <select id="in_business_category" required title="Category the business belongs to" class="form-control">
                 <?php
                     $categories = DbInfo::GetAllCategories();
                     
@@ -71,7 +94,7 @@
                 ?>
             </select>
         </div>
-        <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12 col-md-6 input-container">
             <br>
             <label for="in_cat_description">Business description </label>
             <textarea class="form-control" type="text" placeholder="Business description" name="business_description" id="in_business_description" title="Business description. Brief description of what the business does"></textarea>
@@ -164,30 +187,35 @@
           <div class="panel-body">
             <h4>ACCOUNT DETAILS</h4><hr>
             <form class="row editable-list" method="post">  
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-6 input-container">
                     <br>
                     <label for="<?php echo $first_name_id;?>" >First name </label>
-                    <input class="editable form-control" disabled type="text" placeholder="First name" name="admin_first_name" id="<?php echo $first_name_id;?>" title="First name of the business owner" value="<?php echo $acc["first_name"];?>">
+                    <input class="editable form-control" required disabled type="text" placeholder="First name" name="admin_first_name" id="<?php echo $first_name_id;?>" title="First name of the business owner" value="<?php echo $acc["first_name"];?>">
                 </div>
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-6 input-container">
                     <br>
                     <label for="<?php echo $last_name_id;?>" >Last name </label>
-                    <input class="editable form-control" disabled type="text" placeholder="Last name" name="admin_last_name" id="<?php echo $last_name_id;?>" title="Last name of the business owner" value="<?php echo $acc["last_name"];?>">
+                    <input class="editable form-control" required disabled type="text" placeholder="Last name" name="admin_last_name" id="<?php echo $last_name_id;?>" title="Last name of the business owner" value="<?php echo $acc["last_name"];?>">
                 </div>
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-6 input-container">
                     <br>
                     <label for="<?php echo $email_id;?>" >Email address</label>
-                    <input class="editable form-control" disabled type="email" placeholder="Email address" name="admin_email" id="<?php echo $email_id;?>" title="Email of the business/business owner. Used to login to the account." value="<?php echo $acc["email"];?>">
+                    <input class="editable form-control" required disabled type="email" placeholder="Email address" name="admin_email" id="<?php echo $email_id;?>" title="Email of the business/business owner. Used to login to the account." value="<?php echo $acc["email"];?>">
                 </div>
-                <div class="col-xs-12 col-md-6">
+                <div class="col-xs-12 col-sm-6 input-container">
+                    <br>
+                    <label for="admin_phone_<?php echo $acc_id;?>">Phone number</label>
+                    <input class="editable form-control" required disabled type="text" placeholder="Phone number" id="admin_phone_<?php echo $acc_id;?>" title="Phone number of the business/business owner. Used to login to the account." value="<?php echo $acc["phone"];?>">
+                </div>
+                <div class="col-xs-12 col-sm-6 input-container">
                     <br>
                     <label for="<?php echo $bus_name_id;?>">Business name </label>
-                    <input class="editable form-control" disabled type="text" placeholder="Business name" name="admin_business_name" id="<?php echo $bus_name_id;?>" title="Name of the business/company that owns this account" value="<?php echo $business_name;?>">
+                    <input class="editable form-control" required disabled type="text" placeholder="Business name" name="admin_business_name" id="<?php echo $bus_name_id;?>" title="Name of the business/company that owns this account" value="<?php echo $business_name;?>">
                 </div>
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-6 input-container">
                     <br>
                     <label for="<?php echo $cat_dom_id;?>" >Category </label>
-                    <select id="<?php echo $cat_dom_id;?>" title="Category the business belongs to" class="editable form-control disabled" disabled>
+                    <select id="<?php echo $cat_dom_id;?>" required title="Category the business belongs to" class="editable form-control disabled" disabled>
                         <?php
                             $categories = DbInfo::GetAllCategories();
 
@@ -213,7 +241,7 @@
                         ?>
                     </select>
                 </div>
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-md-6 input-container">
                     <br>
                     <label for="<?php echo $bus_descr_id;?>">Business description </label>
                     <textarea class="editable form-control" disabled placeholder="No business description set" name="business_description" id="<?php echo $bus_descr_id;?>" title="Business description. Brief description of what the business does"><?php echo $business_descr;?></textarea>
