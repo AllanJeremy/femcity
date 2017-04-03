@@ -118,7 +118,7 @@
         <div class="panel-heading">
           <h4 class="panel-title">
             <a data-toggle="collapse" data-parent="#manage_offers_group" href="#<?php echo $collapse_id;?>">
-            <?php echo $offer_title;?> <span class="caret"></span></a>
+            <span class="accordion-title"><?php echo $offer_title;?></span> <span class="caret"></span></a>
             <span class="pull-right action-buttons">
                 <a class="btn btn-info editable-trigger-btn" data-edit-type="<?php echo $current_page;?>" data-state-toggle="save"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                 <a class="btn btn-warning manage-delete-btn"><span class="glyphicon glyphicon-trash"></span> Delete</a>
@@ -132,13 +132,13 @@
                 <div class="col-xs-12 col-sm-6 input-container">
                     <br>
                     <label for="<?php echo $offer_name_id;?>" >Offer title <sup>(Required)</sup></label>
-                    <input class="editable form-control" required disabled type="text" placeholder="Offer title" id="<?php echo $offer_name_id;?>" title="Offer title" value="<?php echo $offer_title;?>">
+                    <input class="editable form-control offer_text" required disabled type="text" placeholder="Offer title" id="<?php echo $offer_name_id;?>" title="Offer title" value="<?php echo $offer_title;?>">
                 </div>
 
                 <div class="col-xs-12 col-sm-6 input-container">
                     <br>
                     <label for="in_cat<?php echo $offer_id?>">Category <sup>(Required)</sup></label>  
-                    <select id="in_cat<?php echo $offer_id?>" required title="Category the business belongs to" disabled class="editable form-control">
+                    <select id="in_cat<?php echo $offer_id?>" required title="Category the business belongs to" disabled class="editable form-control offer_category">
                         <?php
                             $categories = DbInfo::GetAllCategories();
 
@@ -168,7 +168,7 @@
                 <div class="col-xs-12 col-md-6 input-container">
                     <br>
                     <label for="<?php echo $offer_descr_id;?>">Offer Description <sup>(Optional)</sup></label>
-                    <textarea class="editable form-control" disabled type="text" placeholder="No description available for this offer. Click edit to add one." id="<?php echo $offer_descr_id;?>" title="Category Description"><?php echo $offer_description;?></textarea>
+                    <textarea class="editable form-control offer_description" disabled type="text" placeholder="No description available for this offer. Click edit to add one." id="<?php echo $offer_descr_id;?>" title="Category Description"><?php echo $offer_description;?></textarea>
                 </div>
             </form>
           </div>

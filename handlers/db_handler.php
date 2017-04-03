@@ -116,7 +116,7 @@ class DbHandler implements DbHandlerInterface
         //Attempt to prepare query
         if($update_stmt = $dbCon->prepare($update_query))
         {
-            $update_stmt->bind_param("ssi",$details["cat_name"],$details["cat_description"]);
+            $update_stmt->bind_param("ssi",$details["cat_name"],$details["cat_description"],$id);
             
             //Try executing the query ~ returns true on success and false on failure
             return($update_stmt->execute());
@@ -160,12 +160,12 @@ class DbHandler implements DbHandlerInterface
     public static function UpdateAdminAcc($id,$details)
     {
         global $dbCon;
-        $update_query = "UPDATE admin_accounts SET first_name=?,last_name=?,business_name=?,business_description=?,cat_id=?,email=?,phone=?,password=?,subbed=? WHERE acc_id=?";
+        $update_query = "UPDATE admin_accounts SET first_name=?,last_name=?,business_name=?,business_description=?,cat_id=?,email=?,phone=? WHERE acc_id=?";
 
         //Attempt to prepare query
         if($update_stmt = $dbCon->prepare($update_query))
         {
-            $update_stmt->bind_param("ssssisssii",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["phone"],$details["password"],$details["subbed"],$id);
+            $update_stmt->bind_param("ssssissi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["phone"],$id);
             
             //Try executing the query ~ returns true on success and false on failure
             return($update_stmt->execute());
@@ -324,6 +324,7 @@ class DbHandler implements DbHandlerInterface
     #Update offer based on primary key
     public static function UpdateOffer($id,$details)
     {
+        global $dbCon;
         $update_query = "UPDATE offers SET offer_text=?,description=?,cat_id=? WHERE offer_id=?";
         
         //Attempt to prepare query

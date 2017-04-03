@@ -93,7 +93,7 @@
         <div class="panel-heading">
           <h4 class="panel-title">
             <a data-toggle="collapse" data-parent="#manage_cat_group" href="#<?php echo $collapse_id;?>">
-            <?php echo $cat_name;?> <span class="caret"></span></a>
+            <span class="accordion-title"><?php echo $cat_name;?></span> <span class="caret"></span></a>
             <span class="pull-right action-buttons">
                 <a class="btn btn-info editable-trigger-btn" data-edit-type="<?php echo $current_page?>" data-state-toggle="save"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                 <a class="btn btn-warning manage-delete-btn"><span class="glyphicon glyphicon-trash"></span> Delete</a>

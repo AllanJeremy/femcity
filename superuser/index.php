@@ -92,8 +92,8 @@
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/toastr.min.js"></script>
     
-    <script type="text/javascript" src="js/event_handler.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/event_handler.js"></script>
     
 </body>
 </html>

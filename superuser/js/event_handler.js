@@ -237,35 +237,128 @@ $(document).ready(function(){
     
 
     /*UPDATE FUNCTIONS*/
+    function GetAccordionTitle($editable_list)
+    {
+        var $parents = $editable_list.parents(".manage-items");
+        var $accordion_title = $parents.find(".accordion-title");
+        
+        return $accordion_title;
+    }
+    
     //Update categories
-    function UpdateCategories(id,$editable_list)
+    function UpdateCategory(id,$editable_list)
     {
+        //Accordion title
+        var $accordion_title = GetAccordionTitle($editable_list);
+        
+        //Input containers and data
+        var $input_containers = $editable_list.children(".input-container");
+        var cat_name = $input_containers.children(".cat_name").val();
+        var cat_description = $input_containers.children(".cat_description").val();
+        
         //Data in JSON format
-//        var data = {
-//            "cat_name":,
-//            "cat_description":
-//        };
+        var data = {
+            "cat_name":cat_name,
+            "cat_description":cat_description
+        }
         
+        //AJAX request
         $.post(ajax_handler_path,{"action":"UpdateCategory","id":id,"data":data},function(response,status){
+            if(IsValid(response))
+            {
+                toastr.success("Successfully updated the category");
+                //Update the Accordion title accordingly
+                $accordion_title.text(cat_name);
+            }
+            else
+            {
+                toastr.error("Failed to update the category","AJAX Server-side error");
+            }
             
+            return status;
         });
-        
-    }
-    
-    function UpdateAccounts(id,$editable_list)
-    {
-        
-    }
-    
-    function UpdateCategories(id,$editable_list)
-    {
-        
     }
     
     //Update accounts
+    function UpdateAdminAccount(id,$editable_list)
+    {
+        //Accordion title
+        var $accordion_title = GetAccordionTitle($editable_list);
+        
+        //Input containers and data
+        var $input_containers = $editable_list.children(".input-container");
+        var first_name = $input_containers.children(".admin_first_name").val();
+        var last_name = $input_containers.children(".admin_last_name").val();
+        var business_name = $input_containers.children(".admin_business_name").val();
+        var business_description = $input_containers.children(".business_description").val();
+        var cat_id = $input_containers.children(".business_category").val();
+        var email = $input_containers.children(".admin_email").val();
+        var phone = $input_containers.children(".admin_phone").val();
+        
+        //Store the data as JSON data
+        var data = {
+            "first_name":first_name,
+            "last_name":last_name,
+            "business_name":business_name,
+            "business_description":business_description,
+            "cat_id":cat_id,
+            "email":email,
+            "phone":phone,
+        };
+        
+        //AJAX request
+        $.post(ajax_handler_path,{"action":"UpdateAdminAccount","id":id,"data":data},function(response,status){
+            if(IsValid(response))
+            {
+                toastr.success("Successfully updated the admin account");
+                
+                //Update the Accordion title accordingly
+                $accordion_title.text(first_name+" "+last_name+", "+business_name);
+            }
+            else
+            {
+                toastr.error("Failed to update the admin account","AJAX Server-side error");
+            }
+            
+            return status;
+        });
+    }
     
     //Update offers
-    
+    function UpdateOffer(id,$editable_list)
+    {
+        //Accordion title
+        var $accordion_title = GetAccordionTitle($editable_list);
+        
+        //Input containers and data
+        var $input_containers = $editable_list.children(".input-container");
+        var offer_text = $input_containers.children(".offer_text").val();
+        var description = $input_containers.children(".offer_description").val();
+        var cat_id = $input_containers.children(".offer_category").val();
+        
+        //Data in JSON format
+        var data = {
+            "offer_text":offer_text,
+            "description":description,
+            "cat_id":cat_id
+        }
+        
+        //AJAX request
+        $.post(ajax_handler_path,{"action":"UpdateOffer","id":id,"data":data},function(response,status){
+            if(IsValid(response))
+            {
+                toastr.success("Successfully updated the offer");
+                //Update the Accordion title accordingly
+                $accordion_title.text(offer_text);
+            }
+            else
+            {
+                toastr.error("Failed to update the offer","AJAX Server-side error");
+            }
+            
+            return status;
+        });
+    }
     
     /*EDIT BUTTON*/
     var $state_toggle = "data-state-toggle"; //State toggle selector
@@ -395,17 +488,17 @@ $(document).ready(function(){
             {
                 case "categories": //Update categories
                     primary_id = $parents.attr("data-cat-id");
-//                    UpdateCategories(primary_id,$editable_list);
+                    UpdateCategory(primary_id,$editable_list);
                 break;
 
                 case "accounts":
                     primary_id = $parents.attr("data-acc-id");
-//                    UpdateAccounts(primary_id,$editable_list);
+                    UpdateAdminAccount(primary_id,$editable_list);
                 break;
 
                 case "offers":
                     primary_id = $parents.attr("data-offer-id");
-//                    UpdateOffers(primary_id,$editable_list);
+                    UpdateOffer(primary_id,$editable_list);
                 break;
 
                 default:
@@ -413,7 +506,6 @@ $(document).ready(function(){
             }
         }
 
-        
     });
     
     //Add a featured item

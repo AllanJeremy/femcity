@@ -21,7 +21,11 @@ if(isset($_POST["action"]))
         break;
             
         case "UpdateCategory": #Superuser ~ Update a category
-            echo "<p>Updating category</p>";
+            $id = $_POST["id"];
+            $data = $_POST["data"];
+            
+            $update_status = DbHandler::UpdateCategory($id,$data);
+            echo $update_status;
         break;
         
         case "DeleteCategory": #Superuser ~ Delete a category
@@ -39,7 +43,11 @@ if(isset($_POST["action"]))
         break;
         
         case "UpdateAdminAccount": #Superuser ~ Update an admin account
-            echo "<p>Updating admin account</p>";
+            $id = $_POST["id"];
+            $data = $_POST["data"];
+            
+            $update_status = DbHandler::UpdateAdminAcc($id,$data);
+            echo $update_status;
         break;
 
         case "DeleteAdminAccount": #Superuser ~ Delete an admin account
@@ -52,7 +60,11 @@ if(isset($_POST["action"]))
         break;   
      
         case "UpdateFeaturedItem": #Superuser ~ Update a featured item
-            echo "<p>Updating featured item</p>";
+            $id = $_POST["id"];
+            $data = $_POST["data"];
+            
+            $update_status = DbHandler::UpdateFeaturedItem($id,$data);
+            echo $update_status;
         break;   
      
         case "DeleteFeaturedItem": #Superuser ~ Delete a featured item
@@ -68,7 +80,12 @@ if(isset($_POST["action"]))
         break;
         
         case "UpdateOffer": #Superuser ~ Update an offer
-            echo "<p>Updating offer</p>";
+            $id = $_POST["id"];
+            $data = $_POST["data"];
+            
+            $update_status = DbHandler::UpdateOffer($id,$data);
+            var_dump($update_status);
+            echo $update_status;
         break;
         
         case "DeleteOffer": #Superuser ~ Delete an offer
