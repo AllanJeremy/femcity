@@ -589,7 +589,8 @@ $(document).ready(function(){
         /*Confirm delete clicked  
           ~ This is nested here so that if the modal is accessed from a non-delete btn, it's not handled
         */
-        $(".btn_confirm_delete").click(function(){
+        //Unbind the click event before calling the event handler to ensure it runs only once
+        $(".btn_confirm_delete").off("click").click(function(){
             
             $confirmDeleteModal.modal("hide");
             var primary_id = null;
