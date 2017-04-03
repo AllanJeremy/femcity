@@ -96,7 +96,7 @@
             <span class="accordion-title"><?php echo $cat_name;?></span> <span class="caret"></span></a>
             <span class="pull-right action-buttons">
                 <a class="btn btn-info editable-trigger-btn" data-edit-type="<?php echo $current_page?>" data-state-toggle="save"><span class="glyphicon glyphicon-edit"></span> Edit</a>
-                <a class="btn btn-warning manage-delete-btn"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                <a class="btn btn-warning manage-delete-btn delete_category" data-toggle="modal" data-target=".confirm-delete-modal"data-toggle="modal" data-target=".confirm-delete-modal"><span class="glyphicon glyphicon-trash"></span> Delete</a>
             </span>
           </h4><br>
         </div>

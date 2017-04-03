@@ -178,7 +178,7 @@
                 <a class="btn btn-info editable-trigger-btn" data-edit-type="<?php echo $current_page;?>" data-state-toggle="save"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                 <a class="btn btn-info manage-reset-btn"><span class="glyphicon glyphicon-refresh"></span> Reset</a>
                 <a class="btn btn-warning manage-ban-btn"><span class="glyphicon glyphicon-ban-circle"></span> Ban</a>
-                <a class="btn btn-warning manage-delete-btn"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                <a class="btn btn-warning manage-delete-btn delete_admin_account" data-toggle="modal" data-target=".confirm-delete-modal"><span class="glyphicon glyphicon-trash"></span> Delete</a>
             </div>
           </h4><br>
         </div>

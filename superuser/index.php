@@ -79,6 +79,27 @@
         ?>
     </header>
     <main>
+        <!-- Confirm delete modal -->
+        <div class="modal fade confirmation-modal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" id="confirmDeleteModal">
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h4>
+                </div>
+                <div class="modal-body">
+                    <h5>
+                        Are you sure you want to delete the selected <span id="confirmDeleteType">item</span>?
+                        <br><br><small><b>Note:</b> This process is irreversible</small>
+                    </h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success btn_confirm_delete"><span class="glyphicon glyphicon-ok"></span> Confirm</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+          </div>
+        </div>
         <div class="container">
         <?php
             include_once($display_tab);

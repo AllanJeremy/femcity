@@ -237,6 +237,7 @@ $(document).ready(function(){
     
 
     /*UPDATE FUNCTIONS*/
+    //Get the title of the accordion ~ we will be dynamically updating this title
     function GetAccordionTitle($editable_list)
     {
         var $parents = $editable_list.parents(".manage-items");
@@ -517,5 +518,122 @@ $(document).ready(function(){
     $(".removeFeaturedItem").click(function(){
          alert("Removing featured item...");
     });
+    
     /*DELETE FUNCTIONS*/
+    //Reference to the confirm delete modal
+    var $confirmDeleteModal = $("#confirmDeleteModal");
+    
+    //Delete the category with the given id
+    function DeleteCategory(id)
+    {
+        console.log("Deleting category with the id "+id);
+    }
+    
+    //Delete the admin account with the given id
+    function DeleteAdminAccount(id)
+    {
+        console.log("Deleting admin account with the id "+id);
+    }
+    
+    //Delete the item with the given id
+    function DeleteItem(id)
+    {
+        console.log("Deleting item with the id "+id);
+    }
+    
+    //Delete the offer with the given id
+    function DeleteOffer(id)
+    {
+        console.log("Deleting offer with the id "+id);
+    }
+    
+    //Delete button clicked
+    $(".manage-delete-btn").click(function(){
+        var $delete_type = "item";
+        var $del_btn = $(this);//Reference to the clicked button
+        
+        //Classes for the different types of deletes
+        var DELETE_CATEGORY_CLASS = "delete_category";
+        var DELETE_ADMIN_ACC_CLASS = "delete_admin_account";
+        var DELETE_OFFER_CLASS = "delete_offer";
+        var DELETE_ITEM_CLASS = "delete_featured";
+        
+        //TODO: Find a way to DRY this code
+        //If delete category is clicked 
+        if($del_btn.hasClass(DELETE_CATEGORY_CLASS))
+        {
+            $delete_type = "category";
+        }
+        //If delete admin account
+        else if($del_btn.hasClass(DELETE_ADMIN_ACC_CLASS))
+        {
+            $delete_type = "admin account";
+        }
+        //If delete item
+        else if($del_btn.hasClass(DELETE_ITEM_CLASS))
+        {
+            $delete_type = "item (The actual item posted by the admin)";
+        }
+        //If delete offer
+        else if($del_btn.hasClass(DELETE_OFFER_CLASS))
+        {
+            $delete_type = "offer";
+        }
+        
+        //Update the modal text based on what has been clicked then display the modal
+        $confirmDeleteModal.find("#confirmDeleteType").text($delete_type);
+        $confirmDeleteModal.modal("show");
+        
+        var $parents = $del_btn.parents(".manage-items");//Accordion contents parent
+        
+        /*Confirm delete clicked  
+          ~ This is nested here so that if the modal is accessed from a non-delete btn, it's not handled
+        */
+        $(".btn_confirm_delete").click(function(){
+            
+            $confirmDeleteModal.modal("hide");
+            var primary_id = null;
+            
+            //If delete category is clicked
+            if($del_btn.hasClass(DELETE_CATEGORY_CLASS))
+            {
+                primary_id = $parents.attr("data-cat-id");
+                
+                //Delete from Database and remove from DOM
+                DeleteCategory(primary_id);
+                return;
+            }
+            
+            //If delete admin account
+            else if($del_btn.hasClass(DELETE_ADMIN_ACC_CLASS))
+            {
+                primary_id = $parents.attr("data-acc-id");
+                
+                //Delete from Database and remove from DOM
+                DeleteAdminAccount(primary_id);
+                return;
+            }
+            //If delete an item
+            else if($del_btn.hasClass(DELETE_ITEM_CLASS))
+            {
+                primary_id = $parents.attr("data-item-id");
+                
+                //Delete from Database and remove from DOM
+                DeleteItem(primary_id);
+                return;
+            }
+            //If delete offer
+            else if($del_btn.hasClass(DELETE_OFFER_CLASS))
+            {
+                primary_id = $parents.attr("data-offer-id");
+                
+                //Delete from Database and remove from DOM
+                DeleteOffer(primary_id);
+                return;
+            }
+            
+        });
+
+        
+    });
 });

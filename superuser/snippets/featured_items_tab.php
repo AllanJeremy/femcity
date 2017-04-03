@@ -26,7 +26,7 @@
             $state_toggle = "remove";#state toggle is remove because add toggles to remove
         }
         
-        //If the items to add were found
+        //If the items to add were found ~ based on how we call this, it should always be true (here just incase)
         if($items_to_add && $items_to_add->num_rows>0):
     
             //Loop through each category creating a dropdown item
@@ -57,7 +57,7 @@
             <?php echo $item_name." - by ".$admin_full_name." ($admin_bus_name)";?> <span class="caret"></span></a>
             <span class="pull-right action-buttons">
                 <a class="btn <?php echo $btn_class;?> add-trigger-btn" data-state-toggle="<?php echo $state_toggle;?>"><span class="glyphicon <?php echo $btn_glyph_class;?>"></span> <?php echo $btn_text;?></a>
-                <a class="btn btn-warning manage-delete-btn delete-item"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                <a class="btn btn-warning manage-delete-btn delete_featured"><span class="glyphicon glyphicon-trash"></span> Delete</a>
             </span>
           </h4><br>
         </div>
@@ -84,6 +84,7 @@
             endforeach;
             return true;
         else:
+            MessageDisplay::PrintError("Something went wrong while trying to retrieve items from the database<br>Unhandled error: check featured_items php file");
             return false;
         endif;
     } #End of function
