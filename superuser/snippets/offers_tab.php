@@ -9,6 +9,10 @@
     $create_url = "index.php?p=".$current_page."&tab=create";
     $manage_url = "index.php?p=".$current_page."&tab=manage";
 
+//Message shown when categories cannot be found and the id for the message box(used as selector in js)
+    $missing_offer_msg = "No offers were found. Once you create offers, they will appear here";
+    $missing_offer_id = "missing_cat_msg";
+
     //Display the tab headers below
 ?>
     <!--Tab headers-->
@@ -71,10 +75,14 @@
 <?php
     else:#Manage tab active
         $offers = DbInfo::GetAllOffers();
+        
+        //Print hidden message for display when items run out
+        MessageDisplay::PrintHiddenInfo($missing_offer_msg,$missing_offer_id);
+        
         if($offers && $offers->num_rows>0):
 ?>
-    <!--Category list-->
-    <div class="container">
+    <!--Offer list-->
+    <div class="container" id="manage_offers">
         <div class="col-xs-12 col-sm-6">
             <p>Manage offers here.</p>
         </div>
@@ -183,7 +191,7 @@
         else:#No offers were found
 ?>
     <div class="container">
-        <?php MessageDisplay::PrintInfo("No offers were found. Once you create offers, they will appear here");?>    
+        <?php MessageDisplay::PrintInfo($missing_offer_msg,$missing_offer_id);?>    
     </div>
 <?php
         endif;

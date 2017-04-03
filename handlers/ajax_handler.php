@@ -29,7 +29,10 @@ if(isset($_POST["action"]))
         break;
         
         case "DeleteCategory": #Superuser ~ Delete a category
-            echo "<p>Deleting category</p>";
+            $id = $_POST["id"];
+            $delete_status = DbHandler::DeleteCategory($id);
+            
+            echo $delete_status;
         break;
             
         //ADMIN ACCOUNT FUNCTIONS
@@ -51,7 +54,10 @@ if(isset($_POST["action"]))
         break;
 
         case "DeleteAdminAccount": #Superuser ~ Delete an admin account
-            echo "<p>Deleting admin account</p>";
+            $id = $_POST["id"];
+            $delete_status = DbHandler::DeleteAdminAcc($id);
+            
+            echo $delete_status;
         break;
             
         //FEATURED ITEM FUNCTIONS
@@ -65,10 +71,6 @@ if(isset($_POST["action"]))
             
             $update_status = DbHandler::UpdateFeaturedItem($id,$data);
             echo $update_status;
-        break;   
-     
-        case "DeleteFeaturedItem": #Superuser ~ Delete a featured item
-            echo "<p>Deleting featured item</p>";
         break;   
      
         //OFFER FUNCTIONS
@@ -89,7 +91,10 @@ if(isset($_POST["action"]))
         break;
         
         case "DeleteOffer": #Superuser ~ Delete an offer
-            echo "<p>Deleting offer</p>";
+            $id = $_POST["id"];
+            $delete_status = DbHandler::DeleteOffer($id);
+            
+            echo $delete_status;
         break;
         
         //ACCOUNT REQUEST FUNCTIONS
@@ -99,6 +104,22 @@ if(isset($_POST["action"]))
             
         case "DenyAccountRequest": #Superuser ~ Deny account request
             echo "<p>Denying account request</p>";
+        break;
+            
+        //ITEM FUNCTIONS
+        case "CreateItem":
+            echo "Creating item"; #Admin ~ Create/post item
+        break;
+            
+        case "UpdateItem":
+            echo "Updating item"; #Admin ~ Create/post item
+        break;
+            
+        case "DeleteItem": #Admin & Superuser ~ Delete item
+            $id = $_POST["id"];
+            $delete_status = DbHandler::DeleteItem($id);
+            
+            echo $delete_status;
         break;
             
         default:

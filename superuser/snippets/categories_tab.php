@@ -8,6 +8,10 @@
     //Variables for the different urls
     $create_url = "index.php?p=".$current_page."&tab=create";
     $manage_url = "index.php?p=".$current_page."&tab=manage";
+    
+    //Message shown when categories cannot be found and the id for the message box(used as selector in js)
+    $missing_cat_msg = "No categories were found. Once you create categories, they will appear here";
+    $missing_cat_id = "missing_cat_msg";
 
     //Display the tab headers below
 ?>
@@ -49,6 +53,10 @@
 <?php
     else:#Manage tab active
         $categories = DbInfo::GetAllCategories();
+        
+        //Print hidden message for display when items run out
+        MessageDisplay::PrintHiddenInfo($missing_cat_msg,$missing_cat_id);
+        
         if($categories && $categories->num_rows>0):
 ?>
     <!--Category list-->
@@ -128,7 +136,7 @@
         else:#No categories were found
 ?>
     <div class="container">
-        <?php MessageDisplay::PrintInfo("No categories were found. Once you create categories, they will appear here");?>  
+        <?php MessageDisplay::PrintInfo($missing_cat_msg,$missing_cat_id);?>  
     </div>
 <?php
         endif;

@@ -1,13 +1,17 @@
 <?php
     //Get the active tab
     require_once("tab_manager.php");#Variables ~ $is_create, $create_tab_class, $manage_tab_class
-    
+
     //Current page
     $current_page = "accounts";
 
     //Variables for the different urls
     $create_url = "index.php?p=".$current_page."&tab=create";
     $manage_url = "index.php?p=".$current_page."&tab=manage";
+
+    //Message shown when categories cannot be found and the id for the message box(used as selector in js)
+    $missing_acc_msg = "No admin accounts were found. Once you create admin accounts, they will appear here";
+    $missing_acc_id = "missing_acc_msg";
 
     //Display the tab headers below
 ?>
@@ -109,6 +113,10 @@
 <?php
     else:#Manage tab active
         $admin_accounts = Dbinfo::GetAllAdminAccounts();
+        
+        //Print hidden message for display when items run out
+        MessageDisplay::PrintHiddenInfo($missing_acc_msg,$missing_acc_id);
+        
         if($admin_accounts && $admin_accounts->num_rows>0):
 ?>
     <!--Category list-->
@@ -273,7 +281,7 @@
 ?>
     <div>
         <?php
-            MessageDisplay::PrintInfo("No admin accounts were found. Once you create admin accounts, they will appear here");
+            MessageDisplay::PrintInfo($missing_acc_msg,$missing_acc_id);
         ?> 
     </div>
 <?php

@@ -1,4 +1,7 @@
 <?php
+    //Message shown when categories cannot be found and the id for the message box(used as selector in js)
+    $missing_item_msg = "No items were found in the database. <br>Once business owners post items, they will appear here and you can manage the items as well as add/remove featured items.";
+    $missing_item_id = "missing_item_msg";
 
     //Adds items to the DOM ~ must be inside a panel-group, since the items are panels used as accordions
     function AddItemsToDOM($items_to_add,$is_featured=false)
@@ -95,10 +98,14 @@
 
     <?php
         $items = DbInfo::GetAllItems(); #Get all the items
+        
+        //Print hidden message for display when items run out
+        MessageDisplay::PrintHiddenInfo($missing_item_msg,$missing_item_id);
+        
         if($items && $items->num_rows>0):    
     ?>
     <!--Manage featured items header-->
-    <div class="container">
+    <div class="container" id="manage_featured_items">
             <div class="col-xs-12 col-sm-6">
                 <p>Manage featured items here.</p>
             </div>
@@ -138,8 +145,10 @@
             }        
         
     ?>
-        <br><hr><h4>OTHER ITEMS</h4><hr>
     </div>
+        
+    <div class="panel-group" id="manage_other_group">
+        <br><hr><h4>OTHER ITEMS</h4><hr>
     <?php
             //Other items
             $other_items = DbInfo::GetAllOtherItems();
@@ -158,11 +167,13 @@
             {
                 MessageDisplay::PrintInfo($no_other_msg,$no_other_id);
             }
-
+?>
+        </div>
+    <?php
         else:
     ?>
     <div class="container">
-        <?php MessageDisplay::PrintInfo("No items were found in the database. <br>Once business owners post items, they will appear here and you can set the featured items.");?>    
+        <?php MessageDisplay::PrintInfo($missing_item_msg,$missing_item_id);?>    
     </div>
     <?php
         endif;

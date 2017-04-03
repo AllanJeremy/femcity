@@ -524,27 +524,67 @@ $(document).ready(function(){
     var $confirmDeleteModal = $("#confirmDeleteModal");
     
     //Delete the category with the given id
-    function DeleteCategory(id)
+    function DeleteCategory(id,$parents)
     {
-        console.log("Deleting category with the id "+id);
+        $.post(ajax_handler_path,{"action":"DeleteCategory","id":id},function(response,status){
+            if(IsValid(response))
+            {
+                toastr.success("Successfully deleted the category");
+                $parents.remove();//Remove item from DOM
+            }
+            else
+            {
+                toastr.error("Failed to delete the category. Possible reason: the item has already been deleted. If the problem persists contact your technical team.","AJAX Server-side error");
+            }
+        });
     }
     
     //Delete the admin account with the given id
-    function DeleteAdminAccount(id)
+    function DeleteAdminAccount(id,$parents)
     {
-        console.log("Deleting admin account with the id "+id);
+        $.post(ajax_handler_path,{"action":"DeleteAdminAccount","id":id},function(response,status){
+            if(IsValid(response))
+            {
+                toastr.success("Successfully deleted the admin account");
+                $parents.remove();//Remove item from DOM
+            }
+            else
+            {
+                toastr.error("Failed to delete the admin account. Possible reason: the item has already been deleted. If the problem persists contact your technical team.","AJAX Server-side error");
+            }
+        });
     }
     
     //Delete the item with the given id
-    function DeleteItem(id)
+    function DeleteItem(id,$parents)
     {
-        console.log("Deleting item with the id "+id);
+        $.post(ajax_handler_path,{"action":"DeleteItem","id":id},function(response,status){
+            if(IsValid(response))
+            {
+                toastr.success("Successfully deleted the item");
+                $parents.remove();//Remove item from DOM
+            }
+            else
+            {
+                toastr.error("Failed to delete the item. Possible reason: the item has already been deleted. If the problem persists contact your technical team.","AJAX Server-side error");
+            }
+        });
     }
     
     //Delete the offer with the given id
-    function DeleteOffer(id)
+    function DeleteOffer(id,$parents)
     {
-        console.log("Deleting offer with the id "+id);
+        $.post(ajax_handler_path,{"action":"DeleteOffer","id":id},function(response,status){
+            if(IsValid(response))
+            {
+                toastr.success("Successfully deleted the offer");
+                $parents.remove();//Remove item from DOM
+            }
+            else
+            {
+                toastr.error("Failed to delete the offer. Possible reason: the item has already been deleted. If the problem persists contact your technical team.","AJAX Server-side error");
+            }
+        });
     }
     
     //Delete button clicked
@@ -601,17 +641,18 @@ $(document).ready(function(){
                 primary_id = $parents.attr("data-cat-id");
                 
                 //Delete from Database and remove from DOM
-                DeleteCategory(primary_id);
+                DeleteCategory(primary_id,$parents);
                 return;
             }
             
             //If delete admin account
             else if($del_btn.hasClass(DELETE_ADMIN_ACC_CLASS))
             {
+                console.log($parents);
                 primary_id = $parents.attr("data-acc-id");
                 
                 //Delete from Database and remove from DOM
-                DeleteAdminAccount(primary_id);
+                DeleteAdminAccount(primary_id,$parents);
                 return;
             }
             //If delete an item
@@ -620,7 +661,7 @@ $(document).ready(function(){
                 primary_id = $parents.attr("data-item-id");
                 
                 //Delete from Database and remove from DOM
-                DeleteItem(primary_id);
+                DeleteItem(primary_id,$parents);
                 return;
             }
             //If delete offer
@@ -629,7 +670,7 @@ $(document).ready(function(){
                 primary_id = $parents.attr("data-offer-id");
                 
                 //Delete from Database and remove from DOM
-                DeleteOffer(primary_id);
+                DeleteOffer(primary_id,$parents);
                 return;
             }
             

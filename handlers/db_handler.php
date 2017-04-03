@@ -69,7 +69,7 @@ class DbHandler implements DbHandlerInterface
             $del_stmt->bind_param($prop_type,$prop_name);
             
             //Try to execute the delete statement, returns true on succes and false on failure
-            return($delete_stmt->execute());
+            return($del_stmt->execute());
         }
         else #failed to prepare the query to delete the message
         {
