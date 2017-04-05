@@ -76,13 +76,13 @@
     else:#Manage tab active
         $offers = DbInfo::GetAllOffers();
         
-        //Print hidden message for display when items run out
-        MessageDisplay::PrintHiddenInfo($missing_offer_msg,$missing_offer_id);
-        
+        //If offers were found
         if($offers && $offers->num_rows>0):
+            //Print hidden message for display when items run out
+            MessageDisplay::PrintHiddenInfo($missing_offer_msg,$missing_offer_id);
 ?>
     <!--Offer list-->
-    <div class="container" id="manage_offers">
+    <div class="container manage-content">
         <div class="col-xs-12 col-sm-6">
             <p>Manage offers here.</p>
         </div>
@@ -99,7 +99,7 @@
     </div><hr> 
         
     <!--Accordion-->
-    <div class="panel-group" id="manage_offers_group">
+    <div class="panel-group manage-content" id="manage_offers_group">
     <?php
         $cat_id="";
         $count = 0;#iterator

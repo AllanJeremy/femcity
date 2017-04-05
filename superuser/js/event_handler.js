@@ -19,10 +19,12 @@ $(document).ready(function(){
         return ($btn.parents($input_list_class));
     }
     
+    //Returns if true if the input is considered valid, used for AJAX responses
     function IsValid(input)
     {
         return (input!=false && input!=null && (typeof(input)!="undefined"));
     }
+    
     //Validate inputs ~ returns true if the inputs were valid(not empty), false if otherwise
     function ValidateInputs($input_list)
     {   
@@ -509,14 +511,103 @@ $(document).ready(function(){
 
     });
     
+    //Container variables
+    $featured_container = $("#manage_featured_group");
+    $other_container = $("#manage_other_group");
+
+    //Toggle the message that is displayed when there are no items
+    function ToggleNoItemMessage()
+    {
+        var hidden_class = "hidden";
+
+        var $f_count = $featured_container.children(".manage-items").length;
+        //If there are no featured items ~ show the message , else: hide it
+        if($f_count===0)
+        {
+            $featured_container.children("#no_featured_msg").removeClass(hidden_class);
+        }
+        else
+        {
+            $featured_container.children("#no_featured_msg").addClass(hidden_class);
+        }
+        
+        var $o_count = $other_container.children(".manage-items").length;
+        //If there are no other items ~ show the message , else: hide it
+        if($o_count===0)
+        {
+            $other_container.children("#no_other_msg").removeClass(hidden_class);
+        }
+        else
+        {
+            $other_container.children("#no_other_msg").addClass(hidden_class);
+        }
+    }
+    
     //Add a featured item
-    $(".addFeaturedItem").click(function(){
-         alert("Adding featured item...");
-    });
+    function AddFeaturedItem($btn,$accordion,$item_id)
+    {
+        $.post(ajax_handler_path,{"action":"AddFeaturedItem","id":$item_id},function(response,status){
+            if(IsValid(response))
+            {
+                $btn.removeClass("btn-info add-trigger-btn");
+                $btn.addClass("btn-warning remove-trigger-btn");
+                $btn.html("<span class='glyphicon glyphicon-minus'></span> Remove");
+                
+                $featured_container.append($accordion);            
+                
+                toastr.success("Successfully added the featured item");
+                ToggleNoItemMessage();
+            }
+            else
+            {
+                toastr.error("Failed to add the featured item.","AJAX Server-side error");
+            }
+        });
+    }
     
     //Remove a featured item
-    $(".removeFeaturedItem").click(function(){
-         alert("Removing featured item...");
+    function RemoveFeaturedItem($btn,$accordion,$item_id)
+    {
+        $.post(ajax_handler_path,{"action":"RemoveFeaturedItem","id":$item_id},function(response,status){
+            if(IsValid(response))
+            {
+                $btn.removeClass("btn-warning remove-trigger-btn");
+                $btn.addClass("btn-info add-trigger-btn");
+                $btn.html("<span class='glyphicon glyphicon-plus'></span> Add");
+                
+                $other_container.append($accordion);   
+                
+                toastr.success("Successfully removed the featured item");
+                ToggleNoItemMessage();
+            }
+            else
+            {
+                toastr.error("Failed to remove the featured item.","AJAX Server-side error");
+            }
+        });
+    }
+    
+    //If the function is an add function, returns true, otherwise returns false
+    function IsAddButton($btn)
+    {
+        return ($btn.hasClass("add-trigger-btn") && !$btn.hasClass("remove-trigger-btn"));
+    }
+    
+    //Add or remove a featured item
+    $(".updateFeaturedItem").on("click",function(){
+        
+        $self = $(this);
+        $accordion = $self.parents(".manage-items");
+        $item_id = $accordion.attr("data-item-id");
+        //Adding a featured item
+        if(IsAddButton($self))
+        {
+            AddFeaturedItem($self,$accordion,$item_id);
+        }
+        else //Adding other item
+        {
+            RemoveFeaturedItem($self,$accordion,$item_id);
+        } 
     });
     
     /*DELETE FUNCTIONS*/
@@ -675,7 +766,6 @@ $(document).ready(function(){
             }
             
         });
-
-        
-    });
+    });//End of delete trigger function
+    
 });

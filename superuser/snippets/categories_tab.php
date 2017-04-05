@@ -53,14 +53,14 @@
 <?php
     else:#Manage tab active
         $categories = DbInfo::GetAllCategories();
-        
-        //Print hidden message for display when items run out
-        MessageDisplay::PrintHiddenInfo($missing_cat_msg,$missing_cat_id);
-        
-        if($categories && $categories->num_rows>0):
+
+        //If categories were found
+        if($categories && $categories->num_rows>0):       
+            //Print hidden message for display when items run out
+            MessageDisplay::PrintHiddenInfo($missing_cat_msg,$missing_cat_id);
 ?>
     <!--Category list-->
-    <div class="container">
+    <div class="container manage-content">
         <div class="col-xs-12 col-sm-6">
             <p>Manage categories here.</p>
         </div>
@@ -77,7 +77,7 @@
     </div><hr> 
         
     <!--Accordion-->
-    <div class="panel-group" id="manage_cat_group">
+    <div class="panel-group manage-content" id="manage_cat_group">
     <?php
         $cat_id="";
         $count = 0;#iterator

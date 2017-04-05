@@ -146,7 +146,7 @@ class DbInfo implements DbInfoInterface
             foreach($all_items as $item)
             {
                 #If the item is in the featured item_ids variable, it is considered a featured item
-                $is_featured = in_array($featured_ids,$item["item_id"]);
+                $is_featured = in_array($item["item_id"],$featured_ids);
                 
                 #If the item is not a featured item ~ it is considered to be "other item"
                 if(!$is_featured)

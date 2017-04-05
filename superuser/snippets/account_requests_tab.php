@@ -1,10 +1,14 @@
 <?php
     require_once("../handlers/db_handler.php");
+    
+    //Message shown when categories cannot be found and the id for the message box(used as selector in js)
+    $missing_request_msg = "No admin account requests were found. Once account requests are made, they will appear here.";
+    $missing_request_id = "missing_acc_request_msg";
 ?>
 
 <div class="container well">
     <!--Manage featured items header-->
-    <div class="container">
+    <div class="container manage-content">
             <div class="col-xs-12 col-sm-6">
                 <p>Manage account requests.</p>
             </div>
@@ -21,13 +25,16 @@
         </div><hr> 
 
     <!--Accordion-->
-    <div class="panel-group" id="manage_account_requests">
+    <div class="panel-group manage-content" id="manage_account_requests">
         <h4>ACCOUNT REQUESTS</h4><hr>
     <?php
             $account_requests = DbInfo::GetAllAccountRequests();
         
             //If account requests were found, display them
             if($account_requests && $account_requests->num_rows>0):
+                //Print hidden message for display when items run out
+                MessageDisplay::PrintHiddenInfo($missing_request_msg,$missing_request_id);
+        
                 foreach($account_requests as $acc):
                     $request_id = $acc["request_id"];
                     $acc_name = $acc["first_name"]." ".$acc["last_name"];
@@ -138,7 +145,7 @@
                 endforeach;
             else:
                 //Info message ~ displayed when no accounts were found in the database
-                MessageDisplay::PrintInfo("No admin account requests were found. Once account requests are made, they will appear here.","no_acc_requests_msg");
+                MessageDisplay::PrintInfo($missing_request_msg,$missing_request_id);
             endif;    
     ?>
     </div>

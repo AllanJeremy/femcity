@@ -114,13 +114,13 @@
     else:#Manage tab active
         $admin_accounts = Dbinfo::GetAllAdminAccounts();
         
-        //Print hidden message for display when items run out
-        MessageDisplay::PrintHiddenInfo($missing_acc_msg,$missing_acc_id);
-        
+        //If admin accounts were found
         if($admin_accounts && $admin_accounts->num_rows>0):
+            //Print hidden message for display when items run out
+            MessageDisplay::PrintHiddenInfo($missing_acc_msg,$missing_acc_id);
 ?>
     <!--Category list-->
-    <div class="container">
+    <div class="container manage-content">
         <!--Category list-->
         <div class="col-xs-12 col-sm-6">
             <p>Manage admin accounts here.</p>
@@ -138,7 +138,7 @@
     </div><hr>
         
     <!--Accordion-->
-    <div class="panel-group" id="manage_accounts_group">
+    <div class="panel-group manage-content" id="manage_accounts_group">
     <?php
         $acc_id="";
 //        $count = 0;#iterator

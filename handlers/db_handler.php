@@ -24,9 +24,9 @@ interface DbHandlerInterface
     public static function DeleteAdminAccountRequest($id);#Delete an admin account request based on primary key
     
     //Featured products
-    public static function CreateFeaturedItem($details); #Create a new featured product
+    public static function AddFeaturedItem($details); #Create a new featured product
     public static function UpdateFeaturedItem($id,$details); #Update featured product based on primary key
-    public static function DeleteFeaturedItem($id); #Delete featured product based on primary key
+    public static function RemoveFeaturedItem($id); #Delete featured product based on primary key
     
     //Offers
     public static function CreateOffer($details); #Create a new offer
@@ -261,7 +261,7 @@ class DbHandler implements DbHandlerInterface
     }
     //Featured products
     #Create a new featured product
-    public static function CreateFeaturedItem($details)
+    public static function AddFeaturedItem($details)
     {
         global $dbCon;
         $insert_query = "INSERT INTO featured_items(item_id,description) VALUES (?,?)";
@@ -295,10 +295,10 @@ class DbHandler implements DbHandlerInterface
         }
     }
     
-    #Delete featured product based on primary key
-    public static function DeleteFeaturedItem($id)
+    #Delete featured product based on item_id (foreign key)
+    public static function RemoveFeaturedItem($id)
     {
-        return self::DeleteBasedOnSingleProperty("featured_items","feature_id",$id);
+        return self::DeleteBasedOnSingleProperty("featured_items","item_id",$id);
     }
     
     //Offers

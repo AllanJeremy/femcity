@@ -16,14 +16,14 @@
         {
             $item_type="featured";
             $btn_class = "btn-warning";
-            $btn_glyph_class = "glyphicon-minus removeFeaturedItem";
+            $btn_glyph_class = "glyphicon-minus remove-trigger-btn";
             $btn_text = "Remove";      
             $state_toggle = "add";#state toggle is remove because remove toggles to add
         }
         else
         {
             $item_type="other";
-            $btn_class = "btn-info addFeaturedItem";
+            $btn_class = "btn-info add-trigger-btn";
             $btn_glyph_class = "glyphicon-plus";
             $btn_text = "Add";
             $state_toggle = "remove";#state toggle is remove because add toggles to remove
@@ -59,7 +59,7 @@
             <a data-toggle="collapse" data-parent="#manage_cat_group" href="#<?php echo $collapse_id;?>">
             <?php echo $item_name." - by ".$admin_full_name." ($admin_bus_name)";?> <span class="caret"></span></a>
             <span class="pull-right action-buttons">
-                <a class="btn <?php echo $btn_class;?> add-trigger-btn" data-state-toggle="<?php echo $state_toggle;?>"><span class="glyphicon <?php echo $btn_glyph_class;?>"></span> <?php echo $btn_text;?></a>
+                <a class="btn <?php echo $btn_class;?> updateFeaturedItem" data-state-toggle="<?php echo $state_toggle;?>"><span class="glyphicon <?php echo $btn_glyph_class;?>"></span> <?php echo $btn_text;?></a>
                 <a class="btn btn-warning manage-delete-btn delete_featured"><span class="glyphicon glyphicon-trash"></span> Delete</a>
             </span>
           </h4><br>
@@ -99,13 +99,13 @@
     <?php
         $items = DbInfo::GetAllItems(); #Get all the items
         
-        //Print hidden message for display when items run out
-        MessageDisplay::PrintHiddenInfo($missing_item_msg,$missing_item_id);
-        
+        //If items were found in the database
         if($items && $items->num_rows>0):    
+            //Print hidden message for display when items run out
+            MessageDisplay::PrintHiddenInfo($missing_item_msg,$missing_item_id);
     ?>
     <!--Manage featured items header-->
-    <div class="container" id="manage_featured_items">
+    <div class="container manage-content">
             <div class="col-xs-12 col-sm-6">
                 <p>Manage featured items here.</p>
             </div>
@@ -122,7 +122,7 @@
         </div><hr> 
 
     <!--Accordion-->
-    <div class="panel-group" id="manage_featured_group">
+    <div class="panel-group manage-content" id="manage_featured_group">
         <h4>FEATURED ITEMS</h4><hr>
     <?php
             $item_description = "";

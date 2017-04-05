@@ -61,9 +61,22 @@ if(isset($_POST["action"]))
         break;
             
         //FEATURED ITEM FUNCTIONS
-        case "CreateFeaturedItem": #Superuser ~ Create a featured item
-            echo "<p>Creating featured item</p>";
-        break;   
+        case "AddFeaturedItem": #Superuser ~ Add a featured item
+            $id = $_POST["id"];
+            $description = "";
+            $data = array("item_id"=>$id,"description"=>$description);
+            
+            $add_status = DbHandler::AddFeaturedItem($data);
+            
+            echo $add_status;
+        break;  
+            
+        case "RemoveFeaturedItem": #Superuser ~ Remove a featured item
+            $id = $_POST["id"];
+            $remove_status = DbHandler::RemoveFeaturedItem($id);
+            
+            echo $remove_status;
+        break;  
      
         case "UpdateFeaturedItem": #Superuser ~ Update a featured item
             $id = $_POST["id"];
