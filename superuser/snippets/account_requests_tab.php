@@ -56,6 +56,7 @@
                     $first_name_id = $collapse_id."_first_name";
                     $last_name_id = $collapse_id."_last_name";
                     $email_id = $collapse_id."_email";
+                    $phone_id = $collapse_id."_phone";
                     $bus_name_id = $collapse_id."_bus_name";
                     $cat_dom_id = $collapse_id."_cat";
                     $bus_descr_id = $collapse_id."_bus_descr";
@@ -66,8 +67,8 @@
             <a data-toggle="collapse" data-parent="#manage_accounts_group" href="#<?php echo $collapse_id;?>">
             <?php echo $acc_name.", ".$business_name;?> <span class="caret"></span></a>
             <div class="pull-right action-buttons">
-                <a class="btn btn-success manage-accept-btn"><span class="glyphicon glyphicon-ok"></span> Accept</a>
-                <a class="btn btn-warning manage-deny-btn"><span class="glyphicon glyphicon-remove"></span> Deny</a>
+                <a class="btn btn-success accept-request-btn"><span class="glyphicon glyphicon-ok"></span> Accept</a>
+                <a class="btn btn-warning deny-request-btn"><span class="glyphicon glyphicon-remove"></span> Deny</a>
             </div>
           </h4><br>
         </div>
@@ -76,30 +77,35 @@
           <div class="panel-body">
             <h4>ACCOUNT DETAILS</h4><hr>
             <form class="row editable-list" method="post">  
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-6 input-container">
                     <br>
                     <label for="<?php echo $first_name_id;?>" >First name </label>
-                    <input class="editable form-control" disabled type="text" placeholder="First name" name="admin_first_name" id="<?php echo $first_name_id;?>" title="First name of the business owner" value="<?php echo $acc["first_name"];?>">
+                    <input class="editable form-control admin_first_name" disabled type="text" placeholder="First name" id="<?php echo $first_name_id;?>" title="First name of the business owner" value="<?php echo $acc["first_name"];?>">
                 </div>
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-6 input-container">
                     <br>
                     <label for="<?php echo $last_name_id;?>" >Last name </label>
-                    <input class="editable form-control" disabled type="text" placeholder="Last name" name="admin_last_name" id="<?php echo $last_name_id;?>" title="Last name of the business owner" value="<?php echo $acc["last_name"];?>">
+                    <input class="editable form-control admin_last_name" disabled type="text" placeholder="Last name" id="<?php echo $last_name_id;?>" title="Last name of the business owner" value="<?php echo $acc["last_name"];?>">
                 </div>
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-6 input-container">
                     <br>
                     <label for="<?php echo $email_id;?>" >Email address</label>
-                    <input class="editable form-control" disabled type="email" placeholder="Email address" name="admin_email" id="<?php echo $email_id;?>" title="Email of the business/business owner. Used to login to the account." value="<?php echo $acc["email"];?>">
+                    <input class="editable form-control admin_email" disabled type="email" placeholder="Email address" id="<?php echo $email_id;?>" title="Email of the business/business owner. Used to login to the account." value="<?php echo $acc["email"];?>">
                 </div>
-                <div class="col-xs-12 col-md-6">
+                <div class="col-xs-12 col-sm-6 input-container">
+                    <br>
+                    <label for="<?php echo $phone_id;?>" >Email address</label>
+                    <input class="editable form-control admin_phone" disabled type="text" placeholder="Email address" id="<?php echo $phone_id;?>" title="Phone number of the business/business owner. Used to contact them" value="<?php echo $acc["phone"];?>">
+                </div>
+                <div class="col-xs-12 col-md-6 input-container">
                     <br>
                     <label for="<?php echo $bus_name_id;?>">Business name </label>
-                    <input class="editable form-control" disabled type="text" placeholder="Business name" name="admin_business_name" id="<?php echo $bus_name_id;?>" title="Name of the business/company that owns this account" value="<?php echo $business_name;?>">
+                    <input class="editable form-control admin_business_name" disabled type="text" placeholder="Business name" id="<?php echo $bus_name_id;?>" title="Name of the business/company that owns this account" value="<?php echo $business_name;?>">
                 </div>
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-6 input-container">
                     <br>
                     <label for="<?php echo $cat_dom_id;?>" >Category </label>
-                    <select id="<?php echo $cat_dom_id;?>" title="Category the business belongs to" class="editable form-control disabled" disabled>
+                    <select id="<?php echo $cat_dom_id;?>" title="Category the business belongs to" class="editable form-control disabled admin_business_category" disabled>
                         <?php
                             $categories = DbInfo::GetAllCategories();
 
@@ -125,10 +131,10 @@
                         ?>
                     </select>
                 </div>
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-6 input-container">
                     <br>
                     <label for="<?php echo $bus_descr_id;?>">Business description </label>
-                    <textarea class="editable form-control" disabled placeholder="No business description set" name="business_description" id="<?php echo $bus_descr_id;?>" title="Business description. Brief description of what the business does"><?php echo $business_descr;?></textarea>
+                    <textarea class="editable form-control admin_business_description" disabled placeholder="No business description set" id="<?php echo $bus_descr_id;?>" title="Business description. Brief description of what the business does"><?php echo $business_descr;?></textarea>
                 </div>
             </form>
             <hr><h4>EXTRA INFORMATION</h4><hr>

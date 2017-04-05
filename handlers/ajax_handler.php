@@ -110,13 +110,23 @@ if(isset($_POST["action"]))
             echo $delete_status;
         break;
         
-        //ACCOUNT REQUEST FUNCTIONS
+        //ACCOUNT REQUEST FUNCTION
         case "AcceptAccountRequest": #Superuser ~ Accept account request
-            echo "<p>Accepting account request</p>";
+            $id = $_POST["id"];
+            $data = $_POST["data"];
+            
+            $data["password"] = PasswordHandler::Encrypt($data["password"]);#Encrypt the password
+            $data["subbed"] = (int)$data["subbed"];#cast to int (probably uneccesary)
+            
+            $accept_status = DbHandler::AcceptAccRequest($id,$data);
+            echo $accept_status;
         break;
             
         case "DenyAccountRequest": #Superuser ~ Deny account request
-            echo "<p>Denying account request</p>";
+            $id = $_POST["id"];
+
+            $deny_status = DbHandler::DenyAccRequest($id);
+            echo $deny_status;
         break;
             
         //ITEM FUNCTIONS

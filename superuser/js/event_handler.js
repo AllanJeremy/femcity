@@ -5,7 +5,7 @@ $(document).ready(function(){
     //Init toastr options
     toastr.options = {
           "closeButton": false,
-          "positionClass": "toast-bottom-center",
+          "positionClass": "toast-bottom-full-width",
           "preventDuplicates": false,
           "showDuration": "500",
           "hideDuration": "1000",
@@ -29,7 +29,6 @@ $(document).ready(function(){
     function ValidateInputs($input_list)
     {   
         toastr.options.preventDuplicates = true;
-        toastr.options.positionClass = "toast-bottom-full-width";
         //If the input list is undefined
         if($input_list == "undefined" || $input_list.length == 0)
         {
@@ -594,7 +593,7 @@ $(document).ready(function(){
     }
     
     //Add or remove a featured item
-    $(".updateFeaturedItem").on("click",function(){
+    $(".updateFeaturedItem").click(function(){
         
         $self = $(this);
         $accordion = $self.parents(".manage-items");
@@ -767,5 +766,87 @@ $(document).ready(function(){
             
         });
     });//End of delete trigger function
+    
+    /*ACCOUNT REQUESTS*/
+    //Get the request id
+    function GetRequestId($parents)
+    {
+        return $parents.attr("data-request-id");
+    }
+    
+    //Show or hide the message showing that there are no more account requests
+    function ToggleNoRequestMessage()
+    {
+        var $parents = $("#manage_account_requests");
+        var request_count = $parents.find(".manage-items").length;
+        
+        //If there are no account requests, show the message
+        if(request_count === 0)
+        {
+            $parents.children("#missing_acc_request_msg").removeClass("hidden");
+        }
+    }
+    
+    //Accept account request
+    $(".accept-request-btn").click(function(){
+        var $parents = $(this).parents(".manage-items");
+        var $input_list = $parents.find(".editable-list").children(".input-container");
+        
+        //Admin account data
+        var first_name = $input_list.children(".admin_first_name").val();
+        var last_name = $input_list.children(".admin_last_name").val();
+        var email = $input_list.children(".admin_email").val();
+        var phone = $input_list.children(".in_admin_phone").val();
+        var business_name = $input_list.children(".admin_business_name").val();
+        var business_category = $input_list.children(".admin_business_category").val();
+        var business_description = $input_list.children(".admin_business_description").val();
+        
+        var req_id = GetRequestId($parents);
+        
+        //Store the data as JSON data
+        var data = {
+            "first_name":first_name,
+            "last_name":last_name,
+            "business_name":business_name,
+            "business_description":business_description,
+            "cat_id":business_category,
+            "email":email,
+            "phone":phone,
+            "password":email,
+            "subbed":1
+        };
+
+        $.post(ajax_handler_path,{"action":"AcceptAccountRequest","id":req_id,"data":data},function(response,status){
+            if(IsValid(response))
+            {
+                $parents.remove();//Remove the accordion from the DOM
+                toastr.success("Successfully accepted the account request");
+                ToggleNoRequestMessage();
+            }
+            else
+            {
+                toastr.error("Failed to accepted the account request","AJAX Server-side error");
+            }
+        });
+    });
+    
+    //Deny account request
+    $(".deny-request-btn").click(function(){
+        $parents = $(this).parents(".manage-items");
+        var req_id = GetRequestId($parents);
+        
+        $.post(ajax_handler_path,{"action":"DenyAccountRequest","id":req_id},function(response,status){
+            if(IsValid(response))
+            {
+                $parents.remove();//Remove the accordion from the DOM
+                toastr.success("Successfully denied the account request");
+                ToggleNoRequestMessage();
+            }
+            else
+            {
+                toastr.error("Failed to deny the account request","AJAX Server-side error");
+            }
+        });
+    });
     
 });

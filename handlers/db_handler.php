@@ -35,7 +35,7 @@ interface DbHandlerInterface
     
     //Account requests
     public static function AcceptAccRequest($id,$details); #Accept account request ~ delete the account request from account requests table and move it to the admin_accounts table
-    public static function DenyAccountRequest($id); #Deny an account request, delete the account request
+    public static function DenyAccRequest($id); #Deny an account request, delete the account request
     
     //Personal account ~ Create, update and delete superuser account
     public static function CreateSuperuserAccount($details); #Create a new featured product
@@ -145,9 +145,10 @@ class DbHandler implements DbHandlerInterface
         {   
             $insert_stmt->bind_param("ssssisssi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["phone"],$details["password"],$details["subbed"]);
             
-//            var_dump($insert_stmt->error);
+
             //Try executing the query ~ returns true on success and false on failure
             return($insert_stmt->execute());
+            //var_dump($inser_stmt->error);
         }
         else #Failed to prepare query
         {
@@ -356,7 +357,8 @@ class DbHandler implements DbHandlerInterface
     public static function AcceptAccRequest($id,$details)
     {   
         $admin_acc_created = self::CreateAdminAcc($details);
-        //If the admin acc was created successfully
+        
+        //If the admin acc was created successfully ~ delete the account request
         if($admin_acc_created)
         {
             #delete the account request if the corresponsing admin account is created
@@ -371,7 +373,7 @@ class DbHandler implements DbHandlerInterface
     }
     
     #Deny an account request, delete the account request
-    public static function DenyAccountRequest($id)
+    public static function DenyAccRequest($id)
     {
         return self::DeleteAccountRequest($id);
     }
