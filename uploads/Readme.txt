@@ -1,0 +1,1 @@
+This folder stores image uploads made by the admin

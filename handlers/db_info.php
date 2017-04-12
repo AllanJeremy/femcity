@@ -27,6 +27,7 @@ interface DbInfoInterface
     public static function GetOfferByItemId($item_id);
     public static function GetItemsByAccId($acc_id);        
     public static function GetAllItemImages();
+    public static function GetItemImagesByItem($item_id);
 }
 
 //This class deals with retrieval of records from the database
@@ -251,4 +252,26 @@ class DbInfo implements DbInfoInterface
         return self::SinglePropertyExists("items","acc_id",$acc_id);
     }
     
+    //Get item images based on an item Id
+    public static function GetItemImagesByItem($item_id)
+    {
+        global $dbCon;
+        $item_id = htmlspecialchars($item_id);
+        $select_query = "SELECT * FROM item_images INNER JOIN items ON item_images.item_id = items.item_id WHERE item_images.item_id=".$item_id;
+        
+        return ($dbCon->query($select_query));
+    }
+    
+    //Get a single item image
+    public static function GetSingleItemImage($item_images)
+    {
+        if($item_images && !empty($item_images))
+        {
+            foreach($item_images as $img)
+            {
+                return $img;
+            }
+        }
+        return $item_images;
+    }
 }
