@@ -26,6 +26,7 @@ interface DbInfoInterface
     public static function GetFeaturedByItemId($item_id);
     public static function GetOfferByItemId($item_id);
     public static function GetItemsByAccId($acc_id);        
+    public static function GetAllItemImages();
 }
 
 //This class deals with retrieval of records from the database
@@ -169,6 +170,17 @@ class DbInfo implements DbInfoInterface
     {
         return self::GetAllRecordsFromTable("items");
     }
+    
+    //Get all item images
+    public static function GetAllItemImages()
+    {
+        global $dbCon;
+        
+        $select_query  ="SELECT * FROM item_images INNER JOIN items ON item_images.item_id = items.item_id";
+        
+        return ($dbCon->query($select_query));
+    }
+    //Get all offers
     public static function GetAllOffers()
     {
         return self::GetAllRecordsFromTable("offers");

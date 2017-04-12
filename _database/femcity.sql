@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2017 at 08:04 PM
+-- Generation Time: Apr 12, 2017 at 09:35 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -31,10 +31,10 @@ CREATE TABLE `account_requests` (
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `business_name` varchar(256) NOT NULL,
-  `business_description` text NOT NULL COMMENT 'Description of what the business does',
+  `business_description` text COMMENT 'Description of what the business does',
   `cat_id` int(255) UNSIGNED NOT NULL COMMENT 'Category id',
   `email` varchar(256) NOT NULL,
-  `password` varchar(512) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL COMMENT 'Phone number of the admin',
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `subbed` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'If the account request is subscribed to the email newsletter'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -50,9 +50,10 @@ CREATE TABLE `admin_accounts` (
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `business_name` varchar(256) NOT NULL,
-  `business_description` text NOT NULL COMMENT 'Description of what the business does',
+  `business_description` text COMMENT 'Description of what the business does',
   `cat_id` int(255) UNSIGNED NOT NULL COMMENT 'Category id',
   `email` varchar(256) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL COMMENT 'Phone number of the admin',
   `password` varchar(512) NOT NULL,
   `subbed` tinyint(1) NOT NULL DEFAULT '1',
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -96,7 +97,6 @@ CREATE TABLE `items` (
   `item_name` varchar(256) NOT NULL,
   `type` enum('service','product','','') NOT NULL DEFAULT 'service',
   `description` text,
-  `images` text COMMENT 'An array showing the images for the item',
   `price` int(255) UNSIGNED NOT NULL DEFAULT '10',
   `quantity` int(10) DEFAULT '1',
   `discount` int(255) UNSIGNED NOT NULL DEFAULT '0',
@@ -107,15 +107,43 @@ CREATE TABLE `items` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `item_images`
+--
+
+CREATE TABLE `item_images` (
+  `img_id` int(255) UNSIGNED NOT NULL,
+  `img_path` varchar(512) NOT NULL,
+  `img_name` varchar(512) NOT NULL,
+  `img_type` varchar(512) NOT NULL,
+  `item_id` int(255) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Stores the list of the images that have been uploaded to db';
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `offers`
 --
 
 CREATE TABLE `offers` (
-  `offer_id` int(11) NOT NULL,
+  `offer_id` int(255) NOT NULL,
   `offer_text` varchar(512) NOT NULL,
   `description` text,
   `cat_id` int(255) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Contains promotions currently being displayed on banners';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_messages`
+--
+
+CREATE TABLE `product_messages` (
+  `msg_id` int(255) UNSIGNED NOT NULL,
+  `item_id` int(255) UNSIGNED NOT NULL,
+  `message_text` text NOT NULL,
+  `sender_name` varchar(256) NOT NULL COMMENT 'name of the sender',
+  `sender_contact` varchar(256) NOT NULL COMMENT 'a means to contact the sender. email, phone etc.'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -172,10 +200,24 @@ ALTER TABLE `items`
   ADD PRIMARY KEY (`item_id`);
 
 --
+-- Indexes for table `item_images`
+--
+ALTER TABLE `item_images`
+  ADD PRIMARY KEY (`img_id`),
+  ADD KEY `item_id` (`item_id`);
+
+--
 -- Indexes for table `offers`
 --
 ALTER TABLE `offers`
+  ADD PRIMARY KEY (`offer_id`),
   ADD KEY `item_id` (`cat_id`);
+
+--
+-- Indexes for table `product_messages`
+--
+ALTER TABLE `product_messages`
+  ADD PRIMARY KEY (`msg_id`);
 
 --
 -- Indexes for table `superuser_accounts`
@@ -201,7 +243,7 @@ ALTER TABLE `admin_accounts`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `cat_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `cat_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `featured_items`
 --
@@ -213,6 +255,21 @@ ALTER TABLE `featured_items`
 ALTER TABLE `items`
   MODIFY `item_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT for table `item_images`
+--
+ALTER TABLE `item_images`
+  MODIFY `img_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `offers`
+--
+ALTER TABLE `offers`
+  MODIFY `offer_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `product_messages`
+--
+ALTER TABLE `product_messages`
+  MODIFY `msg_id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `superuser_accounts`
 --
 ALTER TABLE `superuser_accounts`
@@ -220,6 +277,12 @@ ALTER TABLE `superuser_accounts`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `account_requests`
+--
+ALTER TABLE `account_requests`
+  ADD CONSTRAINT `fk_acc_requests_categories` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`cat_id`);
 
 --
 -- Constraints for table `admin_accounts`
@@ -232,6 +295,12 @@ ALTER TABLE `admin_accounts`
 --
 ALTER TABLE `featured_items`
   ADD CONSTRAINT `fk_featured_id` FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `item_images`
+--
+ALTER TABLE `item_images`
+  ADD CONSTRAINT `fk_item_images` FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `offers`
