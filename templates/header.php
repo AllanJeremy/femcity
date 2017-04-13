@@ -1,4 +1,6 @@
 <?php
+    require_once("handlers/session_handler.php");#Accessing information from the database
+
     const ACTIVE_CLASS = 'class="active"';
     function ShowNav($active_tab="")
     {

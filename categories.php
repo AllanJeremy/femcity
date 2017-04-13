@@ -188,13 +188,13 @@
 										<img src="images/shop/product12.jpg" alt="" />
 										<h2>$56</h2>
 										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2>$56</h2>
 											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 										</div>
 									</div>
 								</div>
@@ -213,13 +213,13 @@
 										<img src="images/shop/product11.jpg" alt="" />
 										<h2>$56</h2>
 										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2>$56</h2>
 											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 										</div>
 									</div>
 								</div>
@@ -238,13 +238,13 @@
 										<img src="images/shop/product10.jpg" alt="" />
 										<h2>$56</h2>
 										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2>$56</h2>
 											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 										</div>
 									</div>
 								</div>
@@ -263,13 +263,13 @@
 										<img src="images/shop/product9.jpg" alt="" />
 										<h2>$56</h2>
 										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2>$56</h2>
 											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 										</div>
 									</div>
 									<img src="images/home/new.png" class="new" alt="" />
@@ -289,13 +289,13 @@
 										<img src="images/shop/product8.jpg" alt="" />
 										<h2>$56</h2>
 										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2>$56</h2>
 											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 										</div>
 									</div>
 									<img src="images/home/sale.png" class="new" alt="" />
@@ -315,13 +315,13 @@
 										<img src="images/shop/product7.jpg" alt="" />
 										<h2>$56</h2>
 										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2>$56</h2>
 											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 										</div>
 									</div>
 								</div>
@@ -341,13 +341,13 @@
 										<img src="images/home/product6.jpg" alt="" />
 										<h2>$56</h2>
 										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2>$56</h2>
 											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 										</div>
 									</div>
 								</div>
@@ -367,13 +367,13 @@
 										<img src="images/home/product5.jpg" alt="" />
 										<h2>$56</h2>
 										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2>$56</h2>
 											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 										</div>
 									</div>
 								</div>
@@ -393,13 +393,13 @@
 										<img src="images/home/product4.jpg" alt="" />
 										<h2>$56</h2>
 										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2>$56</h2>
 											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 										</div>
 									</div>
 								</div>
@@ -419,13 +419,13 @@
 										<img src="images/home/product3.jpg" alt="" />
 										<h2>$56</h2>
 										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2>$56</h2>
 											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 										</div>
 									</div>
 								</div>
@@ -446,13 +446,13 @@
 										<img src="images/home/product2.jpg" alt="" />
 										<h2>$56</h2>
 										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2>$56</h2>
 											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 										</div>
 									</div>
 								</div>
@@ -472,13 +472,13 @@
 										<img src="images/home/product1.jpg" alt="" />
 										<h2>$56</h2>
 										<p>Easy Polo Black Edition</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 									</div>
 									<div class="product-overlay">
 										<div class="overlay-content">
 											<h2>$56</h2>
 											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="#" class="btn btn-default view-item"><i class="glyphicon glyphicon-eye-open"></i>View Item</a>
 										</div>
 									</div>
 								</div>

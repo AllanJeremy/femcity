@@ -25,7 +25,7 @@ interface DbInfoInterface
     //Get records based on foreign keys
     public static function GetFeaturedByItemId($item_id);
     public static function GetOfferByItemId($item_id);
-    public static function GetItemsByAccId($acc_id);        
+    public static function GetItemsByAccId($acc_id,$excluded_id);        
     public static function GetAllItemImages();
     public static function GetItemImagesByItem($item_id);
 }
@@ -247,9 +247,31 @@ class DbInfo implements DbInfoInterface
     }
     
     //Get item by acc_id ~ the id of the account that added it
-    public static function GetItemsByAccId($acc_id)
+    public static function GetItemsByAccId($acc_id,$excluded_id=0)
     {
-        return self::SinglePropertyExists("items","acc_id",$acc_id);
+        global $dbCon;
+        $select_query = "SELECT * FROM items WHERE acc_id=? AND (NOT item_id=?)";
+        
+        if($select_stmt = $dbCon->prepare($select_query))
+        {
+            //If the excluded id has been provided
+            $select_stmt->bind_param("ii",$acc_id,$excluded_id);    
+            $exec_status = ($select_stmt->execute());
+            
+            if($exec_status)
+            {
+                return $select_stmt->get_result();
+            }
+            else
+            {
+                return $exec_status;
+            }
+            
+        }
+        else
+        {
+            return null;
+        }
     }
     
     //Get item images based on an item Id
@@ -263,8 +285,9 @@ class DbInfo implements DbInfoInterface
     }
     
     //Get a single item image
-    public static function GetSingleItemImage($item_images)
+    public static function GetSingleItemImage($item_id)
     {
+        $item_images = self::GetItemImagesByItem($item_id);
         if($item_images && !empty($item_images))
         {
             foreach($item_images as $img)
