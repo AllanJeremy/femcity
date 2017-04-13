@@ -27,7 +27,7 @@
 <body>
     <?php
         include_once("templates/header.php");
-        showNav("shop");
+        showNav();
     ?>
 	
 	<section>

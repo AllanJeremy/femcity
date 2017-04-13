@@ -26,15 +26,31 @@
 
 <body>
 	<?php
+        $cat_id = @$_GET["id"];
+        
+        //If the category id is not set, redirect to 404
+        if(!isset($cat)):
+    ?>
+         <script> location.replace("404.php"); </script>
+     <?php
+        endif; 
+   
         include_once("templates/header.php");
         ShowNav();
+    
+        $offers = DbInfo::GetOfferByCategory($cat_id);
+    
+        //Offers 
+        if($offers && $offers->num_rows>0):
 	?>
 	<section id="advertisement">
 		<div class="container">
 			<img src="images/shop/advertisement.jpg" alt="" />
 		</div>
 	</section>
-	
+	<?php
+        endif;
+    ?>
 	<section>
 		<div class="container">
 			<div class="row">

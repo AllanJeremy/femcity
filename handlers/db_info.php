@@ -21,6 +21,7 @@ interface DbInfoInterface
     public static function GetFeaturedById($f_item_id);
     public static function GetItemById($item_id);
     public static function GetOfferById($promo_id);
+    public static function GetOfferByCategory($cat_id);
     
     //Get records based on foreign keys
     public static function GetFeaturedByItemId($item_id);
@@ -231,6 +232,10 @@ class DbInfo implements DbInfoInterface
     public static function GetOfferById($offer_id)
     {
         return (self::GetSingleRecordUsingProperty("offers","offer_id",$offer_id));
+    }
+    public static function GetOfferByCategory($cat_id)
+    {
+        return (self::GetSingleRecordUsingProperty("offers","cat_id",$cat_id));
     }
     
     /*GET RECORDS BASED ON FOREIGN KEYS*/
