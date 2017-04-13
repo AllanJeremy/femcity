@@ -25,6 +25,7 @@ interface DbInfoInterface
     
     //Get records based on foreign keys
     public static function GetFeaturedByItemId($item_id);
+    public static function GetAdminByCategory($cat_id);
     public static function GetOfferByItemId($item_id);
     public static function GetItemsByAccId($acc_id,$excluded_id);        
     public static function GetAllItemImages();
@@ -239,6 +240,13 @@ class DbInfo implements DbInfoInterface
     }
     
     /*GET RECORDS BASED ON FOREIGN KEYS*/
+    
+    //Get admin by category
+    public static function GetAdminByCategory($cat_id)
+    {
+        return self::SinglePropertyExists("admin_accounts","cat_id",$cat_id);
+    }
+    
     //Get Featured item by item_id
     public static function GetFeaturedByItemId($item_id)
     {

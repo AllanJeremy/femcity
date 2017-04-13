@@ -2530,3 +2530,12 @@ h2.title {
     background-size:contain;
     background-repeat:no-repeat;
 }
+
+/*ad container*/
+.ad-container
+{
+    background-color:#8B008B;
+    color:#ddd;
+    padding-top:1em;
+    padding-bottom:2em;
+}

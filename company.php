@@ -26,8 +26,23 @@
 
 <body>
     <?php
+        $acc_id = $_GET["id"];
+    
+        if(!isset($acc_id)):
+    ?>
+        <script> location.replace("404.php"); </script>
+    <?php
+        endif;
         include_once("templates/header.php");
         showNav();
+    
+        $acc_found = MySessionHandler::GetAdminById($acc_id);
+        if(!isset($acc_found) || @$acc_found->num_rows<=0 || !$acc_found):
+    ?>
+<!--        <script> location.replace("404.php"); </script>-->
+    <?php
+        else:
+        endif;
     ?>
 	
 	<section>
@@ -35,13 +50,35 @@
 			<div class="row">
                 <?php
                     include_once("templates/category_list.php");
+                    $business_name = $acc_found["business_name"];
                 ?>
 				
 				<div class="col-sm-9 padding-right">
+                    <div class="company-profile container">
+                        <h2 class="title text-center">About <?php echo $business_name;?></h2>
+                        <div class="col-sm-3">
+                            <img class="img-responsive" src="images/placeholder_logo.png" alt="<?php echo $business_name.' logo';?>">
+                        </div>
+                        <div class="col-sm-9">
+                            <br>
+                            <?php
+                                $descr = $acc_found["business_description"];
+                                if(!empty($descr) && isset($descr)):
+                            ?>
+                                <p><?php echo $descr;?></p>
+                            <?php
+                                else:
+                            ?>
+                                <p>No description available for <?php echo $acc_found["business_name"];?></p>
+                            <?php
+                                endif;
+                            ?>
+                        </div>
+                    </div><br><hr><br>
 					<div class="items_available"><!--items_available-->
-						<h2 class="title text-center">Items Available</h2>
+						<h2 class="title text-center">Items by <?php echo $acc_found["business_name"];?></h2>
                     <?php
-                        $items_found = DbInfo::GetAllFeaturedItems();
+                        $items_found = DbInfo::GetItemsByAccId($acc_id);
                     
                         if($items_found && $items_found->num_rows>0):
                             foreach($items_found as $item):
@@ -80,6 +117,8 @@
                         </div>
 					<?php
                             endforeach;
+                        else:
+                            echo "<p>This business has not yet posted any items</p><br><hr><br>";
                         endif;
                     ?>
 						
