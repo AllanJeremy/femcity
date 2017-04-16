@@ -30,7 +30,7 @@
         }
         
         //If the items to add were found ~ based on how we call this, it should always be true (here just incase)
-        if($items_to_add && $items_to_add->num_rows>0):
+        if($items_to_add && @$items_to_add->num_rows>0):
     
             //Loop through each category creating a dropdown item
             foreach($items_to_add as $item):
@@ -100,7 +100,7 @@
         $items = DbInfo::GetAllItems(); #Get all the items
         
         //If items were found in the database
-        if($items && $items->num_rows>0):    
+        if($items && @$items->num_rows>0):    
             //Print hidden message for display when items run out
             MessageDisplay::PrintHiddenInfo($missing_item_msg,$missing_item_id);
     ?>
@@ -134,7 +134,7 @@
             $no_featured_id="no_featured_msg";
 
             //If featured items were found
-            if($featured_items && $featured_items->num_rows>0)
+            if($featured_items && @$featured_items->num_rows>0)
             {
                 MessageDisplay::PrintHiddenInfo($no_featured_msg,$no_featured_id); 
                 AddItemsToDOM($featured_items,true); #Add the featured items to the DOM
@@ -158,7 +158,7 @@
             $no_other_id = "no_other_msg";
             
             //If other items were found
-            if($other_items && $other_items->num_rows>0)
+            if($other_items && @$other_items->num_rows>0)
             {
                 MessageDisplay::PrintHiddenInfo($no_other_msg,$no_other_id);    
                 AddItemsToDOM($other_items,false); #Add the featured items to the DOM
