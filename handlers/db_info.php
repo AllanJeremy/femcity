@@ -200,7 +200,7 @@ class DbInfo implements DbInfoInterface
     public static function GetAllSuperuserAccounts()
     {
         global $dbCon;
-        $select_query = "SELECT acc_id,first_name,last_name,username,email,subbed,date_created FROM admin_accounts";
+        $select_query = "SELECT acc_id,first_name,last_name,username,email,subbed,date_created FROM superuser_accounts";
         
         return ($dbCon->query($select_query));
     }

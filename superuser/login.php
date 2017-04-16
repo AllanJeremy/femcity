@@ -17,12 +17,12 @@
                     <form id="loginform" class="form-horizontal" role="form">
                         <div style="margin-bottom: 25px" class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input id="login-email" type="email" class="form-control" name="email" value="" placeholder="Email address">                                        
+                            <input id="login-email" type="email" class="form-control" value="" placeholder="Email address">                                        
                         </div>
 
                         <div style="margin-bottom: 25px" class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input id="login-password" type="password" class="form-control" name="password" placeholder="Password">
+                            <input id="login-password" type="password" class="form-control" placeholder="Password">
                         </div>
 
                         <div style="margin-top:10px" class="form-group">
@@ -88,6 +88,7 @@
     <script src="../js/toastr.min.js"></script>
     
     <script src="../js/bootstrap.min.js"></script>
+    <script src="js/login.js"></script>
     
 </body>
 </html>

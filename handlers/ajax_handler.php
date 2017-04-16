@@ -144,6 +144,22 @@ if(isset($_POST["action"]))
             
             echo $delete_status;
         break;
+        
+        //ACCOUNT RELATED FUNCTIONS
+        case "SuperuserSignup":
+            $data = $_POST["data"];
+            
+            $signup_status = DbHandler::CreateSuperuserAccount($data);
+            
+            echo $signup_status;
+        break;
+            
+        case "SuperuserLogin":
+            $data = $_POST["data"];
+            
+            $login_status = MySessionHandler::SuperuserLogin($data["email"],$data["password"]);
+            echo $login_status;
+        break;
             
         default:
             echo "Invalid action";

@@ -310,7 +310,6 @@ class MySessionHandler extends DbInfo implements MySessionHandlerInterface
         {
             //if the account exists and the password is valid, log them in ~ set session variables
             $password_valid = PasswordHandler::Verify($password,$superuser_acc["password"]);
-                
             //If the password is valid
             if($password_valid)
             {

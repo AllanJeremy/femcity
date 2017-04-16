@@ -15,13 +15,13 @@
         require_once("../handlers/message_display.php");
         require_once("../handlers/session_handler.php");
     
-        /*//If the superuser is not logged in ~ redirect them to the login page
+        //If the superuser is not logged in ~ redirect them to the login page
         if(!MySessionHandler::SuperuserIsLoggedIn())
         {
             header("Location:login.php");
             exit(); #Stop execution of this script
         }
-        */
+        
         $snippets_dir ="snippets/"; #Snippets folder
         $display_tab = ""; #Tab that should be displayed
         

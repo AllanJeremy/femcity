@@ -1,5 +1,6 @@
 <?php
 require_once("db_info.php");
+require_once("password_handler.php");
 
 //This interface determines what public functions need to be implemented in this class
 interface DbHandlerInterface
@@ -383,12 +384,13 @@ class DbHandler implements DbHandlerInterface
     public static function CreateSuperuserAccount($details)
     {
         global $dbCon;
-        $insert_query = "INSERT INTO superuser_accounts(first_name,last_name,username,email,password,subbed) VALUES(?,?,?,?,?,?)";
+        $insert_query = "INSERT INTO superuser_accounts(first_name,last_name,username,email,password) VALUES(?,?,?,?,?)";
         
         //Attempt to prepare query
         if($insert_stmt = $dbCon->prepare($insert_query))
         {   
-            $insert_stmt->bind_param("sssssi",$details["first_name"],$details["last_name"],$details["username"],$details["email"],$details["password"],$details["subbed"]);
+            $password = PasswordHandler::Encrypt($details["password"]);
+            $insert_stmt->bind_param("sssss",$details["first_name"],$details["last_name"],$details["username"],$details["email"],$password);
             
             //Try executing the query ~ returns true on success and false on failure
             return($insert_stmt->execute());
