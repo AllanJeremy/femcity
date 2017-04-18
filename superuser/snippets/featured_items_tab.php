@@ -15,8 +15,8 @@
         if($is_featured)
         {
             $item_type="featured";
-            $btn_class = "btn-warning";
-            $btn_glyph_class = "glyphicon-minus remove-trigger-btn";
+            $btn_class = "btn-warning remove-trigger-btn";
+            $btn_glyph_class = "glyphicon-minus";
             $btn_text = "Remove";      
             $state_toggle = "add";#state toggle is remove because remove toggles to add
         }
@@ -60,7 +60,7 @@
             <?php echo $item_name." - by ".$admin_full_name." ($admin_bus_name)";?> <span class="caret"></span></a>
             <span class="pull-right action-buttons">
                 <a class="btn <?php echo $btn_class;?> updateFeaturedItem" data-state-toggle="<?php echo $state_toggle;?>"><span class="glyphicon <?php echo $btn_glyph_class;?>"></span> <?php echo $btn_text;?></a>
-                <a class="btn btn-warning manage-delete-btn delete_featured"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                <a class="btn btn-warning manage-delete-btn delete_item"><span class="glyphicon glyphicon-trash"></span> Delete</a>
             </span>
           </h4><br>
         </div>

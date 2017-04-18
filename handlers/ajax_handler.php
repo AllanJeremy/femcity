@@ -141,8 +141,14 @@ if(isset($_POST["action"]))
         case "DeleteItem": #Admin & Superuser ~ Delete item
             $id = $_POST["id"];
             $delete_status = DbHandler::DeleteItem($id);
-            
             echo $delete_status;
+        break;
+        case "DeleteFeaturedItem": #Admin & Superuser ~ Delete item
+            $id = $_POST["id"];
+            $remove_status = DbHandler::RemoveFeaturedItem($id);
+            $delete_status = DbHandler::DeleteItem($id);
+            
+            echo ($remove_status && $delete_status);
         break;
         
         //ACCOUNT RELATED FUNCTIONS

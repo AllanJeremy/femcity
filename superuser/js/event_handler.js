@@ -653,6 +653,7 @@ $(document).ready(function(){
             {
                 toastr.success("Successfully deleted the item");
                 $parents.remove();//Remove item from DOM
+                ToggleNoItemMessage();
             }
             else
             {
@@ -660,7 +661,23 @@ $(document).ready(function(){
             }
         });
     }
-    
+
+    //Delete the item with the given id
+    function DeleteFeaturedItem(id,$parents)
+    {
+        $.post(ajax_handler_path,{"action":"DeleteFeaturedItem","id":id},function(response,status){
+            if(IsValid(response))
+            {
+                toastr.success("Successfully deleted the featured item as well as the corresponding item","Successfully deleted the item");
+                $parents.remove();//Remove item from DOM
+                ToggleNoItemMessage();
+            }
+            else
+            {
+                toastr.error("Failed to delete the item. Possible reason: the item has already been deleted. If the problem persists contact your technical team.","AJAX Server-side error");
+            }
+        });
+    }
     //Delete the offer with the given id
     function DeleteOffer(id,$parents)
     {
@@ -686,7 +703,7 @@ $(document).ready(function(){
         var DELETE_CATEGORY_CLASS = "delete_category";
         var DELETE_ADMIN_ACC_CLASS = "delete_admin_account";
         var DELETE_OFFER_CLASS = "delete_offer";
-        var DELETE_ITEM_CLASS = "delete_featured";
+        var DELETE_ITEM_CLASS = "delete_item";
         
         //TODO: Find a way to DRY this code
         //If delete category is clicked 
@@ -750,8 +767,23 @@ $(document).ready(function(){
             {
                 primary_id = $parents.attr("data-item-id");
                 
-                //Delete from Database and remove from DOM
-                DeleteItem(primary_id,$parents);
+                //If it is a featured item
+                var is_featured = $del_btn.siblings(".remove-trigger-btn").length > 0;
+                
+                //Delete from Database and remove from DOM 
+                if(!is_featured)
+                {
+                    DeleteItem(primary_id,$parents); 
+                }
+                else
+                {
+                    DeleteFeaturedItem(primary_id,$parents);
+                    /*
+                    //TODO: Consider allowing people to delete featured items
+                    toastr.error("If you would like to delete the item. Remove it from the featured items then delete it","Error: Cannot delete a featured item");
+                    */
+                }
+                
                 return;
             }
             //If delete offer

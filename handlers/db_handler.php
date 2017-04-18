@@ -41,7 +41,10 @@ interface DbHandlerInterface
     public static function CreateSuperuserAccount($details); #Create a new featured product
     public static function UpdateSuperuserAccount($id,$details); #Update a superuser account based on primary key
     public static function DeleteSuperuserAccount($id); #Delete a superuser account based on primary key
-
+    
+    //Item images
+    public static function DeleteItemImages($id);
+    
 /*ADMIN FUNCTIONS*/
    //Account requests
     public static function RequestAdminAccount($details); #Create an admin account request
@@ -68,8 +71,10 @@ class DbHandler implements DbHandlerInterface
         {
             $del_stmt->bind_param($prop_type,$prop_name);
             
+            $del_status = $del_stmt->execute();
+            
             //Try to execute the delete statement, returns true on succes and false on failure
-            return($del_stmt->execute());
+            return($del_status);
         }
         else #failed to prepare the query to delete the message
         {
@@ -491,13 +496,67 @@ class DbHandler implements DbHandlerInterface
             return null;
         }  
     }
+        
+    #Delete item images from the database and server
+    public static function DeleteItemImages($id)
+    {
+        global $dbCon;
+        
+        $select_query = "SELECT * FROM item_images WHERE item_id=?";
+        
+        if($select_stmt = $dbCon->prepare($select_query))
+        {
+            $select_stmt->bind_param("i",$id);
+            $select_status = $select_stmt->execute();
+            
+            //If the selection was successful
+            if($select_status)
+            {
+                $files = $select_stmt->get_result();
+                
+                $file_del_status = true;#File delete status ~ true if succesful deletion
+                
+                if($files && @$files->num_rows>0)
+                {
+                    $file_path = "";
+                    
+                    //Loop through each file and attempt to delete it from the server if it exists
+                    foreach($files as $file)
+                    {
+                        $file_path = $file["img_path"];
+                        
+                        //If the file exists delete it from the server
+                        if(file_exists($file_path))
+                        {
+                            $file_del_status = $file_del_status && (unlink($file_path));    
+                        }
+                    }
+                    
+                    //Delete the files from the database
+                    $file_db_del_status = self::DeleteBasedOnSingleProperty("item_images","item_id",$id);
+                    return ($file_db_del_status && $file_del_status);
+                }
+                else #Files were not found in the database
+                {
+                    return true;
+                }
+            }
+            else #Failed to execute query to select files
+            {
+                return $select_status;
+            }
+        }
+        else #Failed to prepare query to select files from the database
+        {
+            return null;
+        }
+    }
     
     #Delete product/service based on primary key
     public static function DeleteItem($id)
     {
-        return self::DeleteBasedOnSingleProperty("items","item_id",$id);
+        $del_item_images_status = self::DeleteItemImages($id);
+        $del_items_status = self::DeleteBasedOnSingleProperty("items","item_id",$id);
+        return ($del_item_images_status && $del_items_status);
     }
-    
-    
-    
 }
