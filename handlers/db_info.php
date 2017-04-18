@@ -11,10 +11,13 @@ interface DbInfoInterface
     public static function GetAllOtherItems();
     public static function GetAllItems();
     public static function GetAllOffers();
-       
+    
+    #Accounts
     public static function GetAllAdminAccounts();
     public static function GetAllSuperuserAccounts();
     public static function GetAllAccountRequests();
+    public static function GetValidAdminAccounts();
+    public static function GetBannedAdminAccounts();
     
     //Get records based on primary keys
     public static function GetCategoryById($cat_id);
@@ -197,6 +200,25 @@ class DbInfo implements DbInfoInterface
         
         return ($dbCon->query($select_query));
     }
+    
+    //Get all admin accounts ~ select everything except the password for valid admin accounts
+    public static function GetValidAdminAccounts()
+    {
+        global $dbCon;
+        $select_query = "SELECT acc_id,first_name,last_name,business_name,business_description,cat_id,email,phone,subbed,date_created,date_activated,date_expires FROM admin_accounts WHERE is_banned=0";
+        
+        return ($dbCon->query($select_query));
+    }
+    
+    //Get all admin accounts ~ select everything except the password for banned admin accounts
+    public static function GetBannedAdminAccounts()
+    {
+        global $dbCon;
+        $select_query = "SELECT acc_id,first_name,last_name,business_name,business_description,cat_id,email,phone,subbed,date_created,date_activated,date_expires FROM admin_accounts WHERE is_banned=1";
+        
+        return ($dbCon->query($select_query));
+    }
+    
     public static function GetAllSuperuserAccounts()
     {
         global $dbCon;

@@ -1,138 +1,24 @@
+<div class="well">
 <?php
-    //Get the active tab
-    require_once("tab_manager.php");#Variables ~ $is_create, $create_tab_class, $manage_tab_class
-
-    //Current page
-    $current_page = "accounts";
-
-    //Variables for the different urls
-    $create_url = "index.php?p=".$current_page."&tab=create";
-    $manage_url = "index.php?p=".$current_page."&tab=manage";
-
     //Message shown when categories cannot be found and the id for the message box(used as selector in js)
-    $missing_acc_msg = "No admin accounts were found. Once you create admin accounts, they will appear here. <br><b>Note : </b>If you banned any accounts, you can access them from Settings > Banned Accounts";
+    $missing_acc_msg = "No banned admin accounts were found. Once you ban admin accounts, they will appear here";
     $missing_acc_id = "missing_acc_msg";
+    $admin_accounts = Dbinfo::GetBannedAdminAccounts();
 
-    //Display the tab headers below
-?>
-    <!--Tab headers-->
-    <div class="container">
-		<ul class="nav nav-pills col-xs-offset-4 col-sm-offset-5">
-            <li class="<?php echo $create_tab_class;?>"><a href="<?php echo $create_url; ?>">Create</a></li>
-            <li class="<?php echo $manage_tab_class;?>"><a href="<?php echo $manage_url; ?>">Manage</a></li>
-		</ul>
-    </div><br><br>
-    <!--Tab body-->
-    <div class="container well tab-body">
-<?php
-    //If the active tab is the create tab ~ Display the create tab only
-    if($is_create):#Create tab active
-?>
-    <div>
-        <p>Create a new admin account here</p>    
-    </div><hr>
-        
-    <form class="row input-list" method="post">  
-        <div class="col-xs-12 col-sm-6 input-container">
-            <br>
-            <label for="in_admin_first_name">First name <sup>(Required)</sup> </label>
-            <input class="form-control" required type="text" placeholder="First name" id="in_admin_first_name" title="First name of the business owner">
-        </div>
-        <div class="col-xs-12 col-sm-6 input-container">
-            <br>
-            <label for="in_admin_last_name">Last name <sup>(Required)</sup></label>
-            <input class="form-control" required type="text" placeholder="Last name" id="in_admin_last_name" title="Last name of the business owner">
-        </div>
-        <div class="col-xs-12 col-sm-6 input-container">
-            <br>
-            <label for="in_admin_first_name">Email address <sup>(Required)</sup></label>
-            <input class="form-control" required type="email" placeholder="Email address" id="in_admin_email" title="Email of the business/business owner. Used to login to the account.">
-        </div>
-        <div class="col-xs-12 col-sm-6 input-container">
-            <br>
-            <label for="in_admin_phone">Phone number <sup>(Required)</sup></label>
-            <input class="form-control" required type="text" placeholder="Phone number" id="in_admin_phone" title="Phone number of the business/business owner. Used to login to the account.">
-        </div>
-        
-<!--
-        <div class="col-xs-12 col-sm-6 col-md-4 input-container">
-            <br>
-            <label for="in_admin_first_name">Country</label>
-            <input class="form-control" required type="text" placeholder="Country the business belongs to" id="in_admin_country" title="Phone number of the business/business owner. Used to login to the account.">
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4 input-container">
-            <br>
-            <label for="in_admin_first_name">Region</label>
-            <input class="form-control" required type="text" placeholder="Country the business belongs to" id="in_admin_country" title="Phone number of the business/business owner. Used to login to the account.">
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4 input-container">
-            <br>
-            <label for="in_admin_first_name">Sub-region</label>
-            <input class="form-control" required type="text" placeholder="Country the business belongs to" id="in_admin_country" title="Phone number of the business/business owner. Used to login to the account.">
-        </div>
--->
-        <div class="col-xs-12 col-sm-6 input-container">
-            <br>
-            <label for="in_admin_business_name">Business name <sup>(Required)</sup> </label>
-            <input class="form-control" type="text" required placeholder="Business name" id="in_admin_business_name" title="Name of the business/company that owns this account">
-        </div>
-        <div class="col-xs-12 col-sm-6 input-container">
-            <br>
-            <label for="in_business_category">Category <sup>(Required)</sup> </label>
-            <select id="in_business_category" required title="Category the business belongs to" class="form-control">
-                <?php
-                    $categories = DbInfo::GetAllCategories();
-                    
-                    //If there are any categories
-                    if($categories):
-                        foreach($categories as $cat):
-                ?>
-                    <option value="<?php echo $cat["cat_id"];?>"><?php echo $cat["cat_name"];?></option>
-                <?php
-                        endforeach;
-                    else:
-                ?>
-                <option value="0">No Categories found</option>
-                <?php
-                    endif;
-                ?>
-            </select>
-        </div>
-        <div class="col-xs-12 col-md-6 input-container">
-            <br>
-            <label for="in_cat_description">Business description <sup>(Optional)</sup> </label>
-            <textarea class="form-control" type="text" placeholder="Business description" name="business_description" id="in_business_description" title="Business description. Brief description of what the business does"></textarea>
-        </div>
-
-
-        <div class="col-xs-12">
-            <br>
-            <a class="btn btn-info pull-right" title="Create a new admin account" href="javascript:void(0)" id="createAdminAccount">CREATE ACCOUNT</a>
-        </div>
-    </form>
-<?php
-    else:#Manage tab active
-        $admin_accounts = Dbinfo::GetValidAdminAccounts();
-        
-        //If admin accounts were found
-        if($admin_accounts && $admin_accounts->num_rows>0):
-            //Print hidden message for display when items run out
-            MessageDisplay::PrintHiddenInfo($missing_acc_msg,$missing_acc_id);
+    //If admin accounts were found
+    if($admin_accounts && $admin_accounts->num_rows>0):
+        //Print hidden message for display when items run out
+        MessageDisplay::PrintHiddenInfo($missing_acc_msg,$missing_acc_id);
 ?>
     <!--Category list-->
     <div class="container manage-content">
         <!--Category list-->
         <div class="col-xs-12 col-sm-6">
-            <p>Manage admin accounts here.</p>
+            <p>Manage banned accounts here.</p>
         </div>
         <div class="col-xs-12 col-sm-6 pull-right row clearfix">
             <div class="col-xs-10">
                 <input class="form-control" type="search" id="search_manage_acccounts" placeholder="Search Accounts">
-            </div>
-            <div class="col-xs-2">
-                <button class="btn btn-default">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
             </div>
         </div>
     </div><hr>
@@ -185,7 +71,7 @@
             <div class="pull-right action-buttons">
                 <a class="btn btn-info editable-trigger-btn" data-edit-type="<?php echo $current_page;?>" data-state-toggle="save"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                 <a class="btn btn-info manage-reset-btn"><span class="glyphicon glyphicon-refresh"></span> Reset</a>
-                <a class="btn btn-warning manage-ban-btn"><span class="glyphicon glyphicon-ban-circle"></span> Ban</a>
+                <a class="btn btn-info manage-unban-btn"><span class="glyphicon glyphicon-ban-circle"></span> Unban</a>
                 <a class="btn btn-warning manage-delete-btn delete_admin_account" data-toggle="modal" data-target=".confirm-delete-modal"><span class="glyphicon glyphicon-trash"></span> Delete</a>
             </div>
           </h4><br>
@@ -277,7 +163,7 @@
     ?>
     </div>
 <?php
-        else:#No accounts were found
+    else:#No accounts were found
 ?>
     <div>
         <?php
@@ -285,7 +171,6 @@
         ?> 
     </div>
 <?php
-        endif;
     endif;
 ?>
-    </div>
+</div>

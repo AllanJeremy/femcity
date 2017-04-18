@@ -849,4 +849,79 @@ $(document).ready(function(){
         });
     });
     
+    //Ban an account
+    function BanAccount(acc_id,$parent)
+    {
+        $.post(ajax_handler_path,{"action":"BanAdminAccount","acc_id":acc_id},function(response,status){
+            if(IsValid(response))
+            {
+                //Remove the item from DOM
+                $parent.remove();
+                
+                toastr.success("The banned account can be found in settings>banned accounts","Successfully banned the account");
+            }
+            else
+            {
+                toastr.error("Failed to ban the account. Possibly an invalid account","AJAX server-side error");    
+            }
+        });
+    }
+    
+    //Unban an account;
+    function UnbanAccount(acc_id,$parent)
+    {
+        $.post(ajax_handler_path,{"action":"UnbanAdminAccount","acc_id":acc_id},function(response,status){
+            if(IsValid(response))
+            {
+                //Remove the item from DOM
+                $parent.remove();
+                
+                toastr.success("The account can now be accessed from the accounts>manage section.","Successfully unbanned the account");
+            }
+            else
+            {
+                toastr.error("Failed to unban the account. Possibly an invalid account","AJAX server-side error");    
+            }
+        });
+    }
+    
+    //Ban button clicked
+    $(".manage-ban-btn").click(function(){
+        var $parent = $(this).parents(".manage-items");
+        var acc_id = $parent.attr("data-acc-id");
+        
+        BanAccount(acc_id,$parent);
+    });
+    
+    //Unban button clicked
+    $(".manage-unban-btn").click(function(){
+        var $parent = $(this).parents(".manage-items");
+        var acc_id = $parent.attr("data-acc-id");
+        
+        UnbanAccount(acc_id,$parent);
+    });
+    
+    //Reset admin account
+    function ResetAccount(acc_id)
+    {
+        $.post(ajax_handler_path,{"action":"ResetAdminAccount","acc_id":acc_id},function(response,status){
+            if(IsValid(response))
+            {   
+                //TODO: Consider showing the actual account name instead of "the selected account" in toast
+                toastr.success("The account password is now equal to the email address of the account","Successfully reset the selected account");
+            }
+            else
+            {
+                toastr.error("Failed to reset the account. Possibly an invalid account","AJAX server-side error");    
+            }
+        });
+    }
+    
+    //Reset admin account clicked
+    $(".manage-reset-btn").click(function(){
+        var $parent = $(this).parents(".manage-items");
+        var acc_id = $parent.attr("data-acc-id");
+        
+        ResetAccount(acc_id);
+    });
 });

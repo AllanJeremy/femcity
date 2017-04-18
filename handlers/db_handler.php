@@ -19,7 +19,6 @@ interface DbHandlerInterface
     public static function ResetAdminAccountPassword($id); #Reset admin account password
     public static function BanAdminAccount($id); #Ban an admin account
     public static function UnbanAdminAccount($id); #Unban an admin account
-    
 
     //Account requests
     public static function DeleteAdminAccountRequest($id);#Delete an admin account request based on primary key
@@ -198,6 +197,7 @@ class DbHandler implements DbHandlerInterface
         //If the select result was valid ~ set an email
         if($select_result)
         {
+            $select_result = $select_result->fetch_array();#Get the mysqli result as an associative array
             $email = $select_result["email"];
         }
         else #Could not find the selected account ~ return false;
@@ -228,7 +228,7 @@ class DbHandler implements DbHandlerInterface
     {
         global $dbCon;
         
-        $update_query = "UPDATE admin_account SET is_banned=? WHERE acc_id=?";
+        $update_query = "UPDATE admin_accounts SET is_banned=? WHERE acc_id=?";
        
         //Attempt to prepare query
         if($update_stmt = $dbCon->prepare($update_query))

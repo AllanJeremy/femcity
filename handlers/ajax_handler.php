@@ -161,6 +161,29 @@ if(isset($_POST["action"]))
             echo $login_status;
         break;
             
+        //Ban and unban accounts
+        case "BanAdminAccount":
+            $acc_id = $_POST["acc_id"];
+            
+            $ban_status = DbHandler::BanAdminAccount($acc_id);
+            echo $ban_status;
+        break;
+            
+        case "UnbanAdminAccount":
+            $acc_id = $_POST["acc_id"];
+            
+            $ban_status = DbHandler::UnbanAdminAccount($acc_id);
+            echo $ban_status;
+        break;
+        
+        //Reset admin accounts
+        case "ResetAdminAccount":
+            $acc_id = $_POST["acc_id"];
+            
+            #Get the admin account matching that acc id
+            $reset_status = DbHandler::ResetAdminAccountPassword($acc_id);
+            echo $reset_status;
+        break;
         default:
             echo "Invalid action";
     }

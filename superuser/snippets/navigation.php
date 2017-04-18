@@ -10,6 +10,8 @@ class SuperuserNavigation
     public $offers_class;
     public $requests_class;
     public $profile_class;
+    public $banned_acc_class;
+    public $settings_class;
     
     function __construct($active_tab)
     {   
@@ -19,6 +21,8 @@ class SuperuserNavigation
         $this->offers_class="";
         $this->requests_class="";
         $this->profile_class="";
+        $this->banned_acc_class="";
+        $this->settings_class = "";
         
         //Setting the active classes
         switch($active_tab)
@@ -40,6 +44,12 @@ class SuperuserNavigation
             break;
             case "profile":
                 $this->profile_class="active";
+                $this->settings_class = "active";
+            break;
+            case "banned_accounts":
+                $this->banned_acc_class="active";
+                $this->settings_class = "active";
+            break;
             default:
                 $this->categories_class="active";
         }
@@ -66,7 +76,7 @@ class SuperuserNavigation
             
             <div class="container">
                <ul class="nav navbar-nav navbar-right">
-                  <li>
+                  <li class="<?php echo $this->settings_class;?>">
                       <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
                           <span class="glyphicon glyphicon-cog"></span> Settings 
                           <span class="caret"></span>
@@ -75,6 +85,11 @@ class SuperuserNavigation
                         <li class="<?php echo $this->profile_class;?>" title="Personal profile. You can change your account information here.">
                             <a href="?p=profile">
                                 <span class="glyphicon glyphicon-user"></span> Profile
+                            </a>
+                        </li>
+                        <li class="<?php echo $this->banned_acc_class;?>" title="Banned accounts. You can view and manage banned accounts here">
+                            <a href="?p=banned_accounts">
+                                <span class="glyphicon glyphicon-ban-circle"></span> Banned Accounts
                             </a>
                         </li>
                         <li title="Logout of your account">

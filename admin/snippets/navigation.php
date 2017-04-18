@@ -28,8 +28,10 @@ class AdminNavigation
             case "profile":
                 $this->settings_class = "active";
                 $this->profile_class="active";
+            break;
             default:
                 //No tab is active it wasn't specified above as a case
+                $this->post_items_class="active";
         }
         
 ?>

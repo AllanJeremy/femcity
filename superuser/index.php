@@ -63,6 +63,9 @@
                 case "profile":
                     $display_tab = $snippets_dir."profile_tab.php";
                 break;
+                case "banned_accounts":
+                    $display_tab = $snippets_dir."banned_accounts.php";
+                break;
                 default:
                     $display_tab = $snippets_dir."categories_tab.php";
             }
