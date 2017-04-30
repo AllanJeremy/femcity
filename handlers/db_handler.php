@@ -45,6 +45,17 @@ interface DbHandlerInterface
     //Item images
     public static function DeleteItemImages($id);
     
+    //Locations
+    #Countries
+    public static function AddCountry($data);
+    public static function UpdateCountry($id,$data);
+    public static function DeleteCountry($id);
+    
+    #Regions
+    public static function AddRegion($data);
+    public static function UpdateRegion($id,$data);
+    public static function DeleteRegion($id);
+    
 /*ADMIN FUNCTIONS*/
    //Account requests
     public static function RequestAdminAccount($details); #Create an admin account request
@@ -550,6 +561,97 @@ class DbHandler implements DbHandlerInterface
         {
             return null;
         }
+    }
+    
+    /*LOCATIONS*/
+    #Add a new country
+    public static function AddCountry($data)
+    {
+        global $dbCon;
+        
+        $insert_query = "INSERT INTO countries(country_name) VALUES(?)";
+        
+        if($insert_stmt = $dbCon->prepare($insert_query))
+        {
+            $insert_stmt->bind_param("s",$data["country_name"]);
+            
+            return($insert_stmt->execute());
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
+    #Update country
+    public static function UpdateCountry($id,$data)
+    {
+        global $dbCon;
+        
+        $update_query = "UPDATE countries SET country_name=? WHERE countries.country_id=?";
+        
+        if($update_stmt = $dbCon->prepare($insert_query))
+        {
+            $update_stmt->bind_param("si",$data["country_name"],$id);
+            
+            return($update_stmt->execute());
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
+    #Delete country
+    public static function DeleteCountry($id)
+    {
+        $del_status = self::DeleteBasedOnSingleProperty("countries","country_id",$id);
+        return $del_status;
+    }
+    
+    #Add a new region
+    public static function AddRegion($data)
+    {
+        global $dbCon;
+        
+        $insert_query = "INSERT INTO regions(region_name,country_id) VALUES(?,?)";
+        
+        if($insert_stmt = $dbCon->prepare($insert_query))
+        {
+            $insert_stmt->bind_param("si",$data["region_name"],$data["country_id"]);
+            
+            return($insert_stmt->execute());
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
+    #Update a region
+    public static function UpdateRegion($id,$data)
+    {
+        global $dbCon;
+        
+        $update_query = "UPDATE regions SET region_name=? country_id=? WHERE regions.region_id=?";
+        
+        if($update_stmt = $dbCon->prepare($insert_query))
+        {
+            $update_stmt->bind_param("sii",$data["region_name"],$data["country_id"],$id);
+            
+            return($update_stmt->execute());
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
+    #Delete a region
+    public static function DeleteRegion($id)
+    {
+        $del_status = self::DeleteBasedOnSingleProperty("regions","region_id",$id);
+        return $del_status;
     }
     
     #Delete product/service based on primary key

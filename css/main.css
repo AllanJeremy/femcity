@@ -255,11 +255,10 @@ a#scrollUp i{
 .search_box input {
   background: #F0F0E9;
   border: medium none;
-  color: #B2B2B2;
+  color: #212121;
   font-family: 'roboto';
   font-size: 12px;
-  font-weight: 300;
-  height: 35px;
+  height: 30px;
   outline: medium none;
   padding-left: 10px;
   width: 155px;
@@ -268,6 +267,16 @@ a#scrollUp i{
   background-position: 130px;
 }
 
+.location_box input {
+  background: #F0F0E9;
+  border: medium none;
+  color: #212121;
+  font-family: 'roboto';
+  font-size: 12px;
+  height: 30px;
+  outline: medium none;
+  padding-left: 10px;
+}
 
 /*  Dropdown menu*/
 
@@ -2538,4 +2547,10 @@ h2.title {
     color:#ddd;
     padding-top:1em;
     padding-bottom:2em;
+}
+
+.small-margin
+{
+    padding-left:0.3em !important;
+    padding-right:0.3em !important;
 }

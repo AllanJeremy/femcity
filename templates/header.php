@@ -62,34 +62,78 @@
 						</div>
 					</div>
                     <div class="col-sm-8">
-                        <div class="pull-right">
-                            <div class="search_box pull-right">
-                                <input type="text" placeholder="Search"/>
-                            </div>
-					   </div>
-                        <div class="btn-group pull-right">
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									KENYA
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li><a href="#">UGANDA</a></li>
-									<li><a href="#">TANZANIA</a></li>
-								</ul>
+                        
+                        <form method="GET" action="search_results.php">
+
+                        <div class="form-group">
+                            <?php
+                                $countries = DbInfo::GetAllCountries();
+                            ?>
+							<div class="form-group col-sm-3 small-margin">
+                                <select id="country_container" title="Country">
+                                    <?php
+                                        if($countries):
+                                            foreach($countries as $country):
+                                    ?>
+                                        <option value="<?php echo $country['country_id'];?>"><?php echo strtoupper($country['country_name']);?></option>
+                                    <?php
+                                            endforeach;
+                                        else:
+                                    ?>
+                                        <option value="none" disabled selected>No countries found</option>
+                                    <?php
+                                        endif;
+                                    ?>
+                                    
+                                    <option value="">ANY</option>
+                                </select>
 							</div>
 							
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									NAIROBI
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li><a href="#">MOMBASA</a></li>
-									<li><a href="#">KISUMU</a></li>
-								</ul>
+							<div class="form-group col-sm-3 small-margin">
+                                <select id="region_container" title="Specific region in country">
+                                    <?php
+                                        #If any countries were found
+                                        if($countries):
+                                            foreach($countries as $country):
+                                                $country_id = $country["country_id"];
+
+                                                $regions = DbInfo::GetRegionsInCountry($country_id);
+                                                
+                                                #If there were any regions found for the given country
+                                                if($regions):
+                                                    foreach($regions as $region):
+                                                        $region_id = $region["region_id"];
+                                    ?>
+                                        <option value="<?php echo $region_id;?>"><?php echo strtoupper($region["region_name"]);?></option>
+                                    <?php
+                                                    endforeach;
+                                                else:#No regions found
+                                    ?>
+                                        <option value="none" disabled selected>No regions found</option>            
+                                    <?php
+                                                endif;
+                                            break;
+                                            endforeach;
+                                        else:
+                                    ?>
+                                        <option value="none" disabled selected>No regions found</option>
+                                    <?php
+                                        endif;
+                                    ?>
+                                    <option value="">ANY</option>
+                                </select>
 							</div>
+                            
+                            <div class="form-group col-sm-3 location_box small-margin">
+                                <input type="text" placeholder="Specific location" title="Specific location to find the item you are looking for">
+                            </div>
+                        
+                            <div class="form-group col-sm-3 search_box small-margin pull-right">
+                                <input type="text" placeholder="Search"/>
+                            </div>                          
 						</div>
+
+                        </form>
                     </div>
 
 				</div>

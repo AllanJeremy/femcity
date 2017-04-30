@@ -103,11 +103,13 @@
 				<div class="col-sm-9 padding-right">
                     
                     <div class="featured-items"><!--featured_items-->
-                        <h2 class="title text-center">Femcity Features</h2>
                     <?php
                         $featured_items = DbInfo::GetAllFeaturedItems();
                     
                         if($featured_items && $featured_items->num_rows>0):
+                    ?>
+                        <h2 class="title text-center">Femcity Features</h2>
+                    <?php
                             foreach($featured_items as $item):
                                 $item_id = $item["item_id"];
                                 $item_name = $item["item_name"];
@@ -154,19 +156,31 @@
                         <?php
                             $other_items = DbInfo::GetAllOtherItems();
                             if($other_items && $other_items->num_rows>0):
+                                
                                 foreach($other_items as $item):
                                     $item_id = $item["item_id"];
                                     $item_name = $item["item_name"];
                                     $price = $item["price"];
                         
                                     $img = DbInfo::GetSingleItemImage($item_id);
-                                    $img_path = @$img["img_path"];
-                                    $img_name = @$img["img_name"];
-                                               
-                                    if(!isset($img_name))
+                                    
+                                    $img_path = $img_name = "";
+                                    if($img && $img->num_rows>0)
                                     {
-                                        $img_name = "No item image";
-                                    }            
+                                        $img_path = @$img["img_path"];
+                                        $img_name = @$img["img_name"];
+
+                                        if(!isset($img_name))
+                                        {
+                                            $img_name = "No item image";
+                                        }                                          
+                                    }
+                                    else
+                                    {
+                                        $img_path = "images/placeholder_logo.png";
+                                        $img_name = "No image found";      
+                                    }
+          
                         ?>
                         <div class="col-sm-3">
                             <div class="product-image-wrapper">

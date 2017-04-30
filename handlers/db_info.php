@@ -12,7 +12,7 @@ interface DbInfoInterface
     public static function GetAllItems();
     public static function GetAllOffers();
     
-    #Accounts
+    //Accounts
     public static function GetAllAdminAccounts();
     public static function GetAllSuperuserAccounts();
     public static function GetAllAccountRequests();
@@ -33,6 +33,11 @@ interface DbInfoInterface
     public static function GetItemsByAccId($acc_id,$excluded_id);        
     public static function GetAllItemImages();
     public static function GetItemImagesByItem($item_id);
+    
+    //Locations
+    public static function GetAllCountries();
+    public static function GetAllRegions();
+    public static function GetRegionsInCountry($country_id);
 }
 
 //This class deals with retrieval of records from the database
@@ -332,4 +337,53 @@ class DbInfo implements DbInfoInterface
         }
         return $item_images;
     }
+    
+    //Locations
+    #Get all countries
+    public static function GetAllCountries()
+    {
+        global $dbCon;
+        $select_query = "SELECT * FROM countries";
+        
+        return($dbCon->query($select_query));
+    }
+    
+    #Get all regions
+    public static function GetAllRegions()
+    {
+        global $dbCon;
+        
+        $select_query = "SELECT * FROM regions INNER JOIN countries ON regions.country_id = countries.country_id";
+        
+        return($dbCon->query($select_query));
+    }
+    
+    #Get all regions belonging to a specific country
+    public static function GetRegionsInCountry($country_id)
+    {
+        global $dbCon;
+        
+        $select_query = "SELECT * FROM regions INNER JOIN countries ON regions.country_id = countries.country_id WHERE regions.country_id=?";
+        
+        if($select_stmt = $dbCon->prepare($select_query))
+        {
+            $select_stmt->bind_param("i",$country_id);
+            
+            $select_status  = ($select_stmt->execute());
+            if($select_status)
+            {
+                return $select_stmt->get_result();
+            }
+            else
+            {
+                return $select_status;
+            }
+        }
+        else
+        {
+            return null;
+        }
+        
+    }
+    
 }
