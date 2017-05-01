@@ -190,6 +190,25 @@ if(isset($_POST["action"]))
             $reset_status = DbHandler::ResetAdminAccountPassword($acc_id);
             echo $reset_status;
         break;
+            
+        //Create country
+        case "CreateCountry":
+            $data = $_POST["data"];
+            
+            $create_status = DbHandler::AddCountry($data);
+            var_dump($create_status);
+            echo $create_status;
+        break;
+        
+        //Create region
+        case "CreateRegion":
+            $data = $_POST["data"];
+            
+            $create_status = DbHandler::AddRegion($data);
+            var_dump($create_status);
+            echo $create_status;
+        break;
+            
         default:
             echo "Invalid action";
     }

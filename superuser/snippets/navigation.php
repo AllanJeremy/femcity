@@ -3,6 +3,7 @@
 //Handles the superuser's navigation
 class SuperuserNavigation
 {
+    const ACTIVE_CLASS = "active";
     //Navigation section classes
     public $categories_class;
     public $users_class;
@@ -10,6 +11,7 @@ class SuperuserNavigation
     public $offers_class;
     public $requests_class;
     public $profile_class;
+    public $locations_class;
     public $banned_acc_class;
     public $settings_class;
     
@@ -21,6 +23,7 @@ class SuperuserNavigation
         $this->offers_class="";
         $this->requests_class="";
         $this->profile_class="";
+        $this->locations_class="";
         $this->banned_acc_class="";
         $this->settings_class = "";
         
@@ -28,30 +31,34 @@ class SuperuserNavigation
         switch($active_tab)
         {
             case "categories":
-                $this->categories_class="active";
+                $this->categories_class = self::ACTIVE_CLASS;
             break;
             case "accounts":
-                $this->users_class="active";
+                $this->users_class = self::ACTIVE_CLASS;
             break;
             case "featured":
-                $this->featured_class="active";
+                $this->featured_class = self::ACTIVE_CLASS;
             break;
             case "offers":
-                $this->offers_class="active";
+                $this->offers_class = self::ACTIVE_CLASS;
             break;
             case "requests":
-                $this->requests_class="active";
+                $this->requests_class = self::ACTIVE_CLASS;
             break;
             case "profile":
-                $this->profile_class="active";
-                $this->settings_class = "active";
+                $this->profile_class = self::ACTIVE_CLASS;
+                $this->settings_class = self::ACTIVE_CLASS;
+            break;
+            case "locations":
+                $this->locations_class = self::ACTIVE_CLASS;
+                $this->settings_class = self::ACTIVE_CLASS;
             break;
             case "banned_accounts":
-                $this->banned_acc_class="active";
-                $this->settings_class = "active";
+                $this->banned_acc_class = self::ACTIVE_CLASS;
+                $this->settings_class = self::ACTIVE_CLASS;
             break;
             default:
-                $this->categories_class="active";
+                $this->categories_class = self::ACTIVE_CLASS;
         }
 ?>
         <nav class="navbar navbar-default">
@@ -85,6 +92,11 @@ class SuperuserNavigation
                         <li class="<?php echo $this->profile_class;?>" title="Personal profile. You can change your account information here.">
                             <a href="?p=profile">
                                 <span class="glyphicon glyphicon-user"></span> Profile
+                            </a>
+                        </li>
+                        <li class="<?php echo $this->locations_class;?>" title="Create and manage locations here">
+                            <a href="?p=locations">
+                                <span class="glyphicon glyphicon-map-marker"></span> Locations
                             </a>
                         </li>
                         <li class="<?php echo $this->banned_acc_class;?>" title="Banned accounts. You can view and manage banned accounts here">

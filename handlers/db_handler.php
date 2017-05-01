@@ -174,7 +174,7 @@ class DbHandler implements DbHandlerInterface
     }
     
     #Update user account based on primary key
-    public static function UpdateAdminAcc($id,$details)
+    public static function UpdateAdminAcc($id,$details)#TODO: Update this
     {
         global $dbCon;
         $update_query = "UPDATE admin_accounts SET first_name=?,last_name=?,business_name=?,business_description=?,cat_id=?,email=?,phone=? WHERE acc_id=?";
@@ -575,7 +575,9 @@ class DbHandler implements DbHandlerInterface
         {
             $insert_stmt->bind_param("s",$data["country_name"]);
             
-            return($insert_stmt->execute());
+            $create_status = ($insert_stmt->execute());
+            echo $dbCon->error;
+            return $create_status;
         }
         else
         {
@@ -614,13 +616,18 @@ class DbHandler implements DbHandlerInterface
     {
         global $dbCon;
         
+        //Set foreign key checks to 0
+        $dbCon->query("SET foreign_key_checks=0");
+        
         $insert_query = "INSERT INTO regions(region_name,country_id) VALUES(?,?)";
         
         if($insert_stmt = $dbCon->prepare($insert_query))
         {
             $insert_stmt->bind_param("si",$data["region_name"],$data["country_id"]);
             
-            return($insert_stmt->execute());
+            $create_status = ($insert_stmt->execute());
+            echo $dbCon->error;
+            return $create_status;
         }
         else
         {

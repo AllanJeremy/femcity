@@ -956,4 +956,91 @@ $(document).ready(function(){
         
         ResetAccount(acc_id);
     });
+    
+    /*LOCATIONS*/
+    //Add new country
+    function AddNewCountry($input,data,$table)
+    {
+        var country_name = data["country_name"];
+        var content = "<tr><td>"+country_name+"</td><td>No actions available</td></tr>";
+        $.post(ajax_handler_path,{"action":"CreateCountry","data":data},function(response,status)
+        {
+            if(IsValid(response))
+            {
+                toastr.success("Successfully created the country");
+                $input.val("");
+                
+                //Add the data to the table
+                $table.append(content);
+            }
+            else
+            {
+                toastr.error("Failed to create the country","Error");
+            }
+        }); 
+    }
+    
+    //Add new region
+    function AddNewRegion($input,data,$table)
+    {
+        var region_name = data["region_name"];
+        var country_name = data["country_name"];
+        var content = "<tr><td>"+region_name+"</td><td>"+country_name+"</td><td>No actions available</td></tr>";
+        $.post(ajax_handler_path,{"action":"CreateRegion","data":data},function(response,status)
+        {
+            if(IsValid(response))
+            {
+                toastr.success("Successfully created the region");
+                $input.val("");
+                
+                //Add the data to the table
+                $table.append(content);
+            }
+            else
+            {
+                toastr.error("Failed to create the region","Error");
+            }
+        }); 
+    }
+    
+    //Add new country button clicked
+    $(".add_country").click(function(){
+        var $input = $("#in_country_name");
+        var country_name = $input.val();
+        
+        var data  = {"country_name":country_name};
+        var $table = $(".country_list");
+        
+        //If the country name is not empty
+        if(country_name != "")
+        {
+            AddNewCountry($input,data,$table);
+        }
+        else
+        {
+            toastr.error("Enter a country name to create country","A required field is empty or invalid");
+        }
+    });
+    
+    //Add new region button clicked
+    $(".add_region").click(function(){
+        var $input = $("#in_region_name");
+        var $country_input = $("#in_region_country :selected");
+        
+        var country_id = $country_input.val();
+        var country_name = $country_input.text();
+        var region_name = $input.val();
+        
+        var data  = {"country_id":country_id,"country_name":country_name,"region_name":region_name};
+        var $table = $(".region_list");
+        //If the country name is not empty
+        if(country_name != "")
+        {
+            AddNewRegion($input,data,$table);
+        }
+        else
+        {
+            toastr.error("Enter a region and select a valid country name to create region","A required field is empty or invalid");
+        }
+    });
 });

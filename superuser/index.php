@@ -62,6 +62,9 @@
                 break;
                 case "profile":
                     $display_tab = $snippets_dir."profile_tab.php";
+                break;                
+                case "locations":
+                    $display_tab = $snippets_dir."locations_tab.php";
                 break;
                 case "banned_accounts":
                     $display_tab = $snippets_dir."banned_accounts.php";
