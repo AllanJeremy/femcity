@@ -4,6 +4,8 @@
 
     function DisplayAccountRequestBox()
     {
+        $countries = DbInfo::GetAllCountries();
+        $regions = null;
 ?>
                 <div id="signupbox" style="margin-top:25px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                     <div class="panel panel-info">
@@ -108,16 +110,70 @@
                                         <input type="password" class="form-control" id="confirm_pass" placeholder="Confirm password (Required)">
                                     </div>
                                 </div>
-                                
-                                <!--Google maps location -->
-<!--
-                                <div class="form-group">
-                                    <label for="confirm_password" class="col-md-3 control-label">Location</label>
-                                    <div class="col-md-9" id="map">
-                                        
+
+                                <div class="form-group location_control">
+                                    <label for="country" class="col-md-3 control-label">Country</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control country_list" id="country" title="Country your business is located in">
+                                            <?php
+                                                if(@$countries && $countries->num_rows>0):
+                                                    $count = 0;
+                                                    foreach($countries as $country):
+                                                        $country_id = $country["country_id"];
+                                                        $country_name = $country["country_name"];
+                                                        
+                                                        #If the country is the first country
+                                                        if($count==0)
+                                                        {
+                                                            #get the regions for that country
+                                                            $regions = DbInfo::GetRegionsInCountry($country_id);
+                                                        }
+                                            ?>
+                                            <option value="<?php echo $country_id?>"><?php echo strtoupper($country_name)?></option>
+                                            <?php
+                                                    $count++;
+                                                    endforeach;
+                                                else:
+                                            ?>
+                                            <option value="0" selected disabled>No countries found</option>
+                                            <?php
+                                                endif;
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
--->
+                                
+                                <div class="form-group location_control">
+                                    <label for="region" class="col-md-3 control-label">Region</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control region_list" id="region" title="Region your business is located in">
+                                            <?php
+                                                if(@$regions && $regions->num_rows>0):
+                                                    foreach($regions as $region):
+                                                        $region_id = $region["region_id"];
+                                                        $region_name = $region["region_name"];
+                                            ?>
+                                            <option value="<?php echo $region_id;?>"><?php echo strtoupper($region_name);?></option>
+                                            <?php
+                                                    endforeach;
+                                                else:
+                                            ?>
+                                            <option value="0" selected disabled>No regions found</option>
+                                            <?php
+                                                endif;
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="location" class="col-md-3 control-label">Location</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" id="location" placeholder="Specific location (Optional)" title="Specific location for the business. Users can find your business by searching for businesses in this location">
+                                    </div>
+                                </div>
+                                <!--Google maps location -->
+
                                 
                                 <div class="form-group">
                                     <!-- Button -->                                        
@@ -173,5 +229,6 @@
         <script src="../js/toastr.min.js"></script>
         
         <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/location_handler.js"></script>
     </body>
 </html>

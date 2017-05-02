@@ -97,5 +97,6 @@
     
     <script type="text/javascript" src="js/event_handler.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/location_handler.js"></script>
 </body>
 </html>

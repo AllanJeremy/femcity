@@ -219,6 +219,29 @@ if(isset($_GET["action"]))
 {
     switch($_GET["action"])
     {
-        
+        case "GetRegionsInCountry":
+            $country_id = htmlspecialchars(@$_GET["country_id"]);
+            $regions = DbInfo::GetRegionsInCountry($country_id);
+            
+            if(@$regions && $regions->num_rows>0)
+            {
+                /*return data should be valid json
+                    {{region_name,region_id},{}}
+                */
+                $regions_array = array();
+                foreach($regions as $region)
+                {
+                    $region_data = array("region_id"=>$region["region_id"],"region_name"=>$region["region_name"]);
+                    
+                    array_push($regions_array,$region_data);
+                }
+                
+                echo json_encode($regions_array);
+            }
+            else
+            {
+                echo false;
+            }
+        break;
     }
 }
