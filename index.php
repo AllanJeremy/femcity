@@ -16,7 +16,7 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
-    <![endif]-->       
+    <![endif]-->
     <link rel="shortcut icon" href="images/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
@@ -39,7 +39,7 @@
 							<li data-target="#slider-carousel" data-slide-to="1"></li>
 							<li data-target="#slider-carousel" data-slide-to="2"></li>
 						</ol>
-						
+
 						<div class="carousel-inner">
 							<div class="item active">
 								<div class="col-sm-6">
@@ -65,7 +65,7 @@
 									<img src="images/home/pricing.png"  class="pricing" alt="" />
 								</div>
 							</div>
-							
+
 							<div class="item">
 								<div class="col-sm-6">
 									<h1><span>E</span>-SHOPPER</h1>
@@ -78,34 +78,34 @@
 									<img src="images/home/pricing.png" class="pricing" alt="" />
 								</div>
 							</div>
-							
+
 						</div>
-						
+
 						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
 							<i class="fa fa-angle-left"></i>
 						</a>
 						<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
 							<i class="fa fa-angle-right"></i>
 						</a>
-					</div>		
+					</div>
 				</div>
 			</div>
 		</div>
 	</section><!--/slider-->
-	
+
 	<section>
 		<div class="container">
 			<div class="row">
 				<?php
                     include_once("templates/category_list.php");
                 ?>
-				
+
 				<div class="col-sm-9 padding-right">
-                    
+
                     <div class="featured-items"><!--featured_items-->
                     <?php
                         $featured_items = DbInfo::GetAllFeaturedItems();
-                    
+
                         if($featured_items && $featured_items->num_rows>0):
                     ?>
                         <h2 class="title text-center">Femcity Features</h2>
@@ -119,7 +119,7 @@
                                 $img_path = @$img["img_path"];
                                 $img_name = @$img["img_name"];
                                 $product_link = "product-details.php?id=".$item_id;
-                        
+
                                 if(!isset($img_name))
                                 {
                                     $img_name = "No item image";
@@ -148,22 +148,22 @@
                             endforeach;
                         endif;
                     ?>
-                        
+
                     </div><!--/featured_items-->
-                    
+
                     <div class="latest-items-tab col-sm-12"><!--latest-items-->
 				        <h2 class="title text-center">Latest Items</h2>
                         <?php
                             $other_items = DbInfo::GetAllOtherItems();
                             if($other_items && $other_items->num_rows>0):
-                                
+
                                 foreach($other_items as $item):
                                     $item_id = $item["item_id"];
                                     $item_name = $item["item_name"];
                                     $price = $item["price"];
-                        
+
                                     $img = DbInfo::GetSingleItemImage($item_id);
-                                    
+
                                     $img_path = $img_name = "";
                                     if($img && $img->num_rows>0)
                                     {
@@ -173,14 +173,14 @@
                                         if(!isset($img_name))
                                         {
                                             $img_name = "No item image";
-                                        }                                          
+                                        }
                                     }
                                     else
                                     {
                                         $img_path = "images/placeholder_logo.png";
-                                        $img_name = "No image found";      
+                                        $img_name = "No image found";
                                     }
-          
+
                         ?>
                         <div class="col-sm-3">
                             <div class="product-image-wrapper">
@@ -201,24 +201,25 @@
                             <p>No items were recently added</p>
                         <?php
                             endif;
-                        ?>           
+                        ?>
 				</div><!--/latest-items-->
             </div>
-                
+
             </div>
-				
+
 		</div>
 	</section>
-	
+
 	<?php
         include_once("templates/footer.php")
     ?>
-	
+
     <script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.scrollUp.min.js"></script>
 	<script src="js/price-range.js"></script>
-    <script src="js/jquery.prettyPhoto.js"></script>
-    <script src="js/main.js"></script>
+  <script src="js/jquery.prettyPhoto.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/location_handler.js"></script>
 </body>
 </html>
