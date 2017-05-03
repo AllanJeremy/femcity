@@ -50,6 +50,7 @@ if(isset($_POST["action"]))
             $data = $_POST["data"];
             
             $update_status = DbHandler::UpdateAdminAcc($id,$data);
+            
             echo $update_status;
         break;
 

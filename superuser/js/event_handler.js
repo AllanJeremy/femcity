@@ -129,7 +129,6 @@ $(document).ready(function(){
         $("#in_admin_email").val("");
         $("#in_admin_phone").val("");
         $("#in_admin_business_name").val("");
-        $("#in_business_category").val("");
         $("#in_business_description").val("");
     }
     
@@ -147,6 +146,8 @@ $(document).ready(function(){
         var business_name = $("#in_admin_business_name").val();
         var business_category = $("#in_business_category").val();
         var business_description = $("#in_business_description").val();
+        var region_id = $("#in_region").val();
+        var specific_location = $("#in_location").val();
         
         //Store the data as JSON data
         var data = {
@@ -154,6 +155,8 @@ $(document).ready(function(){
             "last_name":last_name,
             "business_name":business_name,
             "business_description":business_description,
+            "region_id":region_id,
+            "specific_location":specific_location,
             "cat_id":business_category,
             "email":email,
             "phone":phone,
@@ -296,6 +299,9 @@ $(document).ready(function(){
         var cat_id = $input_containers.children(".business_category").val();
         var email = $input_containers.children(".admin_email").val();
         var phone = $input_containers.children(".admin_phone").val();
+        var region_id = $input_containers.children(".region_list").val();
+        console.log(region_id);
+        var specific_location = $input_containers.children(".location").val();
         
         //Store the data as JSON data
         var data = {
@@ -303,9 +309,11 @@ $(document).ready(function(){
             "last_name":last_name,
             "business_name":business_name,
             "business_description":business_description,
+            "region_id":region_id,
+            "specific_location":specific_location,
             "cat_id":cat_id,
             "email":email,
-            "phone":phone,
+            "phone":phone
         };
         
         //AJAX request
@@ -832,6 +840,8 @@ $(document).ready(function(){
         var business_name = $input_list.children(".admin_business_name").val();
         var business_category = $input_list.children(".admin_business_category").val();
         var business_description = $input_list.children(".admin_business_description").val();
+//        var region_id = ;
+//        var specific_location = ;
         
         var req_id = GetRequestId($parents);
         
@@ -841,6 +851,8 @@ $(document).ready(function(){
             "last_name":last_name,
             "business_name":business_name,
             "business_description":business_description,
+            "region_id":region_id,
+            "specific_location":specific_location,
             "cat_id":business_category,
             "email":email,
             "phone":phone,

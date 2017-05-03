@@ -154,12 +154,12 @@ class DbHandler implements DbHandlerInterface
     public static function CreateAdminAcc($details)
     {
         global $dbCon;
-        $insert_query = "INSERT INTO admin_accounts(first_name,last_name,business_name,business_description,cat_id,email,phone,password,subbed) VALUES(?,?,?,?,?,?,?,?,?)";
+        $insert_query = "INSERT INTO admin_accounts(first_name,last_name,business_name,business_description,region_id,specific_location,cat_id,email,phone,password,subbed) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         
         //Attempt to prepare query
         if($insert_stmt = $dbCon->prepare($insert_query))
         {   
-            $insert_stmt->bind_param("ssssisssi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["phone"],$details["password"],$details["subbed"]);
+            $insert_stmt->bind_param("ssssisisssi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["region_id"],$details["specific_location"],$details["cat_id"],$details["email"],$details["phone"],$details["password"],$details["subbed"]);
             
 
             //Try executing the query ~ returns true on success and false on failure
@@ -177,12 +177,12 @@ class DbHandler implements DbHandlerInterface
     public static function UpdateAdminAcc($id,$details)#TODO: Update this
     {
         global $dbCon;
-        $update_query = "UPDATE admin_accounts SET first_name=?,last_name=?,business_name=?,business_description=?,cat_id=?,email=?,phone=? WHERE acc_id=?";
+        $update_query = "UPDATE admin_accounts SET first_name=?,last_name=?,business_name=?,business_description=?,region_id=?,specific_location=?,cat_id=?,email=?,phone=? WHERE acc_id=?";
 
         //Attempt to prepare query
         if($update_stmt = $dbCon->prepare($update_query))
         {
-            $update_stmt->bind_param("ssssissi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["phone"],$id);
+            $update_stmt->bind_param("ssssisissi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["region_id"],$details["specific_location"],$details["cat_id"],$details["email"],$details["phone"],$id);
             
             //Try executing the query ~ returns true on success and false on failure
             return($update_stmt->execute());
@@ -451,12 +451,12 @@ class DbHandler implements DbHandlerInterface
     public static function RequestAdminAccount($details)
     {
         global $dbCon;
-        $insert_query = "INSERT INTO account_requests(first_name,last_name,business_name,business_description,cat_id,email,password,subbed) VALUES(?,?,?,?,?,?,?,?)";
+        $insert_query = "INSERT INTO account_requests(first_name,last_name,business_name,business_description,region_id,specific_location,cat_id,email,password,subbed) VALUES(?,?,?,?,?,?,?,?,?,?)";
         
         //Attempt to prepare query
         if($insert_stmt = $dbCon->prepare($insert_query))
         {   
-            $insert_stmt->bind_param("ssssissi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["cat_id"],$details["email"],$details["password"],$details["subbed"]);
+            $insert_stmt->bind_param("ssssisissi",$details["first_name"],$details["last_name"],$details["business_name"],$details["business_description"],$details["region_id"],$details["specific_location"],$details["cat_id"],$details["email"],$details["password"],$details["subbed"]);
             
             //Try executing the query ~ returns true on success and false on failure
             return($insert_stmt->execute());

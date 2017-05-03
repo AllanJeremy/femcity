@@ -12,8 +12,11 @@
     //Message shown when categories cannot be found and the id for the message box(used as selector in js)
     $missing_acc_msg = "No admin accounts were found. Once you create admin accounts, they will appear here. <br><b>Note : </b>If you banned any accounts, you can access them from Settings > Banned Accounts";
     $missing_acc_id = "missing_acc_msg";
-
+    
     //Display the tab headers below
+    $countries = DbInfo::GetAllCountries();
+    $regions = null;
+
 ?>
     <!--Tab headers-->
     <div class="container">
@@ -54,23 +57,6 @@
             <input class="form-control" required type="text" placeholder="Phone number" id="in_admin_phone" title="Phone number of the business/business owner. Used to login to the account.">
         </div>
         
-<!--
-        <div class="col-xs-12 col-sm-6 col-md-4 input-container">
-            <br>
-            <label for="in_admin_first_name">Country</label>
-            <input class="form-control" required type="text" placeholder="Country the business belongs to" id="in_admin_country" title="Phone number of the business/business owner. Used to login to the account.">
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4 input-container">
-            <br>
-            <label for="in_admin_first_name">Region</label>
-            <input class="form-control" required type="text" placeholder="Country the business belongs to" id="in_admin_country" title="Phone number of the business/business owner. Used to login to the account.">
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4 input-container">
-            <br>
-            <label for="in_admin_first_name">Sub-region</label>
-            <input class="form-control" required type="text" placeholder="Country the business belongs to" id="in_admin_country" title="Phone number of the business/business owner. Used to login to the account.">
-        </div>
--->
         <div class="col-xs-12 col-sm-6 input-container">
             <br>
             <label for="in_admin_business_name">Business name <sup>(Required)</sup> </label>
@@ -98,7 +84,67 @@
                 ?>
             </select>
         </div>
-        <div class="col-xs-12 col-md-6 input-container">
+        
+        <div class="col-xs-12 col-sm-4 col-md-3 form-group location_control">
+            <br>
+            <label for="in_country" class="control-label country">Country <sup>(Required)</sup></label>
+            <select class="form-control country_list" id="in_country" title="Country your business is located in">
+                <?php
+                    if(@$countries && $countries->num_rows>0):
+                        $count = 0;
+                        foreach($countries as $country):
+                            $country_id = $country["country_id"];
+                            $country_name = $country["country_name"];
+
+                            #If the country is the first country
+                            if($count==0)
+                            {
+                                #get the regions for that country
+                                $regions = DbInfo::GetRegionsInCountry($country_id);
+                            }
+                ?>
+                <option value="<?php echo $country_id?>"><?php echo strtoupper($country_name)?></option>
+                <?php
+                        $count++;
+                        endforeach;
+                    else:
+                ?>
+                <option value="0" selected disabled>No countries found</option>
+                <?php
+                    endif;
+                ?>
+            </select>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-3 form-group location_control">
+            <br>
+            <label for="in_region" class="control-label region">Region <sup>(Required)</sup></label>
+            <select class="form-control region_list" id="in_region" title="Region your business is located in">
+                <?php
+                    if(@$regions && $regions->num_rows>0):
+                        foreach($regions as $region):
+                            $region_id = $region["region_id"];
+                            $region_name = $region["region_name"];
+                ?>
+                <option value="<?php echo $region_id;?>"><?php echo strtoupper($region_name);?></option>
+                <?php
+                        endforeach;
+                    else:
+                ?>
+                <option value="0" selected disabled>No regions found</option>
+                <?php
+                    endif;
+                ?>
+            </select>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-6 form-group input-container">
+            <br>
+            <label for="in_location" class="control-label">Location <sup>(Recommended)</sup></label>
+            <input type="text" class="form-control location" id="in_location" placeholder="Specific location (Optional)" title="Specific location for the business. Users can find your business by searching for businesses in this location">
+        </div>
+        
+        <div class="col-xs-12 input-container">
             <br>
             <label for="in_cat_description">Business description <sup>(Optional)</sup> </label>
             <textarea class="form-control" type="text" placeholder="Business description" name="business_description" id="in_business_description" title="Business description. Brief description of what the business does"></textarea>
@@ -249,6 +295,91 @@
                         ?>
                     </select>
                 </div>
+                
+                <?php
+                    $cur_region_id = $acc["region_id"];
+                    $cur_country_id = DbInfo::GetCountryByRegion($cur_region_id);
+                ?>
+                <div class="col-xs-12 col-sm-4 col-md-3 form-group location_control input-container">
+                    <br>
+                    <label for="in_country_<?php echo $acc_id?>" class="control-label country">Country <sup>(Required)</sup></label>
+                    <select class="editable form-control country_list" required disabled id="in_country_<?php echo $acc_id?>" title="Country your business is located in">
+                        <?php
+                            if(@$countries && $countries->num_rows>0):
+                                $count = 0;
+                                $selected_state = "";
+                                foreach($countries as $country):
+                                    $country_id = $country["country_id"];
+                                    $country_name = $country["country_name"];
+
+                                    if($country_id == $cur_country_id)
+                                    {
+                                        $selected_state = "selected";
+                                    }
+                                    else
+                                    {
+                                       $selected_state = "";          
+                                    }
+                           
+                                    #If the country is the first country
+                                    if($count==0)
+                                    {
+                                        #get the regions for that country
+                                        $regions = DbInfo::GetRegionsInCountry($country_id);
+                                    }
+                        ?>
+                        <option value="<?php echo $country_id?>" <?php echo $selected_state?>><?php echo strtoupper($country_name)?></option>
+                        <?php
+                                $count++;
+                                endforeach;
+                            else:
+                        ?>
+                        <option value="0" selected disabled>No countries found</option>
+                        <?php
+                            endif;
+                        ?>
+                    </select>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-3 form-group location_control input-container">
+                    <br>
+                    <label for="in_region_<?php echo $acc_id?>" class="control-label region">Region <sup>(Required)</sup></label>
+                    <select class="editable form-control region_list" required disabled id="in_region_<?php echo $acc_id?>" required title="Region your business is located in">
+                        <?php
+                            if(@$regions && $regions->num_rows>0):
+                                $selected_state = "";
+                                foreach($regions as $region):
+                                    $region_id = $region["region_id"];
+                                    
+                                    if($region_id == $cur_region_id)
+                                    {
+                                        $selected_state = "selected";
+                                    }
+                                    else
+                                    {
+                                       $selected_state = "";          
+                                    }
+                           
+                                    $region_name = $region["region_name"];
+                        ?>
+                        <option value="<?php echo $region_id;?>" <?php echo $selected_state?>><?php echo strtoupper($region_name);?></option>
+                        <?php
+                                endforeach;
+                            else:
+                        ?>
+                        <option value="0" selected disabled>No regions found</option>
+                        <?php
+                            endif;
+                        ?>
+                    </select>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-6 form-group input-container">
+                    <br>
+                    <label for="in_location_<?php echo $acc_id?>" class="control-label">Location <sup>(Recommended)</sup></label>
+                    <input type="text" class="editable form-control location" id="in_location_<?php echo $acc_id?>" placeholder="Specific location (Optional)" title="Specific location for the business. Users can find your business by searching for businesses in this location" disabled value="<?php echo $acc['specific_location'];?>">
+                </div>
+                
                 <div class="col-xs-12 col-md-6 input-container">
                     <br>
                     <label for="<?php echo $bus_descr_id;?>">Business description <sup>(Optional)</sup> </label>

@@ -38,6 +38,7 @@ interface DbInfoInterface
     public static function GetAllCountries();
     public static function GetAllRegions();
     public static function GetRegionsInCountry($country_id);
+    public static function GetCountryByRegion($region_id);
 }
 
 //This class deals with retrieval of records from the database
@@ -201,7 +202,7 @@ class DbInfo implements DbInfoInterface
     public static function GetAllAdminAccounts()
     {
         global $dbCon;
-        $select_query = "SELECT acc_id,first_name,last_name,business_name,business_description,cat_id,email,phone,subbed,date_created,date_activated,date_expires FROM admin_accounts";
+        $select_query = "SELECT acc_id,first_name,last_name,business_name,business_description,region_id,specific_location,cat_id,email,phone,subbed,date_created,date_activated,date_expires FROM admin_accounts";
         
         return ($dbCon->query($select_query));
     }
@@ -210,7 +211,7 @@ class DbInfo implements DbInfoInterface
     public static function GetValidAdminAccounts()
     {
         global $dbCon;
-        $select_query = "SELECT acc_id,first_name,last_name,business_name,business_description,cat_id,email,phone,subbed,date_created,date_activated,date_expires FROM admin_accounts WHERE is_banned=0";
+        $select_query = "SELECT acc_id,first_name,last_name,business_name,business_description,region_id,specific_location,cat_id,email,phone,subbed,date_created,date_activated,date_expires FROM admin_accounts WHERE is_banned=0";
         
         return ($dbCon->query($select_query));
     }
@@ -219,7 +220,7 @@ class DbInfo implements DbInfoInterface
     public static function GetBannedAdminAccounts()
     {
         global $dbCon;
-        $select_query = "SELECT acc_id,first_name,last_name,business_name,business_description,cat_id,email,phone,subbed,date_created,date_activated,date_expires FROM admin_accounts WHERE is_banned=1";
+        $select_query = "SELECT acc_id,first_name,last_name,business_name,business_description,region_id,specific_location,cat_id,email,phone,subbed,date_created,date_activated,date_expires FROM admin_accounts WHERE is_banned=1";
         
         return ($dbCon->query($select_query));
     }
@@ -384,6 +385,45 @@ class DbInfo implements DbInfoInterface
             return null;
         }
         
+    }
+    
+    public static function GetCountryByRegion($region_id)
+    {
+        global $dbCon;
+        
+        $select_query = "SELECT country_id FROM regions WHERE region_id=?";
+        
+        //Prepare the query
+        if($select_stmt = $dbCon->prepare($select_query))
+        {
+            $select_stmt->bind_param("i",$region_id);
+            $select_status = $select_stmt->execute();
+            
+            if($select_status)
+            {
+                $results = $select_stmt->get_result();
+                if(@$results && $results->num_rows>0)
+                {
+                    //Return the first country id found
+                    foreach($results as $result)
+                    {
+                        return ($result["country_id"]);
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return $select_status;
+            }
+        }
+        else
+        {
+            return null;
+        }
     }
     
 }
