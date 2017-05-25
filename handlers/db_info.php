@@ -426,4 +426,47 @@ class DbInfo implements DbInfoInterface
         }
     }
     
+    //Get search results
+    public static function GetSearchResults($search_query,$region_id,$specific_location)
+    {
+        #TODO ~ consider adding search by category
+        global $dbCon;
+        //FILTERS (WHERE) ~ region_id
+        //GENERIC (LIKE) ~ business_name, specific_location, item_name, item_description,  
+        $select_query = "SELECT * FROM items INNER JOIN admin_accounts ON admin_accounts.acc_id = items.acc_id 
+        WHERE 
+        (
+            admin_accounts.business_name LIKE ? OR 
+            admin_accounts.specific_location LIKE ? OR
+            items.item_name LIKE ? OR 
+            items.description LIKE ?
+        ) 
+        AND (admin_accounts.region_id = ?)
+        ";
+        
+        
+        //Attempt to prepare query
+        if($select_stmt = $dbCon->prepare($select_query))
+        {   
+            $search_query = "%$search_query%";
+            $specific_location = "%$specific_location%";
+            
+            $select_stmt->bind_param("ssssi",$search_query,$specific_location,$search_query,$search_query,$region_id);
+            
+            if($select_stmt->execute())
+            {
+                return $select_stmt->get_result();
+            }
+            else #Failed to execute select stmt
+            {
+                echo "<div class='well'><p><b>Technical error:</b>Failed to execute the query to get search results</p></div><br>";
+                return false;
+            }
+        }
+        else
+        {
+            echo $dbCon->error;
+            return null;
+        }
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+    require_once("handlers/global_init.php");#contains all global variables
     require_once("handlers/session_handler.php");#Accessing information from the database
 
     const ACTIVE_CLASS = 'class="active"';
@@ -90,7 +91,7 @@
 							</div>
 
 							<div class="form-group col-sm-3 small-margin location_control">
-                  <select id="region_container" title="Specific region in country" class="region_list">
+                  <select id="region_container" name="r" title="Specific region in country" class="region_list">
                       <?php
                           #If any countries were found
                           if($countries):
@@ -125,12 +126,17 @@
 							</div>
 
                             <div class="form-group col-sm-3 location_box small-margin">
-                                <input type="text" placeholder="Specific location" title="Specific location to find the item you are looking for">
+                                <input type="text" name="loc" placeholder="Specific location" title="Specific location to find the item you are looking for">
                             </div>
 
-                            <div class="form-group col-sm-3 search_box small-margin pull-right">
-                                <input type="text" placeholder="Search"/>
-                            </div>
+<!--                            <div class="form-group   small-margin pull-right">-->
+                                <div class="input-group col-sm-3">
+                                    <input type="text" class="form-control" name="q" placeholder="Search..." value="<?php echo @$_GET["q"];?>"/>
+                                    <span class="input-group-addon">
+                                        <button class="fa fa-search btn_search"></button>
+                                    </span>
+                                </div>
+<!--                            </div>-->
 						</div>
 
                         </form>

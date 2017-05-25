@@ -81,17 +81,29 @@
                         $items_found = DbInfo::GetItemsByAccId($acc_id);
                     
                         if($items_found && $items_found->num_rows>0):
+                            
                             foreach($items_found as $item):
                                 $item_id = $item["item_id"];
                                 $item_name = $item["item_name"];
                                 $price = $item["price"];
 
                                 $img = DbInfo::GetSingleItemImage($item_id);
-                                $img_path = @$img["img_path"];
-                                $img_name = @$img["img_name"];
+                                
+                                $img_path = $img_name = null;
+                                if($img->num_rows>0)
+                                {
+                                    $img_path = @$img["img_path"];
+                                    $img_name = @$img["img_name"];                             
+                                }
+                                else
+                                {
+                                    $img_path = GlobalInit::PLACEHOLDER_ITEM_IMG;
+                                    $img_name = "No item image";
+                                }
+
                                 $product_link = "product-details.php?id=".$item_id;
                         
-                                if(!isset($img_name))
+                                if(!isset($img_name) || empty($img_name))
                                 {
                                     $img_name = "No item image";
                                 }
