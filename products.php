@@ -41,8 +41,8 @@
 					<div class="items_available"><!--items_available-->
 						<h2 class="title text-center">Items Available</h2>
                     <?php
-                        $items_found = DbInfo::GetAllFeaturedItems();
-                    
+                        $items_found = DbInfo::GetAllItems();#Display all items
+                        
                         if($items_found && $items_found->num_rows>0):
                             foreach($items_found as $item):
                                 $item_id = $item["item_id"];
@@ -50,8 +50,19 @@
                                 $price = $item["price"];
 
                                 $img = DbInfo::GetSingleItemImage($item_id);
-                                $img_path = @$img["img_path"];
-                                $img_name = @$img["img_name"];
+                                
+                                $img_path = $img_name = null;
+                                if($img->num_rows>0)
+                                {
+                                    $img_path = @$img["img_path"];
+                                    $img_name = @$img["img_name"];                             
+                                }
+                                else
+                                {
+                                    $img_path = GlobalInit::PLACEHOLDER_ITEM_IMG;
+                                    $img_name = "No item image";
+                                }
+
                                 $product_link = "product-details.php?id=".$item_id;
                         
                                 if(!isset($img_name))
@@ -80,6 +91,12 @@
                         </div>
 					<?php
                             endforeach;
+                        else:
+                    ?>
+                        <div class="well">
+                            <h4>No items were found</h4>
+                        </div>
+                    <?php
                         endif;
                     ?>
 						
@@ -93,7 +110,7 @@
                             </ul>                        
                         </div>
 -->
-
+                        <br>
 					</div><!--/items_available-->
 				</div>
 			</div>
