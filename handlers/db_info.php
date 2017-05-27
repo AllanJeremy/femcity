@@ -39,6 +39,7 @@ interface DbInfoInterface
     public static function GetAllRegions();
     public static function GetRegionsInCountry($country_id);
     public static function GetCountryByRegion($region_id);
+    public static function GetCountryById($country_id);
     
     //Phone views
     public static function GetAllPhoneViews();
@@ -206,9 +207,14 @@ class DbInfo implements DbInfoInterface
     public static function GetAllAdminAccounts()
     {
         global $dbCon;
-        $select_query = "SELECT acc_id,first_name,last_name,business_name,business_description,region_id,specific_location,cat_id,email,phone,subbed,date_created,date_activated,date_expires FROM admin_accounts";
+        $select_query = "SELECT acc_id,first_name,last_name,business_name,business_description,admin_accounts.region_id,specific_location,cat_id,email,phone,subbed,date_created,date_activated,date_expires, regions.region_name,regions.country_id
+        FROM admin_accounts INNER JOIN regions ON regions.region_id = admin_accounts.region_id";
         
-        return ($dbCon->query($select_query));
+        $select_status =($dbCon->query($select_query));
+        
+        #Any error debug info here //echo $dbCon->error;
+        
+        return $select_status;
     }
     
     //Get all admin accounts ~ select everything except the password for valid admin accounts
@@ -472,6 +478,12 @@ class DbInfo implements DbInfoInterface
             echo $dbCon->error;
             return null;
         }
+    }
+    
+    //Get a country by its id
+    public static function GetCountryById($country_id)
+    {
+       return self::GetSingleRecordUsingProperty("countries","country_id",$country_id) ;
     }
     
     //Get all phone views
