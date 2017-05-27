@@ -217,7 +217,41 @@ if(isset($_POST["action"]))
 
           echo $request_status;
         break;
+        case "ViewPhone":
+            $acc_id = @$_POST["acc_id"];
+            if(isset($acc_id) && !empty($acc_id))
+            {
+                $admin_acc = MySessionHandler::GetAdminById($acc_id);
+                if($admin_acc)
+                {
+                    $phone = $admin_acc["phone"];
+                    
+                    #Add the phone check entry to the db
+                    $add_status = DbHandler::AddPhoneView($acc_id);
+                    
+                    #Ensure that entries from the same session don't count as multiple checks ~ consider
+                    
+                    if($add_status)
+                    {
+                        #echo the phone number as response
+                        echo $phone; 
+                    }
+                    else #Failed to add the phone number check to the database
+                    {
+                        echo false;
+                    }
 
+                }
+                else #Admin account was not found
+                {
+                    echo false;
+                }
+            }
+            else
+            {
+                echo false;#Acc id was not set, return false 
+            }
+        break;
         default:
             echo "Invalid action";
     }

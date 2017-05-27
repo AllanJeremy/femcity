@@ -1,3 +1,6 @@
+<?php
+    session_start();//Start a session here
+?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -146,10 +149,14 @@
 								<span>
 									<span><small>Ksh</small> <?php echo $price;?></span>
 								</span>
-						        <p><a class="btn btn-default view-phone" data-item-id="<?php echo $item_id;?>">
+						        <p class="phone-container">
+                                    <a class="btn btn-default view-phone" data-acc-id="<?php echo $acc_id;?>">
 										<i class="glyphicon glyphicon-eye-open"></i>
 										View Phone
 									</a>
+                                    <span class="loading-phone hide">
+                                        <i class="glyphicon glyphicon-refresh spinning"></i> Loading...
+                                    </span>
                                 </p>
 								<br>
                                 <p><b>Company :</b> 
@@ -368,6 +375,7 @@
                 ?>  
 			</div>
 		</div>
+    </div>
 	</section>
 	
 		

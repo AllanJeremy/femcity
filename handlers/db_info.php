@@ -39,6 +39,10 @@ interface DbInfoInterface
     public static function GetAllRegions();
     public static function GetRegionsInCountry($country_id);
     public static function GetCountryByRegion($region_id);
+    
+    //Phone views
+    public static function GetAllPhoneViews();
+    public static function GetAdminPhoneViews($acc_id);
 }
 
 //This class deals with retrieval of records from the database
@@ -468,5 +472,17 @@ class DbInfo implements DbInfoInterface
             echo $dbCon->error;
             return null;
         }
+    }
+    
+    //Get all phone views
+    public static function GetAllPhoneViews()
+    {
+        return self::GetAllRecordsFromTable("phone_views");
+    }
+    
+    //Get specific admin account phone views
+    public static function GetAdminPhoneViews($acc_id)
+    {
+        return self::SinglePropertyExists("phone_views","acc_id",$acc_id);
     }
 }

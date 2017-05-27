@@ -65,6 +65,7 @@ interface DbHandlerInterface
     public static function UpdateItem($id,$details); #Update product/service based on primary key
     public static function DeleteItem($id); #Delete product/service based on primary key
 
+    public static function AddPhoneView($acc_id);#Add phone view for the acc_id specified
 }
 
 //This class deals with manipulation of records in the database
@@ -668,5 +669,23 @@ class DbHandler implements DbHandlerInterface
         $del_item_images_status = self::DeleteItemImages($id);
         $del_items_status = self::DeleteBasedOnSingleProperty("items","item_id",$id);
         return ($del_item_images_status && $del_items_status);
+    }
+    
+    #Add phone view for the acc_id specified
+    public static function AddPhoneView($acc_id)
+    {
+        global $dbCon;
+        $query = "INSERT INTO phone_views(acc_id) VALUES(?)";
+        
+        if($stmt = $dbCon->prepare($query))
+        {
+            $stmt->bind_param("i",$acc_id);
+            
+            return ($stmt->execute());
+        }
+        else
+        {
+            return null;
+        }
     }
 }

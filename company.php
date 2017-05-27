@@ -1,3 +1,6 @@
+<?php
+    session_start();//Start a session here
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,9 +40,11 @@
         showNav();
     
         $acc_found = MySessionHandler::GetAdminById($acc_id);
-        if(!isset($acc_found) || @$acc_found->num_rows<=0 || !$acc_found):
+        
+        //If the account was not found ~ redirect to 404
+        if(!(isset($acc_found)) || !$acc_found):
     ?>
-<!--        <script> location.replace("404.php"); </script>-->
+        <script> location.replace("404.php"); </script>
     <?php
         else:
         endif;
@@ -73,6 +78,11 @@
                             <?php
                                 endif;
                             ?>
+                            <br><p class="phone-container"><a class="btn btn-default view-phone" data-acc-id="<?php echo $acc_id;?>">
+                                    <i class="glyphicon glyphicon-eye-open"></i>
+                                    View Phone
+                                </a>
+                            </p>
                         </div>
                     </div><br><hr><br>
 					<div class="items_available"><!--items_available-->

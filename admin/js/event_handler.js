@@ -2,6 +2,23 @@ $(document).ready(function(){
 
     var ajax_handler_path = "../handlers/ajax_handler.php";
 
+//    $("#item_files").file
+    //Initialize file input plugin
+    $("#item_files").fileinput({
+        uploadAsync: false,
+        showUpload:false,
+        uploadUrl: "../handlers/ajax_handler.php", // your upload server url
+        uploadExtraData: function() {
+            console.log("Initialized");
+            return {
+                userid: $("#userid").val(),
+                username: $("#username").val()
+            };
+        }
+    });
+    
+//    $('#item_files').fileinput('disable')
+    
     function ValidateInputs($input_list)
     {
         toastr.options.preventDuplicates = true;
@@ -195,16 +212,22 @@ $(document).ready(function(){
 
     //FILE UPLOAD
     /*
-    $("#item_files").fileinput({
-        uploadAsync: false,
-        uploadUrl: "../handlers/ajax_handler.php" // your upload server url
-        uploadExtraData: function() {
-            return {
-                userid: $("#userid").val(),
-                username: $("#username").val()
-            };
-        }
-    });
+        PSEUDOCODE
+        - Select the files
+        - Mark primary file
+        - Click post item [event]
+        - Show progress for the uploads
+        - Add the records of the item uploaded to the db
+        - Upload the files to the appropriate locations & store file paths in db
+        - Empty the inputs for the item upload section
+        
+        ->TODO: Find a way of using the krajee plugin. Currently does not initialize (meaning the rest won't work as expected)
     */
+    
+    $(".fileinput-upload-button").click(function(e){
+//        alert("Upload clicked");
+        console.log($("#item_files"));
+        e.preventDefault();
+    });
 
 });
